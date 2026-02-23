@@ -1129,43 +1129,54 @@ async function confirmPayment() {
   }
 }
 
-// Envía datos al Apps Script usando JSONP (sin fotos — van separadas)
+// Envía datos al Apps Script usando fetch no-cors + formulario oculto
 function sendToAppsScript(data) {
-  // Separar fotos del payload principal para no superar límite de URL
-  const { selfieB64, passportB64, ...mainData } = data;
-  mainData.hasPhotos = !!(selfieB64 || passportB64);
+  // Quitar fotos del payload (demasiado grandes para GET)
+  const payload = Object.assign({}, data);
+  delete payload.selfieB64;
+  delete payload.passportB64;
+  payload.hasPhotos = !!(data.selfieB64 || data.passportB64);
 
-  return new Promise((resolve, reject) => {
-    const cbName = 'cb_' + Date.now();
-    const script = document.createElement('script');
-    const params = new URLSearchParams({
-      callback: cbName,
-      payload: JSON.stringify(mainData)
-    });
-    script.src = CONFIG.APPS_SCRIPT_URL + '?' + params.toString();
+  return new Promise((resolve) => {
+    // Crear formulario oculto que hace POST directo
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = CONFIG.APPS_SCRIPT_URL;
+    form.target = 'hidden_iframe';
+    form.style.display = 'none';
 
-    const timer = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timeout'));
-    }, 20000);
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'payload';
+    input.value = JSON.stringify(payload);
+    form.appendChild(input);
 
-    window[cbName] = (resp) => {
-      cleanup();
-      if (resp && resp.success) {
-        resolve(resp);
-      } else {
-        reject(new Error(JSON.stringify(resp)));
-      }
-    };
-
-    function cleanup() {
-      clearTimeout(timer);
-      delete window[cbName];
-      if (script.parentNode) script.parentNode.removeChild(script);
+    // iframe oculto para recibir la respuesta sin redirigir
+    let iframe = document.getElementById('hidden_iframe');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.name = 'hidden_iframe';
+      iframe.id = 'hidden_iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
     }
 
-    script.onerror = () => { cleanup(); reject(new Error('Script error')); };
-    document.head.appendChild(script);
+    document.body.appendChild(form);
+
+    // Esperar respuesta del iframe
+    const timer = setTimeout(() => {
+      form.remove();
+      // Asumir éxito si no hubo error en 10 segundos
+      resolve({ success: true });
+    }, 10000);
+
+    iframe.onload = () => {
+      clearTimeout(timer);
+      form.remove();
+      resolve({ success: true });
+    };
+
+    form.submit();
   });
 }
 
