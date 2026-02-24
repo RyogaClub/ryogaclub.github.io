@@ -358,6 +358,8 @@
       <span style="font-family:'Orbitron',sans-serif; font-size:11px; letter-spacing:5px; color:#F5C842; text-transform:uppercase;">EXCHANGE</span>
     </div>
   </div>
+  <!-- Versión -->
+  <div style="position:absolute; bottom:15px; right:20px; font-family:'Orbitron',sans-serif; font-size:10px; color:rgba(245,200,66,0.4); letter-spacing:2px;">v2.0.1</div>
   <div style="text-align:center; max-width:400px; margin-bottom:40px;">
     <p style="color:var(--text2); font-size:16px; line-height:1.6;">
       Plataforma segura para cambio de criptomonedas a Quetzales guatemaltecos
@@ -606,6 +608,32 @@
     
     <button class="btn-main" style="width:100%; margin-top:15px;" onclick="confirmPayment()" data-t="confirm_transfer">✓ Confirmar Transferencia</button>
     <p style="font-size:12px; color:var(--text2); margin-top:10px;" data-t="confirm_note">Al confirmar notificaremos al administrador para validar tu pago.</p>
+  </div>
+</div>
+
+<!-- ===================== SCREEN 6.5: RATING ===================== -->
+<div class="screen with-ticker" id="screen-rating">
+  <div class="card" style="text-align:center; max-width:480px;">
+    <div class="card-title" style="justify-content:center;" data-t="rating_title">¿Cómo fue tu experiencia?</div>
+    <p style="font-size:14px; color:var(--text2); margin-bottom:25px;" data-t="rating_desc">
+      Tu opinión nos ayuda a mejorar el servicio
+    </p>
+    <div id="starContainer" style="display:flex; justify-content:center; gap:15px; margin:20px 0;">
+      <span class="star" data-v="1" onclick="setStar(1)" style="font-size:48px; cursor:pointer; opacity:0.3; transition:all 0.2s;">★</span>
+      <span class="star" data-v="2" onclick="setStar(2)" style="font-size:48px; cursor:pointer; opacity:0.3; transition:all 0.2s;">★</span>
+      <span class="star" data-v="3" onclick="setStar(3)" style="font-size:48px; cursor:pointer; opacity:0.3; transition:all 0.2s;">★</span>
+      <span class="star" data-v="4" onclick="setStar(4)" style="font-size:48px; cursor:pointer; opacity:0.3; transition:all 0.2s;">★</span>
+      <span class="star" data-v="5" onclick="setStar(5)" style="font-size:48px; cursor:pointer; opacity:0.3; transition:all 0.2s;">★</span>
+    </div>
+    <div id="ratingLabel" style="font-family:'Orbitron',sans-serif; font-size:16px; color:var(--gold); min-height:28px; margin-bottom:15px;"></div>
+    <div class="form-group">
+      <label class="form-label" data-t="rating_comment">Comentario (opcional)</label>
+      <textarea class="form-input" id="ratingComment" rows="3" placeholder="Cuéntanos tu experiencia..." style="resize:none;"></textarea>
+    </div>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <button class="btn-secondary" style="flex:1;" onclick="skipRating()" data-t="rating_skip">Omitir</button>
+      <button class="btn-main" style="flex:2;" onclick="submitRating()" data-t="rating_submit">Enviar ⭐</button>
+    </div>
   </div>
 </div>
 
@@ -1188,16 +1216,67 @@ function saveLocally(data) {
 }
 
 function showSuccessScreen() {
-  goTo('screen-success');
+  goTo('screen-rating'); // Primero calificación, luego éxito
+  selectedRating = 0;
+  document.querySelectorAll('.star').forEach(s => {
+    s.style.opacity = '0.3';
+    s.style.color = 'var(--text2)';
+    s.style.transform = 'scale(1)';
+  });
+  document.getElementById('ratingLabel').textContent = '';
+  document.getElementById('ratingComment').value = '';
+  // Preparar pantalla de éxito
   document.getElementById('successTxId').textContent = state.txId;
   document.getElementById('successCrypto').textContent = `${state.inputAmount} ${state.selectedCrypto}`;
   document.getElementById('successQuetzal').textContent = `Q ${state.finalAmount.toFixed(2)}`;
-  qrGenerated = false; // reset for next transaction
+  qrGenerated = false;
 }
 
 // =============================================
-//  ADMIN PANEL
+//  RATING
 // =============================================
+let selectedRating = 0;
+const ratingLabels = {
+  es: ['', '😞 Muy malo', '😕 Malo', '😐 Regular', '😊 Bueno', '🤩 Excelente'],
+  en: ['', '😞 Very bad', '😕 Bad', '😐 Average', '😊 Good', '🤩 Excellent'],
+  fr: ['', '😞 Très mauvais', '😕 Mauvais', '😐 Moyen', '😊 Bien', '🤩 Excellent'],
+  de: ['', '😞 Sehr schlecht', '😕 Schlecht', '😐 Mittelmäßig', '😊 Gut', '🤩 Ausgezeichnet'],
+  pt: ['', '😞 Muito ruim', '😕 Ruim', '😐 Regular', '😊 Bom', '🤩 Excelente'],
+};
+
+function setStar(val) {
+  selectedRating = val;
+  document.querySelectorAll('.star').forEach(s => {
+    const v = parseInt(s.getAttribute('data-v'));
+    s.style.opacity = v <= val ? '1' : '0.3';
+    s.style.color = v <= val ? 'var(--gold)' : 'var(--text2)';
+    s.style.transform = v <= val ? 'scale(1.15)' : 'scale(1)';
+  });
+  const labels = ratingLabels[state.lang] || ratingLabels.es;
+  document.getElementById('ratingLabel').textContent = labels[val] || '';
+}
+
+function skipRating() {
+  goTo('screen-success');
+}
+
+async function submitRating() {
+  const comment = document.getElementById('ratingComment').value.trim();
+  if (selectedRating === 0) { showToast('Por favor selecciona una calificación', 'error'); return; }
+
+  // Guardar calificación en Sheets
+  const ratingData = {
+    action: 'saveRating',
+    txId: state.txId,
+    rating: selectedRating,
+    comment: comment,
+    lang: state.lang,
+  };
+
+  try { await sendToAppsScript(ratingData); } catch(e) {}
+  showToast('¡Gracias por tu calificación! ⭐', 'success');
+  setTimeout(() => goTo('screen-success'), 1200);
+}
 function openGSheet() {
   window.open(`https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}`, '_blank');
 }
