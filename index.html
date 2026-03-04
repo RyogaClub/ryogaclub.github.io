@@ -167,7 +167,7 @@
 
   /* ========== TICKER ========== */
   .ticker-bar {
-    position:fixed; top:0; left:0; right:0; z-index:50;
+    position:fixed; top:0; left:0; right:0; z-index:1000;
     background:var(--dark2); border-bottom:1px solid var(--border);
     padding:8px 0; overflow:hidden; height:35px;
   }
@@ -470,10 +470,10 @@
 </div>
 
 <!-- LANGUAGE FLOATING BUTTON -->
-<div id="langFloatWrap" style="position:fixed; bottom:24px; right:20px; z-index:500;">
+<div id="langFloatWrap" style="position:fixed; top:54px; right:12px; z-index:500;">
 
   <!-- Menú desplegable -->
-  <div id="langMenu" style="display:none; position:absolute; bottom:52px; right:0;
+  <div id="langMenu" style="display:none; position:absolute; top:44px; right:0;
     background:var(--dark2); border:1px solid var(--border); border-radius:10px;
     overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.6); min-width:130px;">
     <button class="lang-menu-item" onclick="pickLang('es')">🇬🇹 &nbsp;Español</button>
@@ -522,14 +522,14 @@
     </div>
   </div>
   <!-- Versión -->
-  <div style="position:absolute; bottom:15px; right:20px; font-family:'Orbitron',sans-serif; font-size:10px; color:rgba(245,200,66,0.4); letter-spacing:2px;">v3.1.0</div>
+  <div style="position:absolute; bottom:15px; right:20px; font-family:'Orbitron',sans-serif; font-size:10px; color:rgba(245,200,66,0.4); letter-spacing:2px;">v3.1.9</div>
   <div style="text-align:center; max-width:400px; margin-bottom:40px;">
     <p style="color:var(--text2); font-size:16px; line-height:1.6;">
-      Plataforma segura para cambio de criptomonedas a Quetzales guatemaltecos
+      <span data-t="welcome_sub">Plataforma segura para cambio de criptomonedas a Quetzales guatemaltecos</span>
     </p>
   </div>
   <button class="btn-main" onclick="goTo('screen-lang')">
-    ▶ &nbsp;INICIAR
+    ▶ &nbsp;<span data-t="welcome_start">INICIAR</span>
   </button>
   <div style="margin-top:20px;">
     <button onclick="goToAdmin()" title="Panel Admin"
@@ -542,15 +542,15 @@
   <div style="margin-top:40px; display:flex; gap:30px; flex-wrap:wrap; justify-content:center;">
     <div style="text-align:center;">
       <div style="font-family:Orbitron; font-size:20px; color:var(--gold);">100%</div>
-      <div style="font-size:12px; color:var(--text2);">SEGURO</div>
+      <div style="font-size:12px; color:var(--text2);"><span data-t="welcome_badge1">SEGURO</span></div>
     </div>
     <div style="text-align:center;">
       <div style="font-family:Orbitron; font-size:20px; color:var(--gold);">2.5%</div>
-      <div style="font-size:12px; color:var(--text2);">COMISIÓN</div>
+      <div style="font-size:12px; color:var(--text2);"><span data-t="welcome_badge2">COMISIÓN</span></div>
     </div>
     <div style="text-align:center;">
       <div style="font-family:Orbitron; font-size:20px; color:var(--gold);">24/7</div>
-      <div style="font-size:12px; color:var(--text2);">DISPONIBLE</div>
+      <div style="font-size:12px; color:var(--text2);"><span data-t="welcome_badge3">DISPONIBLE</span></div>
     </div>
   </div>
 </div>
@@ -566,7 +566,7 @@
   onmouseover="this.style.borderColor='rgba(245,200,66,0.6)'; this.style.boxShadow='0 0 20px rgba(245,200,66,0.15)'"
   onmouseout="this.style.borderColor='rgba(245,200,66,0.25)'; this.style.boxShadow='none'">
   <span style="font-size:24px; filter:drop-shadow(0 0 8px rgba(245,200,66,0.6));">🎁</span>
-  <span style="font-size:8px; font-family:Orbitron,sans-serif; letter-spacing:1.5px; color:rgba(245,200,66,0.6);">BENEFICIO</span>
+  <span style="font-size:8px; font-family:Orbitron,sans-serif; letter-spacing:1.5px; color:rgba(245,200,66,0.6);"><span data-t="benefit_btn">BENEFICIO</span></span>
 </button>
 
 <!-- ===================== SCREEN 2: LANGUAGE ===================== -->
@@ -763,8 +763,7 @@
     <canvas id="compressCanvas" style="display:none;"></canvas>
 
     <div style="display:flex; gap:10px; margin-top:10px;">
-      <button class="btn-secondary" style="flex:1;" onclick="skipPhotos()">Omitir →</button>
-      <button class="btn-main" style="flex:2;" onclick="uploadPhotos()" data-t="continue">Continuar →</button>
+      <button class="btn-main" style="width:100%;" onclick="uploadPhotos()" data-t="continue">Continuar →</button>
     </div>
   </div>
 </div>
@@ -819,12 +818,12 @@
     </div>
     <div id="ratingLabel" style="font-family:'Orbitron',sans-serif; font-size:16px; color:var(--gold); min-height:28px; margin-bottom:15px;"></div>
     <div class="form-group">
-      <label class="form-label" data-t="rating_comment">Comentario (opcional)</label>
+      <label class="form-label" data-t="rating_comment"><span data-t="rating_comment">Comentario (opcional)</span></label>
       <textarea class="form-input" id="ratingComment" rows="3" placeholder="Cuéntanos tu experiencia..." style="resize:none;"></textarea>
     </div>
     <div style="display:flex; gap:10px; margin-top:10px;">
-      <button class="btn-secondary" style="flex:1;" onclick="skipRating()" data-t="rating_skip">Omitir</button>
-      <button class="btn-main" style="flex:2;" onclick="submitRating()" data-t="rating_submit">Enviar ⭐</button>
+      <button class="btn-secondary" style="flex:1;" onclick="skipRating()" data-t="rating_skip"><span data-t="rating_skip">Omitir</span></button>
+      <button class="btn-main" style="flex:2;" onclick="submitRating()" data-t="rating_submit"><span data-t="rating_send">Enviar ⭐</span></button>
     </div>
   </div>
 </div>
@@ -835,14 +834,14 @@
 <div class="screen with-ticker" id="screen-waiting">
   <div class="card" style="text-align:center; max-width:480px;">
     <div style="font-size:56px; margin-bottom:15px;">⏳</div>
-    <h2 style="font-family:'Orbitron',sans-serif; font-size:18px; color:var(--gold); margin-bottom:15px;">Solicitud Enviada</h2>
+    <h2 style="font-family:'Orbitron',sans-serif; font-size:18px; color:var(--gold); margin-bottom:15px;"><span data-t="waiting_title">Solicitud Enviada</span></h2>
     <p style="font-size:14px; color:var(--text2); margin-bottom:25px;">
       El administrador está verificando tu transferencia.<br>Por favor espera aquí.
     </p>
 
     <!-- TX Info -->
     <div style="background:rgba(0,229,255,0.05); border:1px solid rgba(0,229,255,0.2); border-radius:6px; padding:15px; margin-bottom:25px;">
-      <div style="font-size:11px; color:var(--text2); letter-spacing:2px; margin-bottom:8px;">REFERENCIA</div>
+      <div style="font-size:11px; color:var(--text2); letter-spacing:2px; margin-bottom:8px;"><span data-t="waiting_ref">REFERENCIA</span></div>
       <div style="font-family:'Orbitron',sans-serif; font-size:13px; color:var(--accent);" id="waitingTxId">TX-000</div>
       <div style="margin-top:10px; display:flex; justify-content:space-between; font-size:13px;">
         <span style="color:var(--text2);">Enviaste</span>
@@ -875,12 +874,12 @@
 <div class="screen with-ticker" id="screen-pin">
   <div class="card" style="text-align:center; max-width:420px;">
     <div style="font-size:48px; margin-bottom:10px;">🔐</div>
-    <div class="card-title" style="justify-content:center;">Confirmacion de Entrega</div>
+    <div class="card-title" style="justify-content:center;"><span data-t="pin_title">Confirmación de Entrega</span></div>
     <p style="font-size:14px; color:var(--text2); margin-bottom:8px;">
       El recepcionista ingresa el PIN para confirmar entrega del efectivo.
     </p>
     <div style="background:rgba(0,229,255,0.07); border:1px solid rgba(0,229,255,0.25); border-radius:6px; padding:12px; margin-bottom:20px;">
-      <div style="font-size:12px; color:var(--text2); letter-spacing:2px;">MONTO A ENTREGAR</div>
+      <div style="font-size:12px; color:var(--text2); letter-spacing:2px;"><span data-t="pin_amount">MONTO A ENTREGAR</span></div>
       <div style="font-family:Orbitron,sans-serif; font-size:32px; color:var(--green); font-weight:700;" id="pinAmount">Q 0.00</div>
       <div style="font-size:12px; color:var(--text2); margin-top:4px;" id="pinTxId">TX-000</div>
     </div>
@@ -933,7 +932,7 @@
         onclick="preFillSubscription(); goTo('screen-subscribe')">
         ✨ Reclamar 3 meses gratis
       </button>
-      <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="goTo('screen-welcome')">Nueva Transacción</button>
+      <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="goTo('screen-welcome')"><span data-t="success_new">Nueva Transacción</span></button>
     </div>
   </div>
 </div>
@@ -1057,7 +1056,7 @@
 <div class="screen" id="screen-guia" style="padding:0; align-items:stretch; justify-content:flex-start; overflow-y:auto;">
 
   <!-- Hero inmersivo -->
-  <div style="position:relative; background:linear-gradient(180deg,#060d08 0%,#0a1a0d 40%,#0d1a10 70%,#080d06 100%); padding:65px 24px 50px; text-align:center; overflow:hidden; min-height:340px;" id="tikалHero">
+  <div style="position:relative; background:linear-gradient(180deg,#060d08 0%,#0a1a0d 40%,#0d1a10 70%,#080d06 100%); padding:90px 24px 50px; text-align:center; overflow:visible; min-height:340px;" id="tikалHero">
 
     <!-- RUINAS TIKAL SVG de fondo -->
     <div id="tikалBg" style="position:absolute; inset:0; pointer-events:none; overflow:hidden;">
@@ -1192,10 +1191,10 @@
     </div>
 
     <!-- Botón volver -->
-    <button onclick="goTo('screen-gift')" style="position:absolute; top:15px; left:15px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.7); padding:6px 14px; border-radius:20px; font-size:12px; cursor:pointer;">← Volver</button>
+    <button onclick="goTo('screen-gift')" style="position:absolute; top:48px; left:15px; z-index:200; background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.9); padding:6px 14px; border-radius:20px; font-size:12px; cursor:pointer;">← Volver</button>
 
     <!-- SELECTOR DE DESTINOS — esquina superior derecha -->
-    <div id="destinoWrap" style="position:absolute; top:12px; right:12px; z-index:50;">
+    <div id="destinoWrap" style="position:absolute; top:48px; right:12px; z-index:200;">
       <!-- Menú desplegable -->
       <div id="destinoMenu" style="display:none; position:absolute; top:42px; right:0;
         background:var(--dark2); border:1px solid var(--border); border-radius:10px;
@@ -1705,10 +1704,10 @@ const CONFIG = {
   },
   
   // Your admin email
-  ADMIN_EMAIL: 'admin@exchangecrypto.gt',
+  ADMIN_EMAIL: 'etsonalvizures@gmail.com',
   
   // Receptionist email
-  RECEPTIONIST_EMAIL: 'recepcion@hotel.gt',
+  RECEPTIONIST_EMAIL: 'rtetecnology@gmail.com',
   
   // Commission rate
   COMMISSION: 0.025,
@@ -1746,6 +1745,24 @@ const T = {
     amount_paid: 'Enviaste', pending: '⏳ Pendiente', check_email: '📧 Revisa tu correo.',
     step_convert: 'Conversión', step_data: 'Datos', step_docs: 'Fotos',
     step_transfer: 'Pago', step_done: 'Listo',
+    welcome_start: 'INICIAR',
+    welcome_sub: 'Plataforma segura para cambio de criptomonedas a Quetzales guatemaltecos',
+    welcome_badge1: 'SEGURO', welcome_badge2: 'COMISIÓN', welcome_badge3: 'DISPONIBLE',
+    benefit_btn: 'BENEFICIO',
+    waiting_title: 'Solicitud Enviada',
+    waiting_ref: 'REFERENCIA',
+    waiting_sent: 'Enviaste', waiting_receive: 'Recibirás',
+    waiting_info: 'Estamos verificando tu pago. Te notificaremos por correo.',
+    pin_title: 'Confirmación de Entrega',
+    pin_amount: 'MONTO A ENTREGAR',
+    pin_label: 'PIN del recepcionista',
+    pin_btn: 'Confirmar Entrega',
+    success_new: 'Nueva Transacción',
+    success_sent: 'Enviaste', success_gets: 'Recibirás',
+    rating_title: '¿Cómo fue tu experiencia?',
+    rating_comment: 'Comentario (opcional)',
+    rating_skip: 'Omitir',
+    rating_send: 'Enviar ⭐',
   },
   en: {
     selectlang: 'Select your language', back: 'Back',
@@ -1770,6 +1787,7 @@ const T = {
     amount_paid: 'You sent', pending: '⏳ Pending', check_email: '📧 Check your email.',
     step_convert: 'Conversion', step_data: 'Details', step_docs: 'Photos',
     step_transfer: 'Payment', step_done: 'Done',
+    welcome_start: 'START', welcome_sub: 'Secure platform to exchange crypto for Guatemalan Quetzales', welcome_badge1: 'SECURE', welcome_badge2: 'FEE', welcome_badge3: 'AVAILABLE', benefit_btn: 'BENEFIT', waiting_title: 'Request Submitted', waiting_ref: 'REFERENCE', waiting_sent: 'You sent', waiting_receive: "You'll receive", waiting_info: 'We are verifying your payment. We will notify you by email.', pin_title: 'Delivery Confirmation', pin_amount: 'AMOUNT TO DELIVER', pin_label: "Receptionist's PIN", pin_btn: 'Confirm Delivery', success_new: 'New Transaction', success_sent: 'You sent', success_gets: "You'll receive", rating_title: 'How was your experience?', rating_comment: 'Comment (optional)', rating_skip: 'Skip', rating_send: 'Send ⭐',
   },
   fr: {
     selectlang: 'Choisissez votre langue', back: 'Retour',
@@ -1793,6 +1811,7 @@ const T = {
     amount_paid: 'Vous avez envoyé', pending: '⏳ En attente', check_email: '📧 Vérifiez votre email.',
     step_convert: 'Conversion', step_data: 'Données', step_docs: 'Photos',
     step_transfer: 'Paiement', step_done: 'Terminé',
+    welcome_start: 'DÉMARRER', welcome_sub: 'Plateforme sécurisée pour échanger des cryptos en Quetzales', welcome_badge1: 'SÉCURISÉ', welcome_badge2: 'COMMISSION', welcome_badge3: 'DISPONIBLE', benefit_btn: 'AVANTAGE', waiting_title: 'Demande Envoyée', waiting_ref: 'RÉFÉRENCE', waiting_sent: 'Vous avez envoyé', waiting_receive: 'Vous recevrez', waiting_info: 'Nous vérifions votre paiement. Vous serez notifié par email.', pin_title: 'Confirmation de Livraison', pin_amount: 'MONTANT À REMETTRE', pin_label: 'PIN du réceptionniste', pin_btn: 'Confirmer la Livraison', success_new: 'Nouvelle Transaction', success_sent: 'Vous avez envoyé', success_gets: 'Vous recevrez', rating_title: 'Comment était votre expérience?', rating_comment: 'Commentaire (optionnel)', rating_skip: 'Passer', rating_send: 'Envoyer ⭐',
   },
   de: {
     selectlang: 'Sprache wählen', back: 'Zurück',
@@ -1816,6 +1835,7 @@ const T = {
     amount_paid: 'Sie haben gesendet', pending: '⏳ Ausstehend', check_email: '📧 E-Mail prüfen.',
     step_convert: 'Umrechnung', step_data: 'Daten', step_docs: 'Fotos',
     step_transfer: 'Zahlung', step_done: 'Fertig',
+    welcome_start: 'STARTEN', welcome_sub: 'Sichere Plattform zum Tauschen von Krypto in Quetzales', welcome_badge1: 'SICHER', welcome_badge2: 'GEBÜHR', welcome_badge3: 'VERFÜGBAR', benefit_btn: 'VORTEIL', waiting_title: 'Anfrage Gesendet', waiting_ref: 'REFERENZ', waiting_sent: 'Sie sendeten', waiting_receive: 'Sie erhalten', waiting_info: 'Wir überprüfen Ihre Zahlung. Sie werden per E-Mail benachrichtigt.', pin_title: 'Lieferbestätigung', pin_amount: 'ZU LIEFERNDER BETRAG', pin_label: 'PIN des Empfangs', pin_btn: 'Lieferung Bestätigen', success_new: 'Neue Transaktion', success_sent: 'Sie sendeten', success_gets: 'Sie erhalten', rating_title: 'Wie war Ihre Erfahrung?', rating_comment: 'Kommentar (optional)', rating_skip: 'Überspringen', rating_send: 'Senden ⭐',
   },
   pt: {
     selectlang: 'Selecione seu idioma', back: 'Voltar',
@@ -1839,6 +1859,7 @@ const T = {
     amount_paid: 'Você enviou', pending: '⏳ Pendente', check_email: '📧 Verifique seu e-mail.',
     step_convert: 'Conversão', step_data: 'Dados', step_docs: 'Fotos',
     step_transfer: 'Pagamento', step_done: 'Pronto',
+    welcome_start: 'INICIAR', welcome_sub: 'Plataforma segura para trocar criptos por Quetzales guatemaltecos', welcome_badge1: 'SEGURO', welcome_badge2: 'COMISSÃO', welcome_badge3: 'DISPONÍVEL', benefit_btn: 'BENEFÍCIO', waiting_title: 'Solicitação Enviada', waiting_ref: 'REFERÊNCIA', waiting_sent: 'Você enviou', waiting_receive: 'Você receberá', waiting_info: 'Estamos verificando seu pagamento. Você será notificado por email.', pin_title: 'Confirmação de Entrega', pin_amount: 'VALOR A ENTREGAR', pin_label: 'PIN do recepcionista', pin_btn: 'Confirmar Entrega', success_new: 'Nova Transação', success_sent: 'Você enviou', success_gets: 'Você receberá', rating_title: 'Como foi sua experiência?', rating_comment: 'Comentário (opcional)', rating_skip: 'Pular', rating_send: 'Enviar ⭐',
   }
 };
 
@@ -2111,7 +2132,15 @@ function goTo(screenId) {
 
   if (screenId === 'screen-payment') buildPaymentScreen();
   if (screenId === 'screen-admin') loadAdminData();
-  if (screenId === 'screen-welcome') stopPolling();
+  if (screenId === 'screen-welcome') {
+    stopPolling();
+    state.lang = 'es';
+    setLang('es');
+    var flagEl = document.getElementById('langCurrentFlag');
+    var codeEl = document.getElementById('langCurrentCode');
+    if (flagEl) flagEl.textContent = '🇬🇹';
+    if (codeEl) codeEl.textContent = 'ES';
+  }
 
   // Rellenar datos en pantalla de espera
   if (screenId === 'screen-waiting') {
@@ -2128,6 +2157,13 @@ function goTo(screenId) {
     if (guiaScreen) guiaScreen.scrollTop = 0;
     var svgParallax = document.querySelector('#tikалBg svg');
     if (svgParallax) svgParallax.style.transform = 'translateY(0)';
+    // Mover botón idioma a inferior derecha solo en esta pantalla
+    var lfw = document.getElementById('langFloatWrap');
+    if (lfw) { lfw.style.top = 'auto'; lfw.style.bottom = '24px'; lfw.style.right = '20px'; }
+  } else {
+    // En todas las demás pantallas: botón idioma arriba derecha
+    var lfw = document.getElementById('langFloatWrap');
+    if (lfw) { lfw.style.top = '54px'; lfw.style.bottom = 'auto'; lfw.style.right = '12px'; }
   }
 
   // Ocultar botón de beneficio en pantallas donde no aplica
@@ -2156,8 +2192,14 @@ function toggleLangMenu() {
   langMenuOpen = !langMenuOpen;
   var menu = document.getElementById('langMenu');
   var arrow = document.querySelector('#langFloatBtn span:last-child');
-  if (menu) menu.style.display = langMenuOpen ? 'block' : 'none';
-  if (arrow) arrow.textContent = langMenuOpen ? '▼' : '▲';
+  if (menu) {
+    menu.style.display = langMenuOpen ? 'block' : 'none';
+    var lfw = document.getElementById('langFloatWrap');
+    var isBottom = lfw && lfw.style.bottom === '24px';
+    menu.style.top    = isBottom ? 'auto' : '44px';
+    menu.style.bottom = isBottom ? '44px' : 'auto';
+  }
+  if (arrow) arrow.textContent = langMenuOpen ? '▲' : '▼';
 }
 
 function closeLangMenu() {
@@ -2291,6 +2333,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const orig = btn.getAttribute('onclick');
     btn.setAttribute('onclick', `stopTimer(); ${orig}`);
   });
+  // Aplicar idioma guardado (por defecto español)
+  setLang(state.lang || 'es');
 });
 
 // =============================================
@@ -2374,10 +2418,75 @@ function handlePhoto(input, previewId, statusId) {
 }
 
 function uploadPhotos() {
-  if(!state.selfieB64 || !state.passportB64) {
-    showToast('Por favor sube ambas fotos','error'); return;
+  var t = T[state.lang] || T.es;
+  // Fotos OBLIGATORIAS
+  if (!state.selfieB64) {
+    showToast('📸 La selfie del cliente es obligatoria', 'error'); return;
   }
+  if (!state.passportB64) {
+    showToast('🛂 La foto del pasaporte es obligatoria', 'error'); return;
+  }
+  // Subir fotos a Drive en segundo plano y continuar
   goTo('screen-payment');
+  // Subida async — no bloquea el flujo
+  if (CONFIG.APPS_SCRIPT_URL && CONFIG.APPS_SCRIPT_URL.indexOf('TU_') < 0) {
+    sendPhotosToScript();
+  }
+}
+
+function sendPhotosToScript() {
+  if (!state.txId || !state.selfieB64 || !state.passportB64) return;
+  var cbName = 'photoCb_' + Date.now();
+  window[cbName] = function(res) {
+    if (res && res.success) {
+      console.log('✅ Fotos subidas a Drive para TX:', state.txId);
+    } else {
+      console.warn('⚠️ No se pudieron subir fotos:', res);
+    }
+    delete window[cbName];
+    var s = document.getElementById('photosScript');
+    if (s) s.remove();
+  };
+  // Comprimir fotos antes de enviar
+  var selfie   = compressB64(state.selfieB64,   0.65);
+  var passport = compressB64(state.passportB64, 0.65);
+  var payload = {
+    action:      'uploadPhotos',
+    txId:        state.txId,
+    selfieB64:   selfie,
+    passportB64: passport,
+    driveFolder: CONFIG.DRIVE_FOLDER_ID,
+    callback:    cbName
+  };
+  var url = CONFIG.APPS_SCRIPT_URL
+    + '?callback=' + cbName
+    + '&payload=' + encodeURIComponent(JSON.stringify(payload));
+  var script = document.createElement('script');
+  script.id  = 'photosScript';
+  script.src = url;
+  script.onerror = function() {
+    console.warn('⚠️ Error cargando script de fotos');
+    delete window[cbName];
+  };
+  document.head.appendChild(script);
+}
+
+function compressB64(b64, quality) {
+  try {
+    var img = new Image();
+    img.src = b64;
+    var canvas = document.createElement('canvas');
+    // Reducir a max 800px
+    var maxW = 800;
+    var scale = Math.min(1, maxW / (img.naturalWidth || 800));
+    canvas.width  = (img.naturalWidth  || 800) * scale;
+    canvas.height = (img.naturalHeight || 600) * scale;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL('image/jpeg', quality || 0.65);
+  } catch(e) {
+    return b64; // Si falla, usar original
+  }
 }
 
 function skipPhotos() {
