@@ -522,7 +522,7 @@
     </div>
   </div>
   <!-- Versión -->
-  <div style="position:absolute; bottom:15px; right:20px; font-family:'Orbitron',sans-serif; font-size:10px; color:rgba(245,200,66,0.4); letter-spacing:2px;">v3.1.9</div>
+  <div style="position:absolute; bottom:15px; right:20px; font-family:'Orbitron',sans-serif; font-size:10px; color:rgba(245,200,66,0.4); letter-spacing:2px;">v3.2.0</div>
   <div style="text-align:center; max-width:400px; margin-bottom:40px;">
     <p style="color:var(--text2); font-size:16px; line-height:1.6;">
       <span data-t="welcome_sub">Plataforma segura para cambio de criptomonedas a Quetzales guatemaltecos</span>
@@ -2100,7 +2100,7 @@ function calcRate() {
   state.selectedNetwork = document.getElementById('networkSelect').value;
   state.inputAmount = amt;
   
-  const rate = state.cryptoRates[crypto] || BASE_GTQ[crypto] || 1;
+  const rate = (state.cryptoRates && state.cryptoRates[crypto]) ? state.cryptoRates[crypto] : 1;
   const gtq = amt * rate;
   const comm = gtq * CONFIG.COMMISSION;
   const final = gtq - comm;
@@ -2240,7 +2240,7 @@ function setLang(lang) {
     var key = el.getAttribute('data-tp');
     if (t[key] !== undefined) el.placeholder = t[key];
   });
-  if (typeof calcRate === 'function') calcRate();
+  try { if (typeof calcRate === 'function') calcRate(); } catch(e) { console.warn('calcRate no disponible aún:', e.message); }
 }
 
 function selLang(lang) {
@@ -2335,7 +2335,43 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // Aplicar idioma guardado (por defecto español)
   setLang(state.lang || 'es');
+
+  // Test silencioso de conexión al Apps Script
+  testScriptConnection();
 });
+
+function testScriptConnection() {
+  if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.indexOf('TU_') >= 0) return;
+  var cbName = 'testCb_' + Date.now();
+  var timeout = setTimeout(function() {
+    console.warn('⚠️ Apps Script no responde — verifica el despliegue');
+    delete window[cbName];
+    var s = document.getElementById('testScript');
+    if (s) s.remove();
+  }, 8000);
+  window[cbName] = function(res) {
+    clearTimeout(timeout);
+    if (res && !res.error) {
+      console.log('✅ Apps Script conectado correctamente');
+    } else {
+      console.warn('⚠️ Apps Script respondió con error:', res);
+    }
+    delete window[cbName];
+    var s = document.getElementById('testScript');
+    if (s) s.remove();
+  };
+  var url = CONFIG.APPS_SCRIPT_URL + '?callback=' + cbName + '&payload=' + encodeURIComponent(JSON.stringify({action:'getTransactions'}));
+  var script = document.createElement('script');
+  script.id = 'testScript';
+  script.src = url;
+  script.onerror = function() {
+    clearTimeout(timeout);
+    console.error('❌ Apps Script 403 — El script necesita redespliegue con acceso "Cualquier persona"');
+    console.error('   Ir a script.google.com → Implementar → Administrar implementaciones → editar → Nueva versión → acceso: Cualquier persona');
+    delete window[cbName];
+  };
+  document.head.appendChild(script);
+}
 
 // =============================================
 //  CLIENT DATA
@@ -2436,39 +2472,55 @@ function uploadPhotos() {
 
 function sendPhotosToScript() {
   if (!state.txId || !state.selfieB64 || !state.passportB64) return;
-  var cbName = 'photoCb_' + Date.now();
-  window[cbName] = function(res) {
-    if (res && res.success) {
-      console.log('✅ Fotos subidas a Drive para TX:', state.txId);
-    } else {
-      console.warn('⚠️ No se pudieron subir fotos:', res);
+  try {
+    // Comprimir fotos
+    var selfie   = compressB64(state.selfieB64,   0.55);
+    var passport = compressB64(state.passportB64, 0.55);
+
+    var payload = JSON.stringify({
+      action:      'uploadPhotos',
+      txId:        state.txId,
+      selfieB64:   selfie,
+      passportB64: passport,
+      driveFolder: CONFIG.DRIVE_FOLDER_ID
+    });
+
+    // Usar iframe + form para evitar CORS (mismo método que sendToAppsScript)
+    var iframe = document.getElementById('hidden_iframe');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.name = 'hidden_iframe';
+      iframe.id   = 'hidden_iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
     }
-    delete window[cbName];
-    var s = document.getElementById('photosScript');
-    if (s) s.remove();
-  };
-  // Comprimir fotos antes de enviar
-  var selfie   = compressB64(state.selfieB64,   0.65);
-  var passport = compressB64(state.passportB64, 0.65);
-  var payload = {
-    action:      'uploadPhotos',
-    txId:        state.txId,
-    selfieB64:   selfie,
-    passportB64: passport,
-    driveFolder: CONFIG.DRIVE_FOLDER_ID,
-    callback:    cbName
-  };
-  var url = CONFIG.APPS_SCRIPT_URL
-    + '?callback=' + cbName
-    + '&payload=' + encodeURIComponent(JSON.stringify(payload));
-  var script = document.createElement('script');
-  script.id  = 'photosScript';
-  script.src = url;
-  script.onerror = function() {
-    console.warn('⚠️ Error cargando script de fotos');
-    delete window[cbName];
-  };
-  document.head.appendChild(script);
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = CONFIG.APPS_SCRIPT_URL;
+    form.target = 'hidden_iframe';
+    form.style.display = 'none';
+
+    var input = document.createElement('input');
+    input.type  = 'hidden';
+    input.name  = 'payload';
+    input.value = payload;
+    form.appendChild(input);
+    document.body.appendChild(form);
+
+    iframe.onload = function() {
+      console.log('✅ Fotos enviadas a Drive para TX:', state.txId);
+      form.remove();
+    };
+
+    // Timeout fallback
+    setTimeout(function() { form.remove(); }, 15000);
+
+    form.submit();
+    console.log('📤 Enviando fotos para TX:', state.txId);
+  } catch(e) {
+    console.warn('⚠️ Error enviando fotos:', e.message);
+  }
 }
 
 function compressB64(b64, quality) {
