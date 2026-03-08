@@ -167,7 +167,7 @@
 
   /* ========== TICKER ========== */
   .ticker-bar {
-    position:fixed; top:0; left:0; right:0; z-index:1000;
+    position:fixed; top:0; left:0; right:0; z-index:50;
     background:var(--dark2); border-bottom:1px solid var(--border);
     padding:8px 0; overflow:hidden; height:35px;
   }
@@ -470,10 +470,10 @@
 </div>
 
 <!-- LANGUAGE FLOATING BUTTON -->
-<div id="langFloatWrap" style="position:fixed; top:54px; right:12px; z-index:500;">
+<div id="langFloatWrap" style="position:fixed; bottom:24px; right:20px; z-index:500;">
 
   <!-- Menú desplegable -->
-  <div id="langMenu" style="display:none; position:absolute; top:44px; right:0;
+  <div id="langMenu" style="display:none; position:absolute; bottom:52px; right:0;
     background:var(--dark2); border:1px solid var(--border); border-radius:10px;
     overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.6); min-width:130px;">
     <button class="lang-menu-item" onclick="pickLang('es')">🇬🇹 &nbsp;Español</button>
@@ -522,7 +522,7 @@
     </div>
   </div>
   <!-- Versión -->
-  <div style="position:absolute; bottom:15px; right:20px; font-family:'Orbitron',sans-serif; font-size:10px; color:rgba(245,200,66,0.4); letter-spacing:2px;">v3.2.0</div>
+  <div style="position:absolute; bottom:15px; right:20px; font-family:'Orbitron',sans-serif; font-size:10px; color:rgba(245,200,66,0.4); letter-spacing:2px;">v3.1.2</div>
   <div style="text-align:center; max-width:400px; margin-bottom:40px;">
     <p style="color:var(--text2); font-size:16px; line-height:1.6;">
       <span data-t="welcome_sub">Plataforma segura para cambio de criptomonedas a Quetzales guatemaltecos</span>
@@ -738,32 +738,68 @@
       Para completar la transacción necesitamos dos fotos. Las imágenes se comprimen automáticamente y se guardan de forma segura.
     </p>
     
+    <!-- SELFIE -->
     <div class="form-group">
       <label class="form-label" data-t="selfie_label">📸 Selfie del cliente</label>
-      <div class="upload-zone" onclick="document.getElementById('selfieInput').click()">
-        <input type="file" id="selfieInput" accept="image/*" capture="user" onchange="handlePhoto(this,'selfiePreview','selfieStatus')">
-        <div class="upload-icon">🤳</div>
-        <div class="upload-text" data-t="tap_photo">Toca para tomar foto</div>
-        <div id="selfieStatus" style="margin-top:8px; font-size:13px; color:var(--green); display:none;"></div>
-        <img id="selfiePreview" class="upload-preview">
+      <!-- inputs ocultos: uno para cámara frontal, otro para galería -->
+      <input type="file" id="selfieInputCamera"  accept="image/*" capture="user"       style="display:none;" onchange="handlePhoto(this,'selfiePreview','selfieStatus','selfieZone')">
+      <input type="file" id="selfieInputGallery" accept="image/*"                      style="display:none;" onchange="handlePhoto(this,'selfiePreview','selfieStatus','selfieZone')">
+      <div id="selfieZone" class="upload-zone" style="cursor:default;">
+        <div id="selfieIcon" class="upload-icon">🤳</div>
+        <div id="selfieText" class="upload-text" data-t="tap_photo">Toca para tomar foto</div>
+        <!-- botones solo visibles antes de tomar foto -->
+        <div id="selfieBtns" style="display:flex;gap:8px;margin-top:10px;justify-content:center;">
+          <button type="button" onclick="document.getElementById('selfieInputCamera').click()"
+            style="padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer;">
+            📷 Cámara
+          </button>
+          <button type="button" onclick="document.getElementById('selfieInputGallery').click()"
+            style="padding:8px 16px;background:var(--dark2);color:var(--text);border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-size:13px;cursor:pointer;">
+            🖼 Galería
+          </button>
+        </div>
+        <div id="selfieStatus" style="margin-top:8px;font-size:13px;color:var(--green);display:none;"></div>
+        <img id="selfiePreview" style="max-width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin-top:8px;display:none;">
+        <!-- botón retomar, visible después de foto -->
+        <button type="button" id="selfieRetake" onclick="retakePhoto('selfie')"
+          style="display:none;margin-top:8px;padding:6px 14px;background:transparent;color:var(--text2);border:1px solid rgba(255,255,255,0.2);border-radius:6px;font-size:12px;cursor:pointer;">
+          🔄 Retomar
+        </button>
       </div>
     </div>
-    
+
+    <!-- PASAPORTE -->
     <div class="form-group">
       <label class="form-label" data-t="passport_photo">🛂 Foto del pasaporte</label>
-      <div class="upload-zone" onclick="document.getElementById('passportInput').click()">
-        <input type="file" id="passportInput" accept="image/*" capture="environment" onchange="handlePhoto(this,'passportPreview','passportStatus')">
-        <div class="upload-icon">📕</div>
-        <div class="upload-text" data-t="tap_passport">Toca para fotografiar pasaporte</div>
-        <div id="passportStatus" style="margin-top:8px; font-size:13px; color:var(--green); display:none;"></div>
-        <img id="passportPreview" class="upload-preview">
+      <input type="file" id="passportInputCamera"  accept="image/*" capture="environment" style="display:none;" onchange="handlePhoto(this,'passportPreview','passportStatus','passportZone')">
+      <input type="file" id="passportInputGallery" accept="image/*"                       style="display:none;" onchange="handlePhoto(this,'passportPreview','passportStatus','passportZone')">
+      <div id="passportZone" class="upload-zone" style="cursor:default;">
+        <div id="passportIcon" class="upload-icon">📕</div>
+        <div id="passportText" class="upload-text" data-t="tap_passport">Toca para fotografiar pasaporte</div>
+        <div id="passportBtns" style="display:flex;gap:8px;margin-top:10px;justify-content:center;">
+          <button type="button" onclick="document.getElementById('passportInputCamera').click()"
+            style="padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer;">
+            📷 Cámara
+          </button>
+          <button type="button" onclick="document.getElementById('passportInputGallery').click()"
+            style="padding:8px 16px;background:var(--dark2);color:var(--text);border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-size:13px;cursor:pointer;">
+            🖼 Galería
+          </button>
+        </div>
+        <div id="passportStatus" style="margin-top:8px;font-size:13px;color:var(--green);display:none;"></div>
+        <img id="passportPreview" style="max-width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin-top:8px;display:none;">
+        <button type="button" id="passportRetake" onclick="retakePhoto('passport')"
+          style="display:none;margin-top:8px;padding:6px 14px;background:transparent;color:var(--text2);border:1px solid rgba(255,255,255,0.2);border-radius:6px;font-size:12px;cursor:pointer;">
+          🔄 Retomar
+        </button>
       </div>
     </div>
-    
+
     <canvas id="compressCanvas" style="display:none;"></canvas>
 
     <div style="display:flex; gap:10px; margin-top:10px;">
-      <button class="btn-main" style="width:100%;" onclick="uploadPhotos()" data-t="continue">Continuar →</button>
+      <button class="btn-secondary" style="flex:1;" onclick="skipPhotos()">Omitir →</button>
+      <button class="btn-main" style="flex:2;" onclick="uploadPhotos()" data-t="continue">Continuar →</button>
     </div>
   </div>
 </div>
@@ -1056,7 +1092,7 @@
 <div class="screen" id="screen-guia" style="padding:0; align-items:stretch; justify-content:flex-start; overflow-y:auto;">
 
   <!-- Hero inmersivo -->
-  <div style="position:relative; background:linear-gradient(180deg,#060d08 0%,#0a1a0d 40%,#0d1a10 70%,#080d06 100%); padding:90px 24px 50px; text-align:center; overflow:visible; min-height:340px;" id="tikалHero">
+  <div style="position:relative; background:linear-gradient(180deg,#060d08 0%,#0a1a0d 40%,#0d1a10 70%,#080d06 100%); padding:65px 24px 50px; text-align:center; overflow:hidden; min-height:340px;" id="tikалHero">
 
     <!-- RUINAS TIKAL SVG de fondo -->
     <div id="tikалBg" style="position:absolute; inset:0; pointer-events:none; overflow:hidden;">
@@ -1191,20 +1227,26 @@
     </div>
 
     <!-- Botón volver -->
-    <button onclick="goTo('screen-gift')" style="position:absolute; top:48px; left:15px; z-index:200; background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.9); padding:6px 14px; border-radius:20px; font-size:12px; cursor:pointer;">← Volver</button>
+    <button onclick="goTo('screen-gift')" style="position:absolute; top:15px; left:15px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.7); padding:6px 14px; border-radius:20px; font-size:12px; cursor:pointer;">← Volver</button>
 
     <!-- SELECTOR DE DESTINOS — esquina superior derecha -->
-    <div id="destinoWrap" style="position:absolute; top:48px; right:12px; z-index:200;">
+    <div id="destinoWrap" style="position:absolute; top:12px; right:12px; z-index:50;">
       <!-- Menú desplegable -->
       <div id="destinoMenu" style="display:none; position:absolute; top:42px; right:0;
         background:var(--dark2); border:1px solid var(--border); border-radius:10px;
         overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.8); min-width:220px;">
         <div style="font-family:Orbitron,sans-serif; font-size:8px; color:var(--text2); letter-spacing:2px; padding:10px 14px 6px;">DESTINOS</div>
-        <button class="destino-item active" id="dest-tikal"     onclick="pickDestino('tikal')">    🏛️ &nbsp;Tikal, Petén</button>
-        <button class="destino-item"        id="dest-antigua"   onclick="pickDestino('antigua')">  🏙️ &nbsp;Antigua Guatemala</button>
-        <button class="destino-item"        id="dest-semuc"     onclick="pickDestino('semuc')">    💧 &nbsp;Semuc Champey</button>
-        <button class="destino-item"        id="dest-acatenango" onclick="pickDestino('acatenango')">🌋 &nbsp;Volcán Acatenango</button>
-        <button class="destino-item"        id="dest-atitlan"   onclick="pickDestino('atitlan')">  🌊 &nbsp;Lago Atitlán</button>
+        <button class="destino-item active" id="dest-tikal"      onclick="pickDestino('tikal')">      🏛️ &nbsp;Tikal, Petén</button>
+        <button class="destino-item"        id="dest-yaxha"      onclick="pickDestino('yaxha')">      🌊 &nbsp;Yaxhá Sunset</button>
+        <button class="destino-item"        id="dest-craterazul" onclick="pickDestino('craterazul')"> 💧 &nbsp;Cráter Azul</button>
+        <button class="destino-item"        id="dest-riodulce"   onclick="pickDestino('riodulce')">   ⛵ &nbsp;Río Dulce</button>
+        <button class="destino-item"        id="dest-belize"     onclick="pickDestino('belize')">     🇧🇿 &nbsp;Belize / Cayes</button>
+        <button class="destino-item"        id="dest-bacalar"    onclick="pickDestino('bacalar')">    🇲🇽 &nbsp;Bacalar / Chetumal</button>
+        <button class="destino-item"        id="dest-ciudadgt"   onclick="pickDestino('ciudadgt')">   🏙️ &nbsp;Ciudad GT / Antigua</button>
+        <button class="destino-item"        id="dest-semuc"      onclick="pickDestino('semuc')">      💧 &nbsp;Semuc Champey</button>
+        <button class="destino-item"        id="dest-antigua"    onclick="pickDestino('antigua')">    🏰 &nbsp;Antigua Guatemala</button>
+        <button class="destino-item"        id="dest-acatenango" onclick="pickDestino('acatenango')"> 🌋 &nbsp;Volcán Acatenango</button>
+        <button class="destino-item"        id="dest-atitlan"    onclick="pickDestino('atitlan')">    🌊 &nbsp;Lago Atitlán</button>
       </div>
       <!-- Botón principal -->
       <button id="destinoBtn" onclick="toggleDestinoMenu()"
@@ -1704,10 +1746,10 @@ const CONFIG = {
   },
   
   // Your admin email
-  ADMIN_EMAIL: 'etsonalvizures@gmail.com',
+  ADMIN_EMAIL: 'admin@exchangecrypto.gt',
   
   // Receptionist email
-  RECEPTIONIST_EMAIL: 'rtetecnology@gmail.com',
+  RECEPTIONIST_EMAIL: 'recepcion@hotel.gt',
   
   // Commission rate
   COMMISSION: 0.025,
@@ -1716,6 +1758,12 @@ const CONFIG = {
   ADMIN_PASSWORD: 'Admin2024!',
   
   DRIVE_FOLDER_ID: '1K93Noif6KKJZcEsU1rD5uGqMYk3-1gj2',
+  // Tours pricing
+  TOUR_CARGO_TARJETA: 0.05,
+  TOUR_DESC_CRIPTO:   0.06,
+  TOUR_GTQ_RATE:      7.75,
+  TOURS_SHEET_ID:     '18oSN9eseH2zJa_93YG4Al1xR40O0zEs8pNMVnWhKyaQ',
+  TOURS_SCRIPT_URL:   'https://script.google.com/macros/s/AKfycbxIeG5mMWt4r3JxKEWMNdSqeKEWzMC3p3BKd2ADlc_emdpMksQ5oFifiMXxCcw8M4mt/exec',
 };
 
 // =============================================
@@ -1787,7 +1835,7 @@ const T = {
     amount_paid: 'You sent', pending: '⏳ Pending', check_email: '📧 Check your email.',
     step_convert: 'Conversion', step_data: 'Details', step_docs: 'Photos',
     step_transfer: 'Payment', step_done: 'Done',
-    welcome_start: 'START', welcome_sub: 'Secure platform to exchange crypto for Guatemalan Quetzales', welcome_badge1: 'SECURE', welcome_badge2: 'FEE', welcome_badge3: 'AVAILABLE', benefit_btn: 'BENEFIT', waiting_title: 'Request Submitted', waiting_ref: 'REFERENCE', waiting_sent: 'You sent', waiting_receive: "You'll receive", waiting_info: 'We are verifying your payment. We will notify you by email.', pin_title: 'Delivery Confirmation', pin_amount: 'AMOUNT TO DELIVER', pin_label: "Receptionist's PIN", pin_btn: 'Confirm Delivery', success_new: 'New Transaction', success_sent: 'You sent', success_gets: "You'll receive", rating_title: 'How was your experience?', rating_comment: 'Comment (optional)', rating_skip: 'Skip', rating_send: 'Send ⭐',
+    welcome_start: 'START', welcome_sub: 'Secure platform to exchange crypto for Guatemalan Quetzales', welcome_badge1: 'SECURE', welcome_badge2: 'FEE', welcome_badge3: 'AVAILABLE', benefit_btn: 'BENEFIT', waiting_title: 'Request Submitted', waiting_ref: 'REFERENCE', waiting_sent: 'You sent', waiting_receive: 'You will receive', waiting_info: 'We are verifying your payment. We will notify you by email.', pin_title: 'Delivery Confirmation', pin_amount: 'AMOUNT TO DELIVER', pin_label: 'Receptionist PIN', pin_btn: 'Confirm Delivery', success_new: 'New Transaction', success_sent: 'You sent', success_gets: 'You will receive', rating_title: 'How was your experience?', rating_comment: 'Comment (optional)', rating_skip: 'Skip', rating_send: 'Send ⭐',
   },
   fr: {
     selectlang: 'Choisissez votre langue', back: 'Retour',
@@ -2100,7 +2148,7 @@ function calcRate() {
   state.selectedNetwork = document.getElementById('networkSelect').value;
   state.inputAmount = amt;
   
-  const rate = (state.cryptoRates && state.cryptoRates[crypto]) ? state.cryptoRates[crypto] : 1;
+  const rate = state.cryptoRates[crypto] || BASE_GTQ[crypto] || 1;
   const gtq = amt * rate;
   const comm = gtq * CONFIG.COMMISSION;
   const final = gtq - comm;
@@ -2132,15 +2180,7 @@ function goTo(screenId) {
 
   if (screenId === 'screen-payment') buildPaymentScreen();
   if (screenId === 'screen-admin') loadAdminData();
-  if (screenId === 'screen-welcome') {
-    stopPolling();
-    state.lang = 'es';
-    setLang('es');
-    var flagEl = document.getElementById('langCurrentFlag');
-    var codeEl = document.getElementById('langCurrentCode');
-    if (flagEl) flagEl.textContent = '🇬🇹';
-    if (codeEl) codeEl.textContent = 'ES';
-  }
+  if (screenId === 'screen-welcome') stopPolling();
 
   // Rellenar datos en pantalla de espera
   if (screenId === 'screen-waiting') {
@@ -2151,19 +2191,17 @@ function goTo(screenId) {
 
   // Inicializar destino al entrar a screen-guia
   if (screenId === 'screen-guia') {
-    renderTours(DESTINOS[currentDestino].tours);
+    if (!state.tourFormaPago) state.tourFormaPago = 'efectivo';
+    cargarConfigDesdeSheets();
+    setTimeout(function() {
+      setTourPago(state.tourFormaPago);
+      if (currentDestino && DESTINOS[currentDestino]) renderTours(DESTINOS[currentDestino].tours);
+    }, 80);
     updateFondoDestino(currentDestino);
     var guiaScreen = document.getElementById('screen-guia');
     if (guiaScreen) guiaScreen.scrollTop = 0;
     var svgParallax = document.querySelector('#tikалBg svg');
     if (svgParallax) svgParallax.style.transform = 'translateY(0)';
-    // Mover botón idioma a inferior derecha solo en esta pantalla
-    var lfw = document.getElementById('langFloatWrap');
-    if (lfw) { lfw.style.top = 'auto'; lfw.style.bottom = '24px'; lfw.style.right = '20px'; }
-  } else {
-    // En todas las demás pantallas: botón idioma arriba derecha
-    var lfw = document.getElementById('langFloatWrap');
-    if (lfw) { lfw.style.top = '54px'; lfw.style.bottom = 'auto'; lfw.style.right = '12px'; }
   }
 
   // Ocultar botón de beneficio en pantallas donde no aplica
@@ -2192,14 +2230,8 @@ function toggleLangMenu() {
   langMenuOpen = !langMenuOpen;
   var menu = document.getElementById('langMenu');
   var arrow = document.querySelector('#langFloatBtn span:last-child');
-  if (menu) {
-    menu.style.display = langMenuOpen ? 'block' : 'none';
-    var lfw = document.getElementById('langFloatWrap');
-    var isBottom = lfw && lfw.style.bottom === '24px';
-    menu.style.top    = isBottom ? 'auto' : '44px';
-    menu.style.bottom = isBottom ? '44px' : 'auto';
-  }
-  if (arrow) arrow.textContent = langMenuOpen ? '▲' : '▼';
+  if (menu) menu.style.display = langMenuOpen ? 'block' : 'none';
+  if (arrow) arrow.textContent = langMenuOpen ? '▼' : '▲';
 }
 
 function closeLangMenu() {
@@ -2240,7 +2272,7 @@ function setLang(lang) {
     var key = el.getAttribute('data-tp');
     if (t[key] !== undefined) el.placeholder = t[key];
   });
-  try { if (typeof calcRate === 'function') calcRate(); } catch(e) { console.warn('calcRate no disponible aún:', e.message); }
+  if (typeof calcRate === 'function') calcRate();
 }
 
 function selLang(lang) {
@@ -2335,43 +2367,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // Aplicar idioma guardado (por defecto español)
   setLang(state.lang || 'es');
-
-  // Test silencioso de conexión al Apps Script
-  testScriptConnection();
 });
-
-function testScriptConnection() {
-  if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.indexOf('TU_') >= 0) return;
-  var cbName = 'testCb_' + Date.now();
-  var timeout = setTimeout(function() {
-    console.warn('⚠️ Apps Script no responde — verifica el despliegue');
-    delete window[cbName];
-    var s = document.getElementById('testScript');
-    if (s) s.remove();
-  }, 8000);
-  window[cbName] = function(res) {
-    clearTimeout(timeout);
-    if (res && !res.error) {
-      console.log('✅ Apps Script conectado correctamente');
-    } else {
-      console.warn('⚠️ Apps Script respondió con error:', res);
-    }
-    delete window[cbName];
-    var s = document.getElementById('testScript');
-    if (s) s.remove();
-  };
-  var url = CONFIG.APPS_SCRIPT_URL + '?callback=' + cbName + '&payload=' + encodeURIComponent(JSON.stringify({action:'getTransactions'}));
-  var script = document.createElement('script');
-  script.id = 'testScript';
-  script.src = url;
-  script.onerror = function() {
-    clearTimeout(timeout);
-    console.error('❌ Apps Script 403 — El script necesita redespliegue con acceso "Cualquier persona"');
-    console.error('   Ir a script.google.com → Implementar → Administrar implementaciones → editar → Nueva versión → acceso: Cualquier persona');
-    delete window[cbName];
-  };
-  document.head.appendChild(script);
-}
 
 // =============================================
 //  CLIENT DATA
@@ -2414,131 +2410,110 @@ function saveClientData() {
 // =============================================
 //  PHOTO COMPRESSION
 // =============================================
-function handlePhoto(input, previewId, statusId) {
-  const file = input.files[0];
-  if(!file) return;
-  
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = new Image();
+function handlePhoto(input, previewId, statusId, zoneId) {
+  var file = input.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/') && !file.name.match(/\.(heic|heif|jpg|jpeg|png|gif|webp|bmp)$/i)) {
+    showToast('⚠️ Solo se aceptan imágenes', 'error'); return;
+  }
+
+  var isSelfie  = previewId === 'selfiePreview';
+  var status    = document.getElementById(statusId);
+  var icon      = document.getElementById(isSelfie ? 'selfieIcon'   : 'passportIcon');
+  var text      = document.getElementById(isSelfie ? 'selfieText'   : 'passportText');
+  var btns      = document.getElementById(isSelfie ? 'selfieBtns'   : 'passportBtns');
+  var retakeBtn = document.getElementById(isSelfie ? 'selfieRetake' : 'passportRetake');
+
+  if (status) { status.textContent = '⏳ Procesando...'; status.style.display = 'block'; status.style.color = 'var(--gold)'; }
+
+  var reader = new FileReader();
+  reader.onload = function(evt) {
+    var img = new Image();
     img.onload = function() {
-      const canvas = document.getElementById('compressCanvas');
-      const MAX = 800;
-      let w = img.width, h = img.height;
-      if(w > MAX || h > MAX) {
-        if(w > h) { h = h*MAX/w; w = MAX; } 
-        else { w = w*MAX/h; h = MAX; }
+      // Canvas OFFSCREEN — funciona en iOS/iPad
+      var canvas = document.createElement('canvas');
+      var MAX = 1200;
+      var w = img.naturalWidth  || img.width  || 800;
+      var h = img.naturalHeight || img.height || 600;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else       { w = Math.round(w * MAX / h); h = MAX; }
       }
       canvas.width = w; canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, w, h);
-      const b64 = canvas.toDataURL('image/jpeg', 0.6);
-      
-      // Store
-      if(previewId === 'selfiePreview') state.selfieB64 = b64;
-      else state.passportB64 = b64;
-      
-      // Preview
-      const prev = document.getElementById(previewId);
-      prev.src = b64; prev.style.display = 'block';
-      
-      const origKB = Math.round(file.size/1024);
-      const newKB = Math.round(b64.length * 0.75 / 1024);
-      const status = document.getElementById(statusId);
-      status.textContent = `✓ Comprimida: ${origKB}KB → ${newKB}KB`;
-      status.style.display = 'block';
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      var b64 = canvas.toDataURL('image/jpeg', 0.75);
+
+      if (isSelfie) state.selfieB64   = b64;
+      else          state.passportB64 = b64;
+
+      var prev = document.getElementById(previewId);
+      if (prev) { prev.src = b64; prev.style.display = 'block'; }
+
+      // Ocultar ícono, texto y botones de captura; mostrar retomar
+      if (icon)      icon.style.display      = 'none';
+      if (text)      text.style.display      = 'none';
+      if (btns)      btns.style.display      = 'none';
+      if (retakeBtn) retakeBtn.style.display = 'inline-block';
+
+      var origKB = Math.round(file.size / 1024);
+      var newKB  = Math.round(b64.length * 0.75 / 1024);
+      if (status) { status.textContent = '✅ ' + origKB + 'KB → ' + newKB + 'KB · Lista'; status.style.color = 'var(--green)'; }
+
+      var zone = document.getElementById(zoneId);
+      if (zone) { zone.style.borderColor = '#00C853'; zone.style.background = 'rgba(0,200,83,0.06)'; }
     };
-    img.src = e.target.result;
+    img.onerror = function() {
+      if (status) { status.textContent = '❌ Error al cargar imagen. Intenta otra.'; status.style.color = '#f44336'; }
+    };
+    img.src = evt.target.result;
+  };
+  reader.onerror = function() {
+    if (status) { status.textContent = '❌ Error leyendo archivo.'; status.style.color = '#f44336'; status.style.display = 'block'; }
   };
   reader.readAsDataURL(file);
 }
 
+// Permite retomar una foto (resetea el estado de esa foto)
+function retakePhoto(which) {
+  var isSelfie  = which === 'selfie';
+  var previewId = isSelfie ? 'selfiePreview'  : 'passportPreview';
+  var statusId  = isSelfie ? 'selfieStatus'   : 'passportStatus';
+  var zoneId    = isSelfie ? 'selfieZone'     : 'passportZone';
+
+  if (isSelfie) state.selfieB64   = null;
+  else          state.passportB64 = null;
+
+  var prev      = document.getElementById(previewId);
+  var status    = document.getElementById(statusId);
+  var zone      = document.getElementById(zoneId);
+  var icon      = document.getElementById(isSelfie ? 'selfieIcon'   : 'passportIcon');
+  var text      = document.getElementById(isSelfie ? 'selfieText'   : 'passportText');
+  var btns      = document.getElementById(isSelfie ? 'selfieBtns'   : 'passportBtns');
+  var retakeBtn = document.getElementById(isSelfie ? 'selfieRetake' : 'passportRetake');
+
+  if (prev)      { prev.src = ''; prev.style.display = 'none'; }
+  if (status)    { status.textContent = ''; status.style.display = 'none'; }
+  if (zone)      { zone.style.borderColor = ''; zone.style.background = ''; }
+  if (icon)      icon.style.display      = '';
+  if (text)      text.style.display      = '';
+  if (btns)      btns.style.display      = 'flex';
+  if (retakeBtn) retakeBtn.style.display = 'none';
+
+  // Resetear los inputs para que se pueda volver a seleccionar el mismo archivo
+  var camId = isSelfie ? 'selfieInputCamera'  : 'passportInputCamera';
+  var galId = isSelfie ? 'selfieInputGallery' : 'passportInputGallery';
+  var cam   = document.getElementById(camId);
+  var gal   = document.getElementById(galId);
+  if (cam) cam.value = '';
+  if (gal) gal.value = '';
+}
+
 function uploadPhotos() {
-  var t = T[state.lang] || T.es;
-  // Fotos OBLIGATORIAS
-  if (!state.selfieB64) {
-    showToast('📸 La selfie del cliente es obligatoria', 'error'); return;
+  if(!state.selfieB64 || !state.passportB64) {
+    showToast('Por favor sube ambas fotos','error'); return;
   }
-  if (!state.passportB64) {
-    showToast('🛂 La foto del pasaporte es obligatoria', 'error'); return;
-  }
-  // Subir fotos a Drive en segundo plano y continuar
   goTo('screen-payment');
-  // Subida async — no bloquea el flujo
-  if (CONFIG.APPS_SCRIPT_URL && CONFIG.APPS_SCRIPT_URL.indexOf('TU_') < 0) {
-    sendPhotosToScript();
-  }
-}
-
-function sendPhotosToScript() {
-  if (!state.txId || !state.selfieB64 || !state.passportB64) return;
-  try {
-    // Comprimir fotos
-    var selfie   = compressB64(state.selfieB64,   0.55);
-    var passport = compressB64(state.passportB64, 0.55);
-
-    var payload = JSON.stringify({
-      action:      'uploadPhotos',
-      txId:        state.txId,
-      selfieB64:   selfie,
-      passportB64: passport,
-      driveFolder: CONFIG.DRIVE_FOLDER_ID
-    });
-
-    // Usar iframe + form para evitar CORS (mismo método que sendToAppsScript)
-    var iframe = document.getElementById('hidden_iframe');
-    if (!iframe) {
-      iframe = document.createElement('iframe');
-      iframe.name = 'hidden_iframe';
-      iframe.id   = 'hidden_iframe';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-    }
-
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = CONFIG.APPS_SCRIPT_URL;
-    form.target = 'hidden_iframe';
-    form.style.display = 'none';
-
-    var input = document.createElement('input');
-    input.type  = 'hidden';
-    input.name  = 'payload';
-    input.value = payload;
-    form.appendChild(input);
-    document.body.appendChild(form);
-
-    iframe.onload = function() {
-      console.log('✅ Fotos enviadas a Drive para TX:', state.txId);
-      form.remove();
-    };
-
-    // Timeout fallback
-    setTimeout(function() { form.remove(); }, 15000);
-
-    form.submit();
-    console.log('📤 Enviando fotos para TX:', state.txId);
-  } catch(e) {
-    console.warn('⚠️ Error enviando fotos:', e.message);
-  }
-}
-
-function compressB64(b64, quality) {
-  try {
-    var img = new Image();
-    img.src = b64;
-    var canvas = document.createElement('canvas');
-    // Reducir a max 800px
-    var maxW = 800;
-    var scale = Math.min(1, maxW / (img.naturalWidth || 800));
-    canvas.width  = (img.naturalWidth  || 800) * scale;
-    canvas.height = (img.naturalHeight || 600) * scale;
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    return canvas.toDataURL('image/jpeg', quality || 0.65);
-  } catch(e) {
-    return b64; // Si falla, usar original
-  }
 }
 
 function skipPhotos() {
@@ -2612,54 +2587,100 @@ async function confirmPayment() {
 
 // Envía datos al Apps Script usando fetch no-cors + formulario oculto
 function sendToAppsScript(data) {
-  // Quitar fotos del payload (demasiado grandes para GET)
-  const payload = Object.assign({}, data);
+  // Separar fotos — se envían por separado con fetch no-cors (sin límite de tamaño)
+  var payload = Object.assign({}, data);
+  var selfie   = payload.selfieB64;
+  var passport = payload.passportB64;
   delete payload.selfieB64;
   delete payload.passportB64;
-  payload.hasPhotos = !!(data.selfieB64 || data.passportB64);
+  payload.hasPhotos = !!(selfie || passport);
 
-  return new Promise((resolve) => {
-    // Crear formulario oculto que hace POST directo
-    const form = document.createElement('form');
+  return new Promise(function(resolve) {
+    // POST via iframe oculto para la TX (funciona con CORS)
+    var iframe = document.getElementById('hidden_iframe');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.name = 'hidden_iframe';
+      iframe.id   = 'hidden_iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+
+    var form = document.createElement('form');
     form.method = 'POST';
     form.action = CONFIG.APPS_SCRIPT_URL;
     form.target = 'hidden_iframe';
     form.style.display = 'none';
 
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'payload';
-    input.value = JSON.stringify(payload);
-    form.appendChild(input);
-
-    // iframe oculto para recibir la respuesta sin redirigir
-    let iframe = document.getElementById('hidden_iframe');
-    if (!iframe) {
-      iframe = document.createElement('iframe');
-      iframe.name = 'hidden_iframe';
-      iframe.id = 'hidden_iframe';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-    }
-
+    var inp = document.createElement('input');
+    inp.type  = 'hidden';
+    inp.name  = 'payload';
+    inp.value = JSON.stringify(payload);
+    form.appendChild(inp);
     document.body.appendChild(form);
 
-    // Esperar respuesta del iframe
-    const timer = setTimeout(() => {
-      form.remove();
-      // Asumir éxito si no hubo error en 10 segundos
+    function afterTx() {
+      // Subir fotos después de registrar la TX
+      if (selfie || passport) {
+        setTimeout(function() {
+          sendPhotosToScript(data.txId, selfie, passport);
+        }, 1500);
+      }
       resolve({ success: true });
+    }
+
+    var timer = setTimeout(function() {
+      form.remove();
+      afterTx();
     }, 10000);
 
-    iframe.onload = () => {
+    iframe.onload = function() {
       clearTimeout(timer);
       form.remove();
-      resolve({ success: true });
+      afterTx();
     };
 
     form.submit();
   });
 }
+
+// Sube fotos a Drive via fetch no-cors — sin límite de tamaño, funciona en iOS Safari
+function sendPhotosToScript(txId, selfieB64, passportB64) {
+  if (!txId || (!selfieB64 && !passportB64)) return;
+  console.log('📤 Subiendo fotos a Drive, TX:', txId);
+
+  var body = JSON.stringify({
+    action:      'uploadPhotos',
+    txId:        txId,
+    selfieB64:   selfieB64   || '',
+    passportB64: passportB64 || '',
+    driveFolder: CONFIG.DRIVE_FOLDER_ID
+  });
+
+  fetch(CONFIG.APPS_SCRIPT_URL, {
+    method:  'POST',
+    mode:    'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body:    body
+  })
+  .then(function() { console.log('✅ Fotos enviadas, TX:', txId); })
+  .catch(function(err) {
+    console.warn('⚠️ fetch falló, usando iframe fallback:', err.message);
+    var name = 'pif_' + Date.now();
+    var ifr = document.createElement('iframe');
+    ifr.name = name; ifr.style.display = 'none';
+    document.body.appendChild(ifr);
+    var frm = document.createElement('form');
+    frm.method = 'POST'; frm.action = CONFIG.APPS_SCRIPT_URL;
+    frm.target = name; frm.style.display = 'none';
+    var i = document.createElement('input');
+    i.type = 'hidden'; i.name = 'payload'; i.value = body;
+    frm.appendChild(i); document.body.appendChild(frm);
+    frm.submit();
+    setTimeout(function() { try { frm.remove(); ifr.remove(); } catch(e){} }, 20000);
+  });
+}
+
 
 function saveLocally(data) {
   const existing = JSON.parse(localStorage.getItem('pendingTx') || '[]');
@@ -3081,25 +3102,6 @@ function loadUsersPanel() {
   });
 }
 
-function showUserSection(tipo) {
-  currentUserType = tipo;
-  const rol = ROLES[tipo] || { label: tipo, icon: '👤' };
-  document.getElementById('user-section').style.display = 'block';
-  // Ocultar todas las cards
-  document.querySelectorAll('.role-card').forEach(c => c.style.display = 'none');
-  document.querySelectorAll('[id^="card-"]').forEach(c => {
-    if (c.classList.contains('role-card')) c.style.display = 'none';
-  });
-  document.getElementById('userSectionTitle').textContent = rol.icon + ' ' + rol.label;
-  renderUsersTable();
-}
-
-function hideUserSection() {
-  document.getElementById('user-section').style.display = 'none';
-  document.querySelectorAll('.role-card').forEach(c => c.style.display = '');
-  loadUsersPanel();
-}
-
 function renderUsersTable() {
   const users = getUsers().filter(u => u.tipo === currentUserType);
   const tbody = document.getElementById('usersTableBody');
@@ -3130,18 +3132,6 @@ function turnoLabel(t) {
   return { 'mañana':'🌅 Mañana', 'tarde':'🌤 Tarde', 'noche':'🌙 Noche', 'completo':'📅 Completo' }[t] || t;
 }
 
-function showAddUserModal() {
-  const rol = ROLES[currentUserType] || { label: currentUserType, icon: '👤' };
-  document.getElementById('modalTitle').textContent = '+ Agregar ' + rol.label;
-  document.getElementById('uName').value = '';
-  document.getElementById('uEmail').value = '';
-  document.getElementById('uPhone').value = '';
-  document.getElementById('uTurno').value = 'mañana';
-  document.getElementById('uStatus').value = 'activo';
-  document.getElementById('userModal').dataset.editId = '';
-  document.getElementById('userModal').style.display = 'flex';
-}
-
 function editUser(id) {
   const users = getUsers();
   const u = users.find(u => u.id === id);
@@ -3155,10 +3145,6 @@ function editUser(id) {
   document.getElementById('uStatus').value = u.status;
   document.getElementById('userModal').dataset.editId = id;
   document.getElementById('userModal').style.display = 'flex';
-}
-
-function closeUserModal() {
-  document.getElementById('userModal').style.display = 'none';
 }
 
 function saveUser() {
@@ -3218,45 +3204,6 @@ function deleteUser(id) {
 //  SUSCRIPCIÓN / BENEFICIOS
 // =============================================
 let selectedBenefit = '';
-
-function selectBenefit(tipo) {
-  selectedBenefit = tipo;
-
-  // Reset todos los botones
-  ['guia','descuentos','newsletter'].forEach(t => {
-    const btn   = document.getElementById('btn-' + t);
-    const check = document.getElementById('check-' + t);
-    if (btn)   btn.classList.remove('selected');
-    if (check) check.textContent = '○';
-  });
-
-  // Activar el seleccionado
-  const selBtn   = document.getElementById('btn-' + tipo);
-  const selCheck = document.getElementById('check-' + tipo);
-  if (selBtn)   selBtn.classList.add('selected');
-  if (selCheck) selCheck.textContent = '✔';
-
-  // Scroll suave hacia los inputs
-  setTimeout(() => {
-    const input = document.getElementById('subName');
-    if (input) {
-      input.focus();
-      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Resaltar campos brevemente
-      ['subName','subEmail','subCountry'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.style.borderColor = 'var(--gold)';
-          el.style.boxShadow = '0 0 10px rgba(245,200,66,0.3)';
-          setTimeout(() => {
-            el.style.borderColor = '';
-            el.style.boxShadow = '';
-          }, 2000);
-        }
-      });
-    }
-  }, 150);
-}
 
 // =============================================
 //  QUETZAL NFT — KAAN EL GUÍA
@@ -4459,59 +4406,108 @@ var destinoMenuOpen = false;
 
 var DESTINOS = {
   tikal: {
-    emoji: '🏛️', name: 'TIKAL',
-    titulo: 'TOUR A TIKAL',
-    subtitulo: 'PETÉN · GUATEMALA · 2026',
-    kaanMsg: '"Bienvenido a Petén. Soy Kaan, tu guía. Juntos vamos a vivir algo que no olvidarás jamás."',
-    tours: [
-      { id:'amanecer',   emoji:'🌅', nombre:'AMANECER',   hora:'Salida 3:30 AM · Permiso especial', precio:'Q 850', color:'var(--gold)',   tags:['🔑 Acceso antes de abrir','🦜 Sonido de la selva','📸 Luz perfecta','★ MÁS POPULAR'] },
-      { id:'manana',     emoji:'☀️', nombre:'MAÑANA',     hora:'Salida 6:00 AM · Tour completo',    precio:'Q 600', color:'var(--accent)', tags:['🏛️ Templos principales','🎙️ Guía certificado','🍱 Almuerzo incluido'] },
-      { id:'atardecer',  emoji:'🌇', nombre:'ATARDECER',  hora:'Salida 1:00 PM · Magia dorada',     precio:'Q 680', color:'#FF6E40',       tags:['🌄 Colores únicos','🦇 Vuelo de murciélagos','🎆 Vista panorámica'] },
+    emoji:'🏛️', name:'TIKAL', color:'var(--gold)',
+    titulo:'TOUR A TIKAL', subtitulo:'PETÉN · GUATEMALA · 2026',
+    kaanMsg:'"Bienvenido a Petén. Soy Kaan, tu guía. Juntos vamos a vivir algo que no olvidarás jamás."',
+    tours:[
+      { id:'amanecer',  emoji:'🌅', nombre:'TIKAL AMANECER',  hora:'Salida 3:00 AM · Permiso especial', color:'var(--gold)',   precioUSD:248, precioLiq:150, conGuia:true,  tags:['🔑 Acceso antes de abrir','🦜 Selva al amanecer','📸 Luz perfecta','★ MÁS POPULAR'] },
+      { id:'manana',    emoji:'☀️', nombre:'TIKAL DÍA',       hora:'04:30 · 06:00 · 08:00 · 10:00 AM', color:'var(--accent)', precioUSD:182, precioLiq:100, conGuia:true, precioUSD_sin:142, precioLiq_sin:70, tags:['🎙️ Con guía $182 / 🚶 Sin guía $142','🐒 Monos aulladores','🌿 Selva viva'] },
+      { id:'atardecer', emoji:'🌇', nombre:'TIKAL ATARDECER', hora:'Salida 12:00 PM · Permiso especial', color:'#FF7043',     precioUSD:222, precioLiq:130, conGuia:true,  tags:['🦇 Murciélagos al atardecer','🌅 Cielo épico','★ ÉPICA'] },
     ]
   },
-  antigua: {
-    emoji: '🏙️', name: 'ANTIGUA',
-    titulo: 'TOUR A ANTIGUA',
-    subtitulo: 'SACATEPÉQUEZ · GUATEMALA · 2026',
-    kaanMsg: '"Antigua es un museo a cielo abierto. Cada calle, cada ruina, cada adoquín tiene 500 años de historia esperándote."',
-    tours: [
-      { id:'city',    emoji:'🚶', nombre:'CITY WALK',    hora:'Salida 7:00 AM · Caminata histórica', precio:'Q 450', color:'var(--gold)',   tags:['⛪ Catedral y ruinas','☕ Café de altura','🎨 Arte colonial'] },
-      { id:'mercado', emoji:'🛍️', nombre:'MERCADO',      hora:'Salida 9:00 AM · Artesanías y sabores', precio:'Q 350', color:'var(--accent)', tags:['🧵 Tejidos típicos','🌮 Gastronomía local','🪴 Mercado de flores'] },
-      { id:'cerro',   emoji:'⛰️', nombre:'CERRO DE LA CRUZ', hora:'Salida 6:00 AM · Panorámica',   precio:'Q 380', color:'#FF6E40',       tags:['🌄 Vista completa','📸 Foto icónica','🌋 Volcán de fondo'] },
+  yaxha: {
+    emoji:'🌊', name:'YAXHÁ', color:'#00BCD4',
+    titulo:'YAXHÁ SUNSET TOUR', subtitulo:'PETÉN · LAGO YAXHÁ · GUATEMALA',
+    kaanMsg:'"Yaxhá al atardecer. El sol sobre el lago, las ruinas en silencio. Solo tú y la eternidad."',
+    tours:[
+      { id:'sunset', emoji:'🌅', nombre:'YAXHÁ SUNSET TOUR', hora:'Salida 12:00 PM', color:'#00BCD4', precioUSD:215, precioLiq:125, tags:['🌅 Atardecer sobre el lago','🏛️ Ruinas mayas','🦜 Fauna silvestre'] },
+    ]
+  },
+  craterazul: {
+    emoji:'💧', name:'CRÁTER AZUL', color:'#0288D1',
+    titulo:'CRÁTER AZUL', subtitulo:'PETÉN · GUATEMALA',
+    kaanMsg:'"El Cráter Azul — aguas cristalinas turquesa en medio de la selva. Un paraíso escondido."',
+    tours:[
+      { id:'sin_almuerzo', emoji:'🏊', nombre:'CRÁTER AZUL',               hora:'Salida 8:00 AM · Sin almuerzo', color:'#0288D1', precioUSD:406, precioLiq:270, tags:['💧 Aguas turquesa','🌿 Sendero selva','🏊 Nado en cráter'] },
+      { id:'con_almuerzo', emoji:'🍽️', nombre:'CRÁTER AZUL + ALMUERZO',    hora:'Salida 8:00 AM · Con almuerzo', color:'#0288D1', precioUSD:472, precioLiq:320, tags:['💧 Aguas turquesa','🍽️ Almuerzo incluido','★ RECOMENDADO'] },
+    ]
+  },
+  riodulce: {
+    emoji:'⛵', name:'RÍO DULCE', color:'#26A69A',
+    titulo:'RÍO DULCE', subtitulo:'PETÉN · IZABAL · GUATEMALA',
+    kaanMsg:'"Río Dulce — mangles, castillos coloniales y el Caribe a tu alcance desde Flores."',
+    tours:[
+      { id:'riodulce',    emoji:'⛵', nombre:'RÍO DULCE',             hora:'Salida 6:00 AM',  color:'#26A69A', precioUSD:215, precioLiq:125, tags:['⛵ Río y manglares','🏰 Castillo San Felipe','🌊 Lago Izabal'] },
+      { id:'riodulce_gt', emoji:'🚌', nombre:'RÍO DULCE → CIUDAD GT', hora:'Salida 11:00 AM', color:'#26A69A', precioUSD:248, precioLiq:150, tags:['🚌 Transfer incluido','🌊 Río Dulce','🏙️ Ciudad Guatemala'] },
+    ]
+  },
+  belize: {
+    emoji:'🇧🇿', name:'BELIZE', color:'#1565C0',
+    titulo:'TOURS A BELIZE', subtitulo:'BELIZE · CARIBE · CENTROAMÉRICA',
+    kaanMsg:'"Belize — el Caribe más cercano. Cayes, arrecifes de coral y selva virgen."',
+    tours:[
+      { id:'belize_city', emoji:'🏙️', nombre:'BELIZE CITY / SAN IGNACIO', hora:'Salida 6:00 AM', color:'#1565C0', precioUSD:222, precioLiq:130, tags:['🇧🇿 Belize','🏙️ Ciudad costera','🌿 Jungla San Ignacio'] },
+      { id:'caye_ida',    emoji:'🏝️', nombre:'CAYE CAULKER (UNA VÍA)',    hora:'Salida 6:00 AM', color:'#0097A7', precioUSD:393, precioLiq:260, tags:['🏝️ Isla caribeña','🐠 Arrecife coral','🌊 Go Slow'] },
+      { id:'caye_rt',     emoji:'🔄', nombre:'CAYE CAULKER (IDA Y VUELTA)',hora:'Salida 6:00 AM', color:'#0097A7', precioUSD:486, precioLiq:330, tags:['🔄 Ida y vuelta','🏝️ Caye Caulker','🐠 Snorkel'] },
+      { id:'san_pedro',   emoji:'🌴', nombre:'SAN PEDRO BELIZE',           hora:'Salida 6:00 AM', color:'#0288D1', precioUSD:446, precioLiq:300, tags:['🌴 San Pedro Ambergris','🐠 Barrera coralina'] },
+      { id:'san_pedro_rt',emoji:'🔄', nombre:'SAN PEDRO (IDA Y VUELTA)',   hora:'Salida 6:00 AM', color:'#0288D1', precioUSD:578, precioLiq:400, tags:['🔄 Ida y vuelta','🌴 San Pedro','★ ÉPICA'] },
+    ]
+  },
+  bacalar: {
+    emoji:'🇲🇽', name:'BACALAR/CHETUMAL', color:'#7B1FA2',
+    titulo:'BACALAR / CHETUMAL', subtitulo:'QUINTANA ROO · MÉXICO',
+    kaanMsg:'"El Lago de los 7 Colores. Bacalar — el Caribe mexicano desde Guatemala."',
+    tours:[
+      { id:'bacalar', emoji:'🌈', nombre:'BACALAR / CHETUMAL', hora:'Salida 6:00 AM', color:'#7B1FA2', precioUSD:578, precioLiq:400, tags:['🌈 Lago 7 Colores','🇲🇽 México','★ ÉPICA'] },
+    ]
+  },
+  ciudadgt: {
+    emoji:'🏙️', name:'CIUDAD GT / ANTIGUA', color:'#455A64',
+    titulo:'CIUDAD DE GUATEMALA & ANTIGUA', subtitulo:'GUATEMALA CITY · ANTIGUA',
+    kaanMsg:'"La capital y Antigua Guatemala — cultura, historia colonial y gastronomía."',
+    tours:[
+      { id:'ciudadgt_am', emoji:'🌅', nombre:'CIUDAD GT (AM)', hora:'Salida 6:00 AM',  color:'#455A64', precioUSD:314, precioLiq:200, tags:['🏙️ Ciudad Guatemala','🌅 Tour matutino'] },
+      { id:'ciudadgt_pm', emoji:'🌆', nombre:'CIUDAD GT (PM)', hora:'Salida 21:00 PM', color:'#455A64', precioUSD:380, precioLiq:250, tags:['🌆 Tour nocturno','🏙️ Ciudad Guatemala'] },
+      { id:'antigua_am',  emoji:'⛪', nombre:'ANTIGUA (AM)',   hora:'Salida 6:00 AM',  color:'#795548', precioUSD:380, precioLiq:250, tags:['⛪ Antigua colonial','🏛️ Patrimonio UNESCO'] },
+      { id:'antigua_pm',  emoji:'🌆', nombre:'ANTIGUA (PM)',   hora:'Salida 21:00 PM', color:'#795548', precioUSD:479, precioLiq:325, tags:['🌆 Nocturno','⛪ Antigua','🍽️ Cena'] },
     ]
   },
   semuc: {
-    emoji: '💧', name: 'SEMUC',
-    titulo: 'TOUR A SEMUC CHAMPEY',
-    subtitulo: 'ALTA VERAPAZ · GUATEMALA · 2026',
-    kaanMsg: '"Las piscinas naturales de Semuc son uno de los secretos mejor guardados de Guatemala. El agua turquesa te va a quitar el aliento."',
-    tours: [
-      { id:'piscinas', emoji:'🏊', nombre:'PISCINAS',    hora:'Salida 8:00 AM · Nado en piscinas', precio:'Q 520', color:'var(--gold)',   tags:['💎 Agua turquesa','🦜 Selva virgen','🤿 Snorkel natural'] },
-      { id:'tubing',   emoji:'🛶', nombre:'TUBING',      hora:'Salida 9:00 AM · Río Cahabón',      precio:'Q 480', color:'var(--accent)', tags:['🌊 Adrenalina','🏞️ Paisajes únicos','⚡ Para aventureros'] },
-      { id:'cueva',    emoji:'🕯️', nombre:'CUEVA KAN BA', hora:'Salida 10:00 AM · Exploración',    precio:'Q 560', color:'#FF6E40',       tags:['🦇 Cavernas activas','🕯️ Solo con vela','😱 Experiencia extrema'] },
+    emoji:'💧', name:'SEMUC CHAMPEY', color:'#00897B',
+    titulo:'SEMUC CHAMPEY', subtitulo:'ALTA VERAPAZ · GUATEMALA',
+    kaanMsg:'"Semuc Champey — pozas de agua turquesa sobre el río Cahabón. La joya oculta de Guatemala."',
+    tours:[
+      { id:'semuc', emoji:'💧', nombre:'SEMUC CHAMPEY', hora:'Salida 8:00 AM', color:'#00897B', precioUSD:248, precioLiq:150, tags:['💧 Pozas turquesa','🌿 Alta Verapaz','★ IMPERDIBLE'] },
+    ]
+  },
+  antigua: {
+    emoji:'🏰', name:'ANTIGUA', color:'#795548',
+    titulo:'ANTIGUA GUATEMALA', subtitulo:'SACATEPÉQUEZ · PATRIMONIO UNESCO',
+    kaanMsg:'"Antigua — la ciudad colonial más bella de América. Calles empedradas y volcanes."',
+    tours:[
+      { id:'antigua_am', emoji:'⛪', nombre:'ANTIGUA AM', hora:'Salida 6:00 AM',  color:'#795548', precioUSD:380, precioLiq:250, tags:['⛪ Colonial','🌅 AM'] },
+      { id:'antigua_pm', emoji:'🌆', nombre:'ANTIGUA PM', hora:'Salida 21:00 PM', color:'#795548', precioUSD:479, precioLiq:325, tags:['🌆 Nocturno','⛪ Antigua'] },
     ]
   },
   acatenango: {
-    emoji: '🌋', name: 'ACATENANGO',
-    titulo: 'VOLCÁN ACATENANGO',
-    subtitulo: 'CHIMALTENANGO · GUATEMALA · 2026',
-    kaanMsg: '"Subir el Acatenango y ver al Fuego entrar en erupción a metros de ti... eso no se olvida. Nunca."',
-    tours: [
-      { id:'trekking', emoji:'🥾', nombre:'TREKKING 1 DÍA', hora:'Salida 5:00 AM · Cumbre y regreso', precio:'Q 750', color:'var(--gold)',   tags:['⛰️ 3,976 msnm','🌋 Vista del Fuego','🦅 Sobre las nubes'] },
-      { id:'camping',  emoji:'⛺', nombre:'CAMPING 2 DÍAS', hora:'Salida 6:00 AM · Noche en volcán',  precio:'Q 1200', color:'#FF6E40',      tags:['🌙 Noche en cima','🌅 Amanecer volcánico','🔥 Fogata incluida','★ EXPERIENCIA ÉPICA'] },
+    emoji:'🌋', name:'ACATENANGO', color:'#E64A19',
+    titulo:'VOLCÁN ACATENANGO', subtitulo:'CHIMALTENANGO · GUATEMALA',
+    kaanMsg:'"Acatenango — observar al Volcán de Fuego desde la cima. Una experiencia que te cambia la vida."',
+    tours:[
+      { id:'trekking1', emoji:'🥾', nombre:'TREKKING 1 DÍA', hora:'Salida 5:00 AM', color:'#E64A19', precio:'Q 650', tags:['🥾 Senderismo','🌋 Vista Fuego'] },
+      { id:'camping2',  emoji:'⛺', nombre:'CAMPING 2 DÍAS', hora:'Salida 8:00 AM', color:'#FF5722', precio:'Q 950', tags:['⛺ Camping','🌋 Amanecer volcán','★ ÉPICA'] },
     ]
   },
   atitlan: {
-    emoji: '🌊', name: 'ATITLÁN',
-    titulo: 'LAGO ATITLÁN',
-    subtitulo: 'SOLOLÁ · GUATEMALA · 2026',
-    kaanMsg: '"Atitlán es el lago más bello del mundo, rodeado de volcanes y pueblos indígenas que guardan una cultura milenaria viva."',
-    tours: [
-      { id:'pueblos', emoji:'⛵', nombre:'PUEBLOS DEL LAGO', hora:'Salida 8:00 AM · Lancha tour', precio:'Q 580', color:'var(--gold)',   tags:['🏘️ San Juan La Laguna','🎨 Muralismo','🧵 Tejidos mayas'] },
-      { id:'kayak',   emoji:'🚣', nombre:'KAYAK ATITLÁN',   hora:'Salida 7:00 AM · Remo libre',   precio:'Q 420', color:'var(--accent)', tags:['🌊 Aguas cristalinas','🌋 3 volcanes de fondo','🦆 Fauna local'] },
-      { id:'indian',  emoji:'🌄', nombre:'INDIAN NOSE',     hora:'Salida 4:30 AM · Amanecer',     precio:'Q 490', color:'#FF6E40',       tags:['👁️ Vista legendaria','🌅 Amanecer mágico','📸 Foto icónica de GT'] },
+    emoji:'🌊', name:'ATITLÁN', color:'#1565C0',
+    titulo:'LAGO ATITLÁN', subtitulo:'SOLOLÁ · GUATEMALA',
+    kaanMsg:'"Atitlán — el lago más bello del mundo, rodeado de volcanes y pueblos mayas."',
+    tours:[
+      { id:'pueblos', emoji:'🛶', nombre:'PUEBLOS DEL LAGO', hora:'Salida 7:00 AM', color:'#1565C0', precio:'Q 550', tags:['🛶 Lancha','🏘️ Pueblos mayas'] },
+      { id:'kayak',   emoji:'🚣', nombre:'KAYAK ATITLÁN',   hora:'Salida 8:00 AM', color:'#0097A7', precio:'Q 400', tags:['🚣 Kayak','🌊 Lago'] },
+      { id:'indian',  emoji:'🏔️', nombre:'INDIAN NOSE',     hora:'Salida 4:00 AM', color:'#1565C0', precio:'Q 350', tags:['🏔️ Mirador','🌅 Amanecer'] },
     ]
-  }
+  },
 };
 
 var currentDestino = 'tikal';
@@ -4570,25 +4566,314 @@ function renderTours(tours) {
   var container = document.getElementById('toursContainer');
   if (!container) return;
   container.innerHTML = '';
+  var fp = state.tourFormaPago || 'efectivo';
   tours.forEach(function(t) {
     var tags = t.tags.map(function(tag) {
-      var extra = tag.indexOf('MÁS POPULAR') >= 0 || tag.indexOf('ÉPICA') >= 0
-        ? 'style="background:rgba(245,200,66,0.2); color:var(--gold);"' : '';
+      var extra = (tag.indexOf('MÁS POPULAR')>=0||tag.indexOf('ÉPICA')>=0||tag.indexOf('IMPERDIBLE')>=0||tag.indexOf('RECOMENDADO')>=0)
+        ? 'style="background:rgba(245,200,66,0.2);color:var(--gold);"' : '';
       return '<span class="tour-tag" ' + extra + '>' + tag + '</span>';
     }).join('');
-    container.innerHTML += '<div class="tour-card" onclick="selectTour(\'' + t.id + '\')" id="tour-' + t.id + '">'
-      + '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">'
-      + '<div style="display:flex; align-items:center; gap:10px;">'
-      + '<span style="font-size:28px;">' + t.emoji + '</span>'
-      + '<div><div style="font-family:Orbitron,sans-serif; font-size:13px; color:' + t.color + ';">' + t.nombre + '</div>'
-      + '<div style="font-size:11px; color:var(--text2);">' + t.hora + '</div></div>'
+
+    var precioHTML;
+    if (t.precioUSD) {
+      // Tour con precio en USD: mostrar precio dinámico según forma de pago y guía
+      var usaGuia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+      var base    = (t.conGuia && !usaGuia && t.precioUSD_sin) ? t.precioUSD_sin : t.precioUSD;
+      var p       = calcTourPrice(base, fp);
+      precioHTML  = '<div style="font-family:Orbitron,sans-serif;font-size:15px;color:'+t.color+';">$'+p.usd.toFixed(0)+' USD</div>'
+                  + '<div style="font-size:11px;color:var(--text2);">Q'+p.gtq.toFixed(0)+' GTQ · p/persona</div>';
+    } else {
+      // Tour con precio fijo en GTQ
+      precioHTML  = '<div style="font-family:Orbitron,sans-serif;font-size:15px;color:'+t.color+';">'+(t.precio||'')+'</div>'
+                  + '<div style="font-size:10px;color:var(--text2);">por persona</div>';
+    }
+
+    // Selector de guía inline (solo Tikal Día)
+    var guiaSelector = '';
+    if (t.conGuia && t.precioUSD_sin) {
+      var usaGuia = !state.guiaTour || state.guiaTour[t.id] !== false;
+      guiaSelector = '<div style="display:flex;gap:6px;margin-top:8px;" onclick="event.stopPropagation()">'
+        + '<button style="flex:1;padding:4px 8px;border-radius:6px;border:1px solid '+(usaGuia?'var(--accent)':'rgba(255,255,255,0.2)')+';background:'+(usaGuia?'rgba(0,188,212,0.15)':'transparent')+';color:var(--text);font-size:12px;cursor:pointer;" onclick="setGuiaTour(this.dataset.id,true)" data-id=\''+t.id+'\'>🎙️ Con guía</button>'
+        + '<button style="flex:1;padding:4px 8px;border-radius:6px;border:1px solid '+(!usaGuia?'var(--green)':'rgba(255,255,255,0.2)')+';background:'+(!usaGuia?'rgba(0,200,83,0.1)':'transparent')+';color:var(--text);font-size:12px;cursor:pointer;" onclick="setGuiaTour(this.dataset.id,false)" data-id=\''+t.id+'\'>🚶 Sin guía</button>'
+        + '</div>';
+    }
+
+    container.innerHTML += '<div class="tour-card" onclick="selectTour(this.dataset.id)" data-id="'+t.id+'" id="tour-'+t.id+'">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">'
+      + '<div style="display:flex;align-items:center;gap:10px;">'
+      + '<span style="font-size:28px;">'+t.emoji+'</span>'
+      + '<div><div style="font-family:Orbitron,sans-serif;font-size:13px;color:'+t.color+';">'+t.nombre+'</div>'
+      + '<div style="font-size:11px;color:var(--text2);">'+t.hora+'</div></div>'
       + '</div>'
-      + '<div style="text-align:right;"><div style="font-family:Orbitron,sans-serif; font-size:16px; color:' + t.color + ';">' + t.precio + '</div>'
-      + '<div style="font-size:10px; color:var(--text2);">por persona</div></div>'
+      + '<div style="text-align:right;">'+precioHTML+'</div>'
       + '</div>'
-      + '<div style="display:flex; gap:6px; flex-wrap:wrap;">' + tags + '</div>'
+      + '<div style="display:flex;gap:6px;flex-wrap:wrap;">'+tags+'</div>'
+      + guiaSelector
       + '</div>';
   });
+}
+
+// ============================================================
+//  TOURS — CÁLCULO DE PRECIOS Y RESERVAS  v3.3
+// ============================================================
+
+function goToTours() { goTo('screen-guia'); }
+
+async function cargarConfigDesdeSheets() {
+  if (!CONFIG.TOURS_SCRIPT_URL) return;
+  try {
+    var r = await fetch(CONFIG.TOURS_SCRIPT_URL + '?action=getConfig');
+    var d = await r.json();
+    if (d.ok && d.config) {
+      if (d.config.TOUR_CARGO_TARJETA) CONFIG.TOUR_CARGO_TARJETA = parseFloat(d.config.TOUR_CARGO_TARJETA);
+      if (d.config.TOUR_DESC_CRIPTO)   CONFIG.TOUR_DESC_CRIPTO   = parseFloat(d.config.TOUR_DESC_CRIPTO);
+      if (d.config.TOUR_GTQ_RATE)      CONFIG.TOUR_GTQ_RATE      = parseFloat(d.config.TOUR_GTQ_RATE);
+      if (currentDestino && DESTINOS[currentDestino]) renderTours(DESTINOS[currentDestino].tours);
+    }
+  } catch(e) { /* config remota no disponible */ }
+}
+
+function setGuiaTour(tourId, conGuia) {
+  if (!state.guiaTour) state.guiaTour = {};
+  state.guiaTour[tourId] = conGuia;
+  if (currentDestino && DESTINOS[currentDestino]) {
+    renderTours(DESTINOS[currentDestino].tours);
+    if (selectedTourType) {
+      var c = document.getElementById('tour-' + selectedTourType);
+      if (c) c.classList.add('selected');
+    }
+    actualizarCTATour();
+  }
+}
+
+function calcTourPrice(precioUSD, formaPago) {
+  var usd = precioUSD || 0;
+  var rate = CONFIG.TOUR_GTQ_RATE || 7.75;
+  if (formaPago === 'tarjeta') usd *= (1 + (CONFIG.TOUR_CARGO_TARJETA || 0.05));
+  if (formaPago === 'cripto')  usd *= (1 - (CONFIG.TOUR_DESC_CRIPTO   || 0.06));
+  return { usd: usd, gtq: usd * rate };
+}
+
+function setTourPago(fp) {
+  state.tourFormaPago = fp;
+  var colors = { efectivo:'var(--green)', tarjeta:'var(--gold)', cripto:'var(--accent)' };
+  ['efectivo','tarjeta','cripto'].forEach(function(p) {
+    var btn = document.getElementById('pago-' + p);
+    if (!btn) return;
+    var on = p === fp;
+    btn.style.background  = on ? 'rgba(245,200,66,0.12)' : 'var(--dark2)';
+    btn.style.borderColor = on ? colors[p] : 'rgba(245,200,66,0.2)';
+    var lbl = btn.querySelector('div:nth-child(2)');
+    if (lbl) lbl.style.color = on ? colors[p] : 'var(--text2)';
+  });
+  var lt = document.getElementById('labelTarjeta');
+  var lc = document.getElementById('labelCripto');
+  if (lt) lt.textContent = '+' + Math.round((CONFIG.TOUR_CARGO_TARJETA||0.05)*100) + '%';
+  if (lc) lc.textContent = '-' + Math.round((CONFIG.TOUR_DESC_CRIPTO||0.06)*100) + '% desc.';
+  if (currentDestino && DESTINOS[currentDestino]) {
+    renderTours(DESTINOS[currentDestino].tours);
+    if (selectedTourType) {
+      var c = document.getElementById('tour-' + selectedTourType);
+      if (c) c.classList.add('selected');
+    }
+  }
+  actualizarCTATour();
+}
+
+function actualizarCTATour() {
+  var elN = document.getElementById('tourSelectedName');
+  var elU = document.getElementById('tourPrecioFinal');
+  var elG = document.getElementById('tourPrecioGTQ');
+  if (!selectedTourType || !currentDestino) return;
+  var tours = DESTINOS[currentDestino] ? DESTINOS[currentDestino].tours : [];
+  var t = tours.find(function(x){ return x.id === selectedTourType; });
+  if (!t) return;
+  var fp  = state.tourFormaPago || 'efectivo';
+  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : (t.precioUSD || 0);
+  if (elN) elN.textContent = t.emoji + ' ' + t.nombre + ' · ' + t.hora;
+  if (base) {
+    var p = calcTourPrice(base, fp);
+    var fpl = { efectivo:'Efectivo', tarjeta:'Tarjeta +' + Math.round((CONFIG.TOUR_CARGO_TARJETA||0.05)*100) + '%', cripto:'Cripto -' + Math.round((CONFIG.TOUR_DESC_CRIPTO||0.06)*100) + '%' };
+    if (elU) elU.textContent = '$' + p.usd.toFixed(0) + ' USD · ' + fpl[fp] + (t.conGuia ? (guia ? ' · 🎙️ Con guía' : ' · 🚶 Sin guía') : '');
+    if (elG) elG.textContent = 'Q' + p.gtq.toFixed(0) + ' GTQ por persona';
+  } else if (t.precio) {
+    if (elU) elU.textContent = t.precio;
+  }
+}
+
+function abrirConfirmacionTour() {
+  if (!selectedTourType || !currentDestino) { showToast('Selecciona un tour primero', 'error'); return; }
+  var dest  = DESTINOS[currentDestino];
+  var tours = dest ? dest.tours : [];
+  var t     = tours.find(function(x){ return x.id === selectedTourType; });
+  if (!t) return;
+  var fp   = state.tourFormaPago || 'efectivo';
+  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : (t.precioUSD || 0);
+  var p    = calcTourPrice(base, fp);
+  var fl   = { efectivo:'💵 Efectivo', tarjeta:'💳 Tarjeta', cripto:'₿ Cripto' };
+  var g    = function(id){ return document.getElementById(id); };
+  if (g('confirmDestino'))    g('confirmDestino').textContent    = dest.emoji + ' ' + dest.name;
+  if (g('confirmTourNombre')) g('confirmTourNombre').textContent = t.emoji + ' ' + t.nombre;
+  if (g('confirmHora'))       g('confirmHora').textContent       = t.hora;
+  if (g('confirmPago'))       g('confirmPago').textContent       = fl[fp] || fp;
+  if (g('confirmPrecioUSD'))  g('confirmPrecioUSD').textContent  = '$' + p.usd.toFixed(0) + ' USD';
+  if (g('confirmPrecioGTQ'))  g('confirmPrecioGTQ').textContent  = 'Q'  + p.gtq.toFixed(0) + ' GTQ';
+  if (state.client && state.client.name) {
+    if (g('tourNombre')) g('tourNombre').value = state.client.name  || '';
+    if (g('tourEmail'))  g('tourEmail').value  = state.client.email || '';
+  }
+  if (g('tourPax')) g('tourPax').value = '1';
+  actualizarTotalPax();
+  goTo('screen-tour-confirm');
+}
+
+function actualizarTotalPax() {
+  var paxEl = document.getElementById('tourPax');
+  var pax   = parseInt(paxEl ? paxEl.value : 1) || 1;
+  var tours = DESTINOS[currentDestino] ? DESTINOS[currentDestino].tours : [];
+  var t     = tours.find(function(x){ return x.id === selectedTourType; });
+  if (!t || !t.precioUSD) return;
+  var fp   = state.tourFormaPago || 'efectivo';
+  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : t.precioUSD;
+  var p    = calcTourPrice(base, fp);
+  var tu   = document.getElementById('confirmTotalUSD');
+  var tg   = document.getElementById('confirmTotalGTQ');
+  if (tu) tu.textContent = '$' + (p.usd * pax).toFixed(0) + ' USD';
+  if (tg) tg.textContent = 'Q'  + (p.gtq * pax).toFixed(0) + ' GTQ';
+}
+
+async function submitTourReserva() {
+  var gn = function(id){ var e = document.getElementById(id); return e ? e.value.trim() : ''; };
+  var nombre = gn('tourNombre'); var email = gn('tourEmail');
+  var pax    = parseInt((document.getElementById('tourPax')||{}).value) || 1;
+  if (!nombre) { showToast('Ingresa tu nombre', 'error'); return; }
+  if (!email)  { showToast('Ingresa tu correo', 'error'); return; }
+  var dest  = DESTINOS[currentDestino];
+  var tours = dest ? dest.tours : [];
+  var t     = tours.find(function(x){ return x.id === selectedTourType; });
+  if (!t) return;
+  var fp   = state.tourFormaPago || 'efectivo';
+  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : (t.precioUSD || 0);
+  var p    = calcTourPrice(base, fp);
+  var payload = {
+    action:'registerTour', txId:'TOUR-'+Date.now(), nombre:nombre, email:email, pax:pax,
+    destino:dest?dest.name:currentDestino, tour:t.nombre, horario:t.hora, formaPago:fp,
+    precioUSDpp:p.usd.toFixed(2), precioLiq:t.precioLiq||0,
+    conGuia:guia?'SI':'NO', totalUSD:(p.usd*pax).toFixed(2),
+    totalGTQ:(p.gtq*pax).toFixed(2), fecha:new Date().toISOString()
+  };
+  showToast('Registrando reserva...', 'info');
+  try {
+    var nm = 'tf_'+Date.now(); var ifr = document.createElement('iframe');
+    ifr.name=nm; ifr.style.display='none'; document.body.appendChild(ifr);
+    var frm=document.createElement('form'); frm.method='POST';
+    frm.action=CONFIG.TOURS_SCRIPT_URL||CONFIG.APPS_SCRIPT_URL;
+    frm.target=nm; frm.style.display='none';
+    var inp=document.createElement('input'); inp.type='hidden';
+    inp.name='payload'; inp.value=JSON.stringify(payload);
+    frm.appendChild(inp); document.body.appendChild(frm); frm.submit();
+    setTimeout(function(){ try{frm.remove();ifr.remove();}catch(e){} },8000);
+  } catch(e) { console.warn('submitTourReserva:',e); }
+  showToast('✅ ¡Reserva confirmada! Revisa tu correo.', 'success');
+  setTimeout(function() { goTo('screen-welcome'); }, 2500);
+}
+
+function guardarConfigTours() {
+  var gv = function(id){ var e=document.getElementById(id); return e?parseFloat(e.value):null; };
+  var rate = gv('cfgGTQRate') || CONFIG.TOUR_GTQ_RATE;
+  var tarj = gv('cfgTarjeta'); if(tarj) CONFIG.TOUR_CARGO_TARJETA = tarj/100;
+  var crip = gv('cfgCripto');  if(crip) CONFIG.TOUR_DESC_CRIPTO   = crip/100;
+  CONFIG.TOUR_GTQ_RATE = rate;
+  var payload = { action:'saveToursConfig', TOUR_GTQ_RATE:rate,
+    TOUR_CARGO_TARJETA:CONFIG.TOUR_CARGO_TARJETA, TOUR_DESC_CRIPTO:CONFIG.TOUR_DESC_CRIPTO };
+  try {
+    var nm='cf_'+Date.now(); var ifr=document.createElement('iframe');
+    ifr.name=nm; ifr.style.display='none'; document.body.appendChild(ifr);
+    var frm=document.createElement('form'); frm.method='POST';
+    frm.action=CONFIG.TOURS_SCRIPT_URL||CONFIG.APPS_SCRIPT_URL;
+    frm.target=nm; frm.style.display='none';
+    var inp=document.createElement('input'); inp.type='hidden';
+    inp.name='payload'; inp.value=JSON.stringify(payload);
+    frm.appendChild(inp); document.body.appendChild(frm); frm.submit();
+    setTimeout(function(){ try{frm.remove();ifr.remove();}catch(e){} },5000);
+  } catch(e){}
+  showToast('✅ Configuración guardada', 'success');
+}
+
+function cargarLiquidacion(filtro) {
+  var container = document.getElementById('liqContainer');
+  if (!container) return;
+  container.innerHTML = '<p style="color:var(--text2);text-align:center;padding:30px;">Cargando...</p>';
+  fetch((CONFIG.TOURS_SCRIPT_URL||CONFIG.APPS_SCRIPT_URL)+'?action=getReservas')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (!d.reservas||!d.reservas.length) {
+        container.innerHTML='<p style="color:var(--text2);text-align:center;padding:30px;">Sin reservas.</p>'; return;
+      }
+      var h='<table style="width:100%;border-collapse:collapse;font-size:13px;">';
+      h+='<tr style="background:var(--dark2);"><th style="padding:8px;color:var(--gold);">Tour</th><th style="padding:8px;color:var(--gold);">Total</th><th style="padding:8px;color:var(--gold);">Estado</th></tr>';
+      d.reservas.forEach(function(r,i){
+        h+='<tr style="background:'+(i%2?'var(--dark2)':'var(--card)')+';">';
+        h+='<td style="padding:8px;">'+(r.tour||r.destino||'')+'</td>';
+        h+='<td style="padding:8px;color:var(--green);">$'+(r.totalUSD||0)+'</td>';
+        h+='<td style="padding:8px;"><span style="padding:2px 8px;border-radius:4px;background:rgba(0,200,83,0.15);color:var(--green);">'+(r.estado||'Pendiente')+'</span></td></tr>';
+      });
+      h+='</table>';
+      container.innerHTML=h;
+    })
+    .catch(function(){ container.innerHTML='<p style="color:var(--text2);text-align:center;padding:30px;">Error al cargar. Verifica URL del script de tours.</p>'; });
+}
+
+// Funciones panel admin de usuarios
+var currentRoleSection = null;
+function showUserSection(role) {
+  currentRoleSection = role;
+  document.querySelectorAll('.role-card').forEach(function(c){ c.style.borderColor=''; });
+  var card = document.getElementById('card-'+role);
+  if (card) card.style.borderColor = 'var(--accent)';
+  var sec = document.getElementById('user-section');
+  if (sec) { sec.style.display='block'; sec.scrollIntoView({behavior:'smooth',block:'start'}); }
+  renderUsersForRole(role);
+}
+function hideUserSection() {
+  var sec = document.getElementById('user-section');
+  if (sec) sec.style.display = 'none';
+  document.querySelectorAll('.role-card').forEach(function(c){ c.style.borderColor=''; });
+  currentRoleSection = null;
+}
+function showAddUserModal() {
+  var m = document.getElementById('userModal');
+  if (m) m.style.display = 'flex';
+}
+function closeUserModal() {
+  var m = document.getElementById('userModal');
+  if (m) m.style.display = 'none';
+}
+function renderUsersForRole(role) {
+  var c = document.getElementById('usersList');
+  if (!c) return;
+  var users = JSON.parse(localStorage.getItem('users')||'[]');
+  var filtered = users.filter(function(u){ return u.tipo===role; });
+  if (!filtered.length) { c.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;">Sin usuarios en este rol.</p>'; return; }
+  c.innerHTML = filtered.map(function(u){
+    return '<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">'
+      +'<div><div style="font-weight:bold;color:var(--text);">'+(u.nombre||'Sin nombre')+'</div>'
+      +'<div style="font-size:12px;color:var(--text2);">'+(u.email||'')+'</div></div>'
+      +'<span style="font-size:11px;padding:3px 8px;background:rgba(0,200,83,0.15);color:var(--green);border-radius:4px;">'+(u.status||'activo')+'</span></div>';
+  }).join('');
+}
+
+// Beneficios / suscripción
+// selectedBenefit declared above
+function selectBenefit(tipo) {
+  selectedBenefit = tipo;
+  document.querySelectorAll('.benefit-btn').forEach(function(b){ b.style.borderColor=''; b.style.background=''; });
+  var btn = document.getElementById('btn-'+tipo);
+  if (btn) { btn.style.borderColor='var(--accent)'; btn.style.background='rgba(0,188,212,0.08)'; }
 }
 
 // =============================================
@@ -4826,6 +5111,62 @@ function doGet(e) { return doPost(e); }
 
 ═══════════════════════════════════════════════════════════════════
 -->
+
+
+<!-- ===================== SCREEN: TOUR CONFIRM ===================== -->
+<div class="screen" id="screen-tour-confirm">
+  <button class="nav-back" onclick="goTo('screen-guia')">← Volver</button>
+  <div class="card" style="max-width:520px; margin-top:20px;">
+    <div class="card-title" style="color:var(--gold);">✅ Confirmar Reserva de Tour</div>
+    <div style="background:var(--dark2); border-radius:8px; padding:16px; margin:16px 0;">
+      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text2);">Destino</span>
+        <span id="confirmDestino" style="color:var(--gold); font-weight:bold;"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text2);">Tour</span>
+        <span id="confirmTourNombre"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text2);">Horario</span>
+        <span id="confirmHora" style="color:var(--text2);"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text2);">Pago</span>
+        <span id="confirmPago" style="color:var(--green);"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0;">
+        <span style="color:var(--text2);">Precio p/persona</span>
+        <div style="text-align:right;">
+          <div id="confirmPrecioUSD" style="color:var(--gold); font-weight:bold;"></div>
+          <div id="confirmPrecioGTQ" style="font-size:12px; color:var(--text2);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Personas</label>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <input class="form-input" id="tourPax" type="number" min="1" max="30" value="1"
+          style="width:80px; text-align:center; font-size:22px;" oninput="actualizarTotalPax()">
+        <div>
+          <div id="confirmTotalUSD" style="font-size:20px; color:var(--gold); font-weight:bold;"></div>
+          <div id="confirmTotalGTQ" style="font-size:13px; color:var(--text2);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nombre completo *</label>
+      <input class="form-input" id="tourNombre" placeholder="Nombre del turista" autocomplete="name">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Correo electrónico *</label>
+      <input class="form-input" id="tourEmail" type="email" placeholder="correo@ejemplo.com" autocomplete="email">
+    </div>
+    <button class="btn-main" style="width:100%; margin-top:12px;" onclick="submitTourReserva()">
+      ✅ Confirmar Reserva
+    </button>
+  </div>
+</div>
 
 </body>
 </html>
