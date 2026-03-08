@@ -604,14 +604,9 @@
     </svg>
 
     <div class="logo-title" style="font-size:clamp(22px,5.5vw,42px); margin-bottom:4px;">EXCHANGE CRYPTO</div>
-    <div style="font-size:clamp(10px,1.5vw,13px); letter-spacing:4px; color:#F5C842; opacity:0.85; margin-bottom:10px;">
-      ryoga.club
-    </div>
-    <div style="display:inline-block; background:linear-gradient(135deg,rgba(245,200,66,0.12),rgba(232,160,32,0.08));
-                border:1px solid rgba(245,200,66,0.35); border-radius:5px;
-                padding:4px clamp(14px,3vw,22px); margin-bottom:clamp(20px,4vw,32px);">
-      <span style="font-family:Orbitron,sans-serif; font-size:clamp(9px,1.3vw,11px);
-                   letter-spacing:5px; color:#F5C842; text-transform:uppercase;">FLORES, PETÉN</span>
+    <div class="logo-sub" style="font-size:13px; letter-spacing:4px; color:#F5C842; opacity:0.85;">ryoga.club</div>
+    <div style="margin-top:10px; display:inline-block; background:linear-gradient(135deg,rgba(245,200,66,0.12),rgba(232,160,32,0.08)); border:1px solid rgba(245,200,66,0.35); border-radius:5px; padding:5px 22px; margin-bottom:clamp(20px,4vw,32px);">
+      <span style="font-family:'Orbitron',sans-serif; font-size:11px; letter-spacing:5px; color:#F5C842; text-transform:uppercase;">EXCHANGE</span>
     </div>
 
     <p style="color:var(--text2); font-size:clamp(13px,2vw,16px); line-height:1.6;
@@ -625,6 +620,18 @@
       onclick="goTo('screen-lang')">
       ▶ &nbsp;<span data-t="welcome_start">INICIAR</span>
     </button>
+
+    <!-- Botón Admin — centrado, debajo de INICIAR -->
+    <div style="margin-top:18px;">
+      <button onclick="goToAdmin()" title="Panel Admin"
+        style="background:none; border:1px solid rgba(0,229,255,0.2); color:rgba(0,229,255,0.6);
+               font-size:18px; padding:8px 14px; border-radius:6px;
+               cursor:pointer; transition:all 0.2s; line-height:1;"
+        onmouseover="this.style.borderColor='rgba(0,229,255,0.5)'; this.style.color='rgba(0,229,255,0.9)'; this.style.boxShadow='0 0 12px rgba(0,229,255,0.15)'"
+        onmouseout="this.style.borderColor='rgba(0,229,255,0.2)'; this.style.color='rgba(0,229,255,0.6)'; this.style.boxShadow='none'">
+        ◈
+      </button>
+    </div>
 
     <!-- Badges -->
     <div style="margin-top:clamp(28px,5vw,44px); display:flex; gap:clamp(18px,4vw,36px);
@@ -643,18 +650,9 @@
       </div>
     </div>
 
-    <!-- Botón Admin -->
-    <div style="margin-top:clamp(16px,3vw,24px);">
-      <button onclick="goToAdmin()" title="Panel Admin"
-        style="background:none; border:1px solid rgba(0,229,255,0.35); color:rgba(0,229,255,0.8);
-               font-size:20px; padding:10px 20px; border-radius:6px;
-               cursor:pointer; transition:all 0.2s; line-height:1;"
-        onmouseover="this.style.borderColor='rgba(0,229,255,0.7)'; this.style.color='#00E5FF'; this.style.boxShadow='0 0 16px rgba(0,229,255,0.2)'"
-        onmouseout="this.style.borderColor='rgba(0,229,255,0.35)'; this.style.color='rgba(0,229,255,0.8)'; this.style.boxShadow='none'">
-        ◈ <span style="font-family:Orbitron,sans-serif; font-size:10px; letter-spacing:2px; vertical-align:middle;">ADMIN</span>
-      </button>
-    </div>
   </div>
+
+  <!-- Botón Admin — centrado debajo del INICIAR -->
 
   <!-- Versión -->
   <div style="position:absolute; bottom:clamp(10px,1.5vw,15px); right:clamp(12px,2vw,20px);
