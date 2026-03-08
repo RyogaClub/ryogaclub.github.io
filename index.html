@@ -53,6 +53,11 @@
     animation: fadeIn 0.5s ease;
   }
   .screen.active { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  /* Welcome: sin scroll, todo ajustado a la pantalla */
+  #screen-welcome {
+    height:100vh; min-height:unset; max-height:100vh;
+    overflow:hidden; padding:0; box-sizing:border-box;
+  }
   @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
   /* ========== LOGO ========== */
@@ -582,16 +587,16 @@
     </div>
   </div>
 
-  <!-- ── Contenido central (padding-top para no quedar bajo el ticker+btn) ── -->
+  <!-- ── Contenido central: ocupa toda la altura disponible sin scroll ── -->
   <div style="display:flex; flex-direction:column; align-items:center; justify-content:center;
-              width:100%; max-width:520px;
-              padding:clamp(80px,12vw,110px) clamp(16px,4vw,32px) clamp(60px,8vw,80px);
-              text-align:center; margin:0 auto;">
+              width:100%; max-width:520px; margin:0 auto; text-align:center;
+              height:100%; padding:0 clamp(16px,4vw,32px); box-sizing:border-box;
+              padding-top:35px;">
 
     <!-- Logo -->
-    <svg width="clamp(64px,12vw,96px)" height="clamp(64px,12vw,96px)"
-         viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"
-         style="filter:drop-shadow(0 0 18px #F5C842); margin-bottom:clamp(8px,1.5vw,14px); width:clamp(64px,12vw,96px); height:clamp(64px,12vw,96px);">
+    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"
+         style="width:clamp(52px,8vh,80px); height:clamp(52px,8vh,80px);
+                filter:drop-shadow(0 0 14px #F5C842); margin-bottom:clamp(6px,1vh,12px); flex-shrink:0;">
       <circle cx="40" cy="40" r="38" fill="#0A0A0F" stroke="#F5C842" stroke-width="2.5"/>
       <text x="40" y="56" font-family="Arial Black, sans-serif" font-size="46" font-weight="900"
             fill="url(#wbg)" text-anchor="middle">₿</text>
@@ -603,29 +608,32 @@
       </defs>
     </svg>
 
-    <div class="logo-title" style="font-size:clamp(22px,5.5vw,42px); margin-bottom:4px;">EXCHANGE CRYPTO</div>
-    <div class="logo-sub" style="font-size:13px; letter-spacing:4px; color:#F5C842; opacity:0.85;">ryoga.club</div>
-    <div style="margin-top:10px; display:inline-block; background:linear-gradient(135deg,rgba(245,200,66,0.12),rgba(232,160,32,0.08)); border:1px solid rgba(245,200,66,0.35); border-radius:5px; padding:5px 22px; margin-bottom:clamp(20px,4vw,32px);">
-      <span style="font-family:'Orbitron',sans-serif; font-size:11px; letter-spacing:5px; color:#F5C842; text-transform:uppercase;">EXCHANGE</span>
+    <div class="logo-title" style="font-size:clamp(20px,4.5vh,38px); margin-bottom:2px; line-height:1.1;">EXCHANGE CRYPTO</div>
+    <div class="logo-sub" style="font-size:clamp(10px,1.5vh,13px); letter-spacing:4px; color:#F5C842; opacity:0.85; margin-bottom:clamp(6px,1vh,10px);">ryoga.club</div>
+
+    <div style="display:inline-block; background:linear-gradient(135deg,rgba(245,200,66,0.12),rgba(232,160,32,0.08));
+                border:1px solid rgba(245,200,66,0.35); border-radius:5px;
+                padding:4px 20px; margin-bottom:clamp(10px,2vh,20px);">
+      <span style="font-family:'Orbitron',sans-serif; font-size:clamp(9px,1.2vh,11px); letter-spacing:5px; color:#F5C842; text-transform:uppercase;">EXCHANGE</span>
     </div>
 
-    <p style="color:var(--text2); font-size:clamp(13px,2vw,16px); line-height:1.6;
-              margin-bottom:clamp(24px,5vw,40px); max-width:380px;">
+    <p style="color:var(--text2); font-size:clamp(12px,1.8vh,15px); line-height:1.5;
+              margin-bottom:clamp(12px,2.5vh,28px); max-width:360px;">
       <span data-t="welcome_sub">Plataforma segura para cambio de criptomonedas a Quetzales guatemaltecos</span>
     </p>
 
     <!-- Botón principal -->
     <button class="btn-main"
-      style="font-size:clamp(13px,2vw,16px); padding:clamp(14px,2.5vw,18px) clamp(36px,6vw,50px);"
+      style="font-size:clamp(13px,1.8vh,16px); padding:clamp(12px,1.8vh,16px) clamp(32px,5vw,48px);"
       onclick="goTo('screen-lang')">
       ▶ &nbsp;<span data-t="welcome_start">INICIAR</span>
     </button>
 
     <!-- Botón Admin — centrado, debajo de INICIAR -->
-    <div style="margin-top:18px;">
+    <div style="margin-top:clamp(10px,1.8vh,18px);">
       <button onclick="goToAdmin()" title="Panel Admin"
         style="background:none; border:1px solid rgba(0,229,255,0.2); color:rgba(0,229,255,0.6);
-               font-size:18px; padding:8px 14px; border-radius:6px;
+               font-size:16px; padding:6px 12px; border-radius:6px;
                cursor:pointer; transition:all 0.2s; line-height:1;"
         onmouseover="this.style.borderColor='rgba(0,229,255,0.5)'; this.style.color='rgba(0,229,255,0.9)'; this.style.boxShadow='0 0 12px rgba(0,229,255,0.15)'"
         onmouseout="this.style.borderColor='rgba(0,229,255,0.2)'; this.style.color='rgba(0,229,255,0.6)'; this.style.boxShadow='none'">
@@ -634,29 +642,26 @@
     </div>
 
     <!-- Badges -->
-    <div style="margin-top:clamp(28px,5vw,44px); display:flex; gap:clamp(18px,4vw,36px);
-                flex-wrap:wrap; justify-content:center;">
+    <div style="margin-top:clamp(12px,2.5vh,32px); display:flex; gap:clamp(16px,4vw,36px); justify-content:center;">
       <div style="text-align:center;">
-        <div style="font-family:Orbitron; font-size:clamp(16px,3vw,22px); color:var(--gold);">100%</div>
-        <div style="font-size:clamp(10px,1.5vw,12px); color:var(--text2);"><span data-t="welcome_badge1">SEGURO</span></div>
+        <div style="font-family:Orbitron; font-size:clamp(14px,2.5vh,22px); color:var(--gold);">100%</div>
+        <div style="font-size:clamp(9px,1.3vh,12px); color:var(--text2);"><span data-t="welcome_badge1">SEGURO</span></div>
       </div>
       <div style="text-align:center;">
-        <div style="font-family:Orbitron; font-size:clamp(16px,3vw,22px); color:var(--gold);">2.5%</div>
-        <div style="font-size:clamp(10px,1.5vw,12px); color:var(--text2);"><span data-t="welcome_badge2">COMISIÓN</span></div>
+        <div style="font-family:Orbitron; font-size:clamp(14px,2.5vh,22px); color:var(--gold);">2.5%</div>
+        <div style="font-size:clamp(9px,1.3vh,12px); color:var(--text2);"><span data-t="welcome_badge2">COMISIÓN</span></div>
       </div>
       <div style="text-align:center;">
-        <div style="font-family:Orbitron; font-size:clamp(16px,3vw,22px); color:var(--gold);">24/7</div>
-        <div style="font-size:clamp(10px,1.5vw,12px); color:var(--text2);"><span data-t="welcome_badge3">DISPONIBLE</span></div>
+        <div style="font-family:Orbitron; font-size:clamp(14px,2.5vh,22px); color:var(--gold);">24/7</div>
+        <div style="font-size:clamp(9px,1.3vh,12px); color:var(--text2);"><span data-t="welcome_badge3">DISPONIBLE</span></div>
       </div>
     </div>
 
   </div>
 
-  <!-- Botón Admin — centrado debajo del INICIAR -->
-
-  <!-- Versión -->
-  <div style="position:absolute; bottom:clamp(10px,1.5vw,15px); right:clamp(12px,2vw,20px);
-              font-family:Orbitron,sans-serif; font-size:clamp(8px,1vw,10px);
+  <!-- Versión — esquina inferior derecha, siempre visible -->
+  <div style="position:absolute; bottom:8px; right:12px;
+              font-family:Orbitron,sans-serif; font-size:clamp(7px,1vw,9px);
               color:rgba(245,200,66,0.35); letter-spacing:2px;">v3.2.0</div>
 </div>
 
