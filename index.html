@@ -509,6 +509,30 @@
     body  { font-size:16px; }
   }
 
+
+  /* ========== BENEFIT / GIFT BUTTONS ========== */
+  .benefit-btn {
+    display:flex; align-items:center; gap:12px;
+    background:var(--dark3); border:1px solid var(--border);
+    border-radius:8px; padding:14px; cursor:pointer;
+    transition:all 0.25s; width:100%; text-align:left;
+    position:relative; overflow:hidden;
+  }
+  .benefit-btn:hover { border-color:rgba(245,200,66,0.5); background:rgba(245,200,66,0.05); }
+  .benefit-btn.selected { border-color:var(--gold); background:rgba(245,200,66,0.08); box-shadow:0 0 18px rgba(245,200,66,0.25), inset 0 0 20px rgba(245,200,66,0.05); }
+  .benefit-btn.selected::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg, rgba(245,200,66,0.08) 0%, transparent 100%); pointer-events:none; }
+  .benefit-title { font-size:13px; color:var(--text); font-weight:600; margin-bottom:3px; }
+  .benefit-desc  { font-size:11px; color:var(--text2); line-height:1.4; }
+  .benefit-check { font-size:18px; color:var(--text2); transition:all 0.2s; min-width:20px; text-align:center; }
+  .benefit-btn.selected .benefit-check { color:var(--gold); transform:scale(1.2); }
+  .gift-btn {
+    display:flex; align-items:center; gap:14px;
+    background:var(--dark3); border:1px solid var(--border);
+    border-radius:10px; padding:16px; cursor:pointer;
+    transition:all 0.2s; width:100%; text-align:left;
+  }
+  .gift-btn:hover { border-color:var(--gold); background:rgba(245,200,66,0.06); transform:translateX(4px); }
+
 </style>
 </head>
 </head>
@@ -663,6 +687,218 @@
   <div style="position:absolute; bottom:8px; right:12px;
               font-family:Orbitron,sans-serif; font-size:clamp(7px,1vw,9px);
               color:rgba(245,200,66,0.35); letter-spacing:2px;">v3.2.0</div>
+</div>
+
+
+<!-- ===================== SCREEN SUBSCRIBE ===================== -->
+<div class="screen" id="screen-subscribe">
+  <div class="card" style="text-align:center; max-width:480px;">
+    <div style="font-size:52px; margin-bottom:10px;">🎁</div>
+    <div style="font-family:Orbitron,sans-serif; font-size:16px; color:var(--gold); letter-spacing:2px; margin-bottom:8px;">BENEFICIO EXCLUSIVO</div>
+    <p style="font-size:13px; color:var(--text2); margin-bottom:20px; line-height:1.6;">
+      Por usar CryptoChange Flores, accede gratis por <strong style="color:var(--gold);">3 meses</strong> a recursos exclusivos para viajeros.
+    </p>
+    <p style="font-size:10px; color:var(--text2); margin-bottom:10px; letter-spacing:2px; text-transform:uppercase;">Elige tu beneficio</p>
+    <div style="display:grid; grid-template-columns:1fr; gap:10px; margin-bottom:28px; text-align:left;">
+      <button class="benefit-btn" id="btn-guia" onclick="selectBenefit('guia')">
+        <span style="font-size:26px;">🗺️</span>
+        <div style="flex:1;">
+          <div class="benefit-title">Guía de Viaje Digital</div>
+          <div class="benefit-desc">Flores, Petén y alrededores — rutas, restaurantes, tips</div>
+        </div>
+        <span class="benefit-check" id="check-guia">○</span>
+      </button>
+      <button class="benefit-btn" id="btn-descuentos" onclick="selectBenefit('descuentos')">
+        <span style="font-size:26px;">🏷️</span>
+        <div style="flex:1;">
+          <div class="benefit-title">Descuentos en Negocios Locales</div>
+          <div class="benefit-desc">Restaurantes, tours, hospedaje — socios de CryptoChange</div>
+        </div>
+        <span class="benefit-check" id="check-descuentos">○</span>
+      </button>
+      <button class="benefit-btn" id="btn-newsletter" onclick="selectBenefit('newsletter')">
+        <span style="font-size:26px;">🎨</span>
+        <div style="flex:1;">
+          <div class="benefit-title">Sistema Pedro el Pintor 🎨</div>
+          <div class="benefit-desc">Estrategia simple de trading — aprende a comprar barato y vender caro sin estrés</div>
+        </div>
+        <span class="benefit-check" id="check-newsletter">○</span>
+      </button>
+    </div>
+    <div class="form-group">
+      <input class="form-input" id="subName" placeholder="Tu nombre completo" style="margin-bottom:12px;" />
+    </div>
+    <div class="form-group">
+      <input class="form-input" id="subEmail" type="email" placeholder="tu@correo.com" style="margin-bottom:12px;" />
+    </div>
+    <div class="form-group">
+      <input class="form-input" id="subCountry" placeholder="País de origen" style="margin-bottom:24px;" />
+    </div>
+    <button class="btn-main" style="width:100%; margin-bottom:10px;" onclick="submitSubscription()">
+      ✨ Quiero mis 3 meses gratis
+    </button>
+    <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="goTo('screen-welcome')">
+      Ahora no
+    </button>
+  </div>
+</div>
+
+<!-- ===================== SCREEN GIFT ===================== -->
+<div class="screen" id="screen-gift">
+  <div class="card" style="text-align:center; max-width:480px;">
+    <div style="font-size:52px; margin-bottom:10px;">🎁</div>
+    <div style="font-family:Orbitron,sans-serif; font-size:15px; color:var(--gold); letter-spacing:2px; margin-bottom:8px;">BENEFICIOS EXCLUSIVOS</div>
+    <p style="font-size:13px; color:var(--text2); margin-bottom:25px;">
+      Elige qué quieres explorar — suscríbete gratis para acceder:
+    </p>
+    <div style="display:grid; grid-template-columns:1fr; gap:12px; margin-bottom:25px;">
+      <button class="gift-btn" onclick="openGift('guia')">
+        <span style="font-size:28px;">🗺️</span>
+        <div style="text-align:left;">
+          <div style="font-size:13px; font-weight:600; color:var(--text);">Guía de Viaje — Flores & Petén</div>
+          <div style="font-size:11px; color:var(--text2); margin-top:3px;">Descarga tu guía completa con mapas y recomendaciones</div>
+        </div>
+        <span style="color:var(--gold); font-size:16px;">→</span>
+      </button>
+      <button class="gift-btn" onclick="openGift('descuentos')">
+        <span style="font-size:28px;">🏷️</span>
+        <div style="text-align:left;">
+          <div style="font-size:13px; font-weight:600; color:var(--text);">Descuentos en Negocios Locales</div>
+          <div style="font-size:11px; color:var(--text2); margin-top:3px;">Ver restaurantes, tours y hospedaje con descuento</div>
+        </div>
+        <span style="color:var(--gold); font-size:16px;">→</span>
+      </button>
+      <button class="gift-btn" onclick="openGift('newsletter')">
+        <span style="font-size:28px;">🎨</span>
+        <div style="text-align:left;">
+          <div style="font-size:13px; font-weight:600; color:var(--text);">Sistema Pedro el Pintor</div>
+          <div style="font-size:11px; color:var(--text2); margin-top:3px;">Aprende a hacer trading sin estrés — estrategia simple para principiantes</div>
+        </div>
+        <span style="color:var(--gold); font-size:16px;">→</span>
+      </button>
+    </div>
+    <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="goTo('screen-welcome')">
+      Volver al inicio
+    </button>
+  </div>
+</div>
+
+<!-- ===================== SCREEN DESCUENTOS ===================== -->
+<div class="screen" id="screen-descuentos">
+  <button class="nav-back" onclick="goTo('screen-gift')">← Volver</button>
+  <div class="card" style="max-width:520px; width:100%;">
+    <div style="text-align:center; margin-bottom:20px;">
+      <div style="font-size:48px; margin-bottom:8px;">🏷️</div>
+      <div style="font-family:Orbitron,sans-serif; font-size:16px; color:var(--gold); letter-spacing:2px;">DESCUENTOS EXCLUSIVOS</div>
+      <div style="font-size:12px; color:var(--text2); margin-top:5px;">Negocios socios en Flores, Petén</div>
+    </div>
+    <div style="display:grid; gap:10px; margin-bottom:22px;">
+      <div style="background:var(--dark3); border:1px solid var(--border); border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <span style="font-size:22px;">🍽️</span>
+          <div><div style="font-size:13px; font-weight:600;">Restaurantes locales</div><div style="font-size:11px; color:var(--text2);">Socios verificados en la isla</div></div>
+        </div>
+        <span style="background:rgba(0,230,118,0.15); color:var(--green); padding:4px 10px; border-radius:20px; font-size:12px; font-weight:700;">10% OFF</span>
+      </div>
+      <div style="background:var(--dark3); border:1px solid var(--border); border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <span style="font-size:22px;">🚤</span>
+          <div><div style="font-size:13px; font-weight:600;">Tours y lanchas</div><div style="font-size:11px; color:var(--text2);">Tikal, Cerro Cahui, Petexbatún</div></div>
+        </div>
+        <span style="background:rgba(0,230,118,0.15); color:var(--green); padding:4px 10px; border-radius:20px; font-size:12px; font-weight:700;">15% OFF</span>
+      </div>
+      <div style="background:var(--dark3); border:1px solid var(--border); border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <span style="font-size:22px;">🏨</span>
+          <div><div style="font-size:13px; font-weight:600;">Hospedaje</div><div style="font-size:11px; color:var(--text2);">Hoteles y hostales aliados</div></div>
+        </div>
+        <span style="background:rgba(0,230,118,0.15); color:var(--green); padding:4px 10px; border-radius:20px; font-size:12px; font-weight:700;">5% OFF</span>
+      </div>
+    </div>
+    <div style="background:rgba(245,200,66,0.06); border:1px solid rgba(245,200,66,0.2); border-radius:10px; padding:18px; text-align:center;">
+      <div style="font-size:13px; color:var(--text); margin-bottom:12px;">Suscríbete para activar tus descuentos</div>
+      <button class="btn-main" style="width:100%; margin-bottom:8px;" onclick="usarBeneficio('descuentos')">
+        🏷️ Activar mis descuentos gratis
+      </button>
+      <div style="font-size:11px; color:var(--text2);">✓ Sin costo · ✓ Válido por 3 meses · ✓ Activo de inmediato</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SCREEN PEDRO EL PINTOR ===================== -->
+<div class="screen" id="screen-pedro">
+  <button class="nav-back" onclick="goTo('screen-gift')">← Volver</button>
+  <div class="card" style="max-width:680px; width:100%;">
+    <div style="text-align:center; margin-bottom:25px;">
+      <div style="font-size:48px; margin-bottom:8px;">🎨</div>
+      <div style="font-family:Orbitron,sans-serif; font-size:20px; color:var(--gold); letter-spacing:2px;">SISTEMA PEDRO EL PINTOR</div>
+      <div style="font-size:13px; color:var(--text2); margin-top:6px;">Para niños de 5 años (y adultos que quieren aprender sin estrés)</div>
+    </div>
+    <div style="background:rgba(245,200,66,0.08); border-left:4px solid var(--gold); padding:16px 20px; border-radius:6px; margin-bottom:25px; font-size:14px; font-style:italic; color:var(--text); line-height:1.6;">
+      "Yo no persigo al perro loco (Bitcoin). Yo pongo la comida y espero a que el perro venga."
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:25px;">
+      <div style="background:var(--dark3); border:1px solid var(--border); border-radius:10px; padding:18px;">
+        <div style="font-size:30px; margin-bottom:8px;">📥</div>
+        <div style="font-family:Orbitron,sans-serif; font-size:12px; color:var(--gold); margin-bottom:10px; letter-spacing:1px;">COMPRAR</div>
+        <div style="font-size:12px; color:var(--text2); line-height:1.8;">
+          <span style="background:rgba(245,200,66,0.15); color:var(--gold); padding:2px 8px; border-radius:3px; font-size:11px;">-3%</span> BTC, ETH, SOL, XRP<br>
+          <span style="background:rgba(245,200,66,0.15); color:var(--gold); padding:2px 8px; border-radius:3px; font-size:11px; margin-top:4px; display:inline-block;">-5%</span> PEPE (10% del capital)
+        </div>
+        <div style="font-size:11px; color:var(--text2); margin-top:10px;">📅 Martes y Miércoles<br>9:00 – 11:00 AM (GT)</div>
+      </div>
+      <div style="background:var(--dark3); border:1px solid var(--border); border-radius:10px; padding:18px;">
+        <div style="font-size:30px; margin-bottom:8px;">📤</div>
+        <div style="font-family:Orbitron,sans-serif; font-size:12px; color:var(--green); margin-bottom:10px; letter-spacing:1px;">VENDER</div>
+        <div style="font-size:12px; color:var(--text2); line-height:1.8;">
+          <span style="background:rgba(0,230,118,0.15); color:var(--green); padding:2px 8px; border-radius:3px; font-size:11px;">+6%</span> BTC, ETH, SOL, XRP<br>
+          <span style="background:rgba(0,230,118,0.15); color:var(--green); padding:2px 8px; border-radius:3px; font-size:11px; margin-top:4px; display:inline-block;">+8%</span> PEPE
+        </div>
+        <div style="font-size:11px; color:var(--text2); margin-top:10px;">📅 Jueves 9:00 – 11:00 AM<br>Revisar ganancias</div>
+      </div>
+      <div style="background:var(--dark3); border:1px solid var(--border); border-radius:10px; padding:18px;">
+        <div style="font-size:30px; margin-bottom:8px;">🧘</div>
+        <div style="font-family:Orbitron,sans-serif; font-size:12px; color:var(--accent); margin-bottom:10px; letter-spacing:1px;">REGLAS DE ORO</div>
+        <div style="font-size:12px; color:var(--text2); line-height:1.8;">
+          • Compro barato, vendo caro<br>• Órdenes LÍMITE siempre<br>• Nunca comprar a mercado<br>• PEPE solo 10% del capital
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--dark3); border:1px solid var(--border); border-radius:10px; padding:18px; margin-bottom:20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span style="font-family:Orbitron,sans-serif; font-size:11px; color:var(--text2); letter-spacing:2px;">🪙 PRECIOS AHORA</span>
+        <span style="font-size:10px; color:var(--text2);">actualizado en tiempo real</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:10px;" id="pedroPrices">
+        <div style="font-size:12px; color:var(--text2);">Cargando...</div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:20px;">
+      <button class="btn-main" onclick="pedroAction('compra')">📥 Registrar Compra</button>
+      <button class="btn-main" style="background:linear-gradient(135deg,var(--green),#00B85C); color:#000;" onclick="pedroAction('venta')">📤 Registrar Venta</button>
+      <button class="btn-secondary" onclick="pedroAction('aprendizaje')">📚 Aprendizaje del día</button>
+    </div>
+    <div style="background:rgba(245,200,66,0.06); border:1px solid rgba(245,200,66,0.2); border-radius:10px; padding:18px; text-align:center;">
+      <div style="font-size:13px; color:var(--text); margin-bottom:12px;">Suscríbete para activar los recordatorios y acceder a todo</div>
+      <button class="btn-main" style="width:100%;" onclick="usarBeneficio('newsletter')">
+        🎨 Activar Sistema Pedro el Pintor
+      </button>
+      <div style="font-size:11px; color:var(--text2); margin-top:8px;">✓ Sin costo · ✓ Correos semanales · ✓ Estrategia simple</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SUSCRIPCIÓN REQUERIDA -->
+<div id="subscribeRequiredModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center; padding:20px;">
+  <div style="background:var(--dark2); border:1px solid var(--border); border-radius:12px; padding:30px; max-width:380px; width:100%; text-align:center;">
+    <div style="font-size:44px; margin-bottom:12px;">🔒</div>
+    <div style="font-family:Orbitron,sans-serif; font-size:14px; color:var(--gold); letter-spacing:2px; margin-bottom:10px;">ACCESO EXCLUSIVO</div>
+    <p style="font-size:13px; color:var(--text2); margin-bottom:6px;">Para acceder a <strong style="color:var(--text);" id="subscribeRequiredTipo">este beneficio</strong> necesitas suscribirte primero.</p>
+    <p style="font-size:12px; color:var(--text2); margin-bottom:22px;">Es gratis y solo toma 30 segundos ✨</p>
+    <input type="hidden" id="subscribeRequiredTarget" value="">
+    <button class="btn-main" style="width:100%; margin-bottom:10px;" onclick="goToSubscribeFromModal()">✨ Suscribirme gratis</button>
+    <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="closeSubscribeRequired()">Quizás después</button>
+  </div>
 </div>
 
 <!-- BOTÓN BENEFICIO — esquina inferior izquierda -->
@@ -1302,7 +1538,129 @@
 </div>
 
 <!-- QR Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+// =============================================
+//  BENEFICIOS — SUSCRIPCIÓN
+// =============================================
+let selectedBenefit = '';
+
+function selectBenefit(tipo) {
+  selectedBenefit = tipo;
+  document.querySelectorAll('.benefit-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  var btn = document.getElementById('btn-' + tipo);
+  if (btn) btn.classList.add('selected');
+  var checks = ['guia','descuentos','newsletter'];
+  checks.forEach(function(c) {
+    var el = document.getElementById('check-' + c);
+    if (el) el.textContent = c === tipo ? '●' : '○';
+  });
+}
+
+function preFillSubscription() {
+  if (state.client && state.client.name) {
+    var n = document.getElementById('subName');
+    var e = document.getElementById('subEmail');
+    var c = document.getElementById('subCountry');
+    if (n) n.value = state.client.name || '';
+    if (e) e.value = state.client.email || '';
+    if (c) c.value = state.client.nationality || '';
+  }
+}
+
+function submitSubscription() {
+  var name    = (document.getElementById('subName').value || '').trim();
+  var email   = (document.getElementById('subEmail').value || '').trim();
+  var country = (document.getElementById('subCountry').value || '').trim();
+  if (!selectedBenefit) { showToast('Elige un beneficio primero', 'error'); return; }
+  if (!name || !email)  { showToast('Por favor ingresa tu nombre y correo', 'error'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Correo inválido', 'error'); return; }
+  var sub = { name:name, email:email, country:country, beneficio:selectedBenefit, date:new Date().toISOString(), source: state.txId || 'directo' };
+  var subs = JSON.parse(localStorage.getItem('cc_subscribers') || '[]');
+  if (!subs.find(function(s){ return s.email === email; })) {
+    subs.push(sub);
+    localStorage.setItem('cc_subscribers', JSON.stringify(subs));
+  }
+  sendToAppsScript(Object.assign({ action: 'saveSubscriber' }, sub)).catch(function(){});
+  localStorage.setItem('cc_subscribed_session', 'true');
+  showToast('¡Bienvenido! Revisa tu correo pronto 🎉', 'success');
+  setTimeout(function(){ goTo('screen-gift'); }, 800);
+}
+
+function isSubscribed() {
+  var subs = JSON.parse(localStorage.getItem('cc_subscribers') || '[]');
+  var clientEmail = state.client && state.client.email ? state.client.email : '';
+  if (clientEmail && subs.find(function(s){ return s.email === clientEmail; })) return true;
+  return localStorage.getItem('cc_subscribed_session') === 'true';
+}
+
+function openGift(tipo) {
+  if (tipo === 'guia') {
+    // La guía está en Tours — ir a Tours en screen-guia
+    goToTours('screen-guia');
+    return;
+  }
+  if (tipo === 'newsletter') { goTo('screen-pedro'); loadPedroPrices(); return; }
+  if (tipo === 'descuentos') { goTo('screen-descuentos'); return; }
+}
+
+function usarBeneficio(tipo) {
+  if (!isSubscribed()) { showSubscribeRequired(tipo); return; }
+  var msgs = {
+    guia:       '🗺️ La guía llegará a tu correo en los próximos minutos.',
+    descuentos: '🏷️ Los descuentos llegarán a tu correo en los próximos minutos.',
+    newsletter: '🎨 Acceso al Sistema Pedro el Pintor activado.',
+  };
+  showToast(msgs[tipo] || 'Acceso activado', 'success');
+}
+
+function showSubscribeRequired(tipo) {
+  var nombres = { guia:'la Guía de Viaje', descuentos:'los Descuentos Locales', newsletter:'el Sistema Pedro el Pintor' };
+  var modal = document.getElementById('subscribeRequiredModal');
+  document.getElementById('subscribeRequiredTipo').textContent = nombres[tipo] || 'este beneficio';
+  document.getElementById('subscribeRequiredTarget').value = tipo;
+  modal.style.display = 'flex';
+}
+
+function closeSubscribeRequired() {
+  document.getElementById('subscribeRequiredModal').style.display = 'none';
+}
+
+function goToSubscribeFromModal() {
+  closeSubscribeRequired();
+  goTo('screen-subscribe');
+}
+
+function loadPedroPrices() {
+  var container = document.getElementById('pedroPrices');
+  if (!container) return;
+  var cryptos = ['BTC','ETH','SOL','USDT','BNB'];
+  var prices = window._cachedRates || {};
+  if (Object.keys(prices).length === 0) {
+    container.innerHTML = '<div style="font-size:12px;color:var(--text2);">Cargando precios...</div>';
+    setTimeout(loadPedroPrices, 2000);
+    return;
+  }
+  container.innerHTML = cryptos.map(function(c) {
+    var p = prices[c] ? '$' + Number(prices[c]).toLocaleString('en-US', {maximumFractionDigits:2}) : '—';
+    return '<div style="text-align:center;">'
+      + '<div style="font-size:10px;color:var(--text2);letter-spacing:1px;">' + c + '</div>'
+      + '<div style="font-family:Orbitron,sans-serif;font-size:13px;color:var(--gold);">' + p + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+function pedroAction(tipo) {
+  var msgs = {
+    compra:      '📥 Próximamente: registra tus compras y haz seguimiento de tu portafolio.',
+    venta:       '📤 Próximamente: registra tus ventas y mide tus ganancias.',
+    aprendizaje: '📚 Próximamente: diario de aprendizaje con tips diarios.',
+  };
+  showToast(msgs[tipo] || '¡Pronto disponible!', 'success');
+}
+
+</script>
 
 <script>
 // =============================================
@@ -1796,7 +2154,7 @@ function goTo(screenId) {
   // Ocultar botón de beneficio en pantallas donde no aplica
   var bfBtn = document.getElementById('benefitFloatBtn');
   if (bfBtn) {
-    var hideIn = ['screen-admin'];
+    var hideIn = ['screen-admin','screen-gift','screen-subscribe','screen-descuentos','screen-pedro'];
     bfBtn.style.display = hideIn.indexOf(screenId) >= 0 ? 'none' : 'flex';
   }
 }
@@ -1982,6 +2340,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // Aplicar idioma guardado (por defecto español)
   setLang(state.lang || 'es');
+  // Mostrar botón beneficio siempre al inicio
+  var bfBtn = document.getElementById('benefitFloatBtn');
+  if (bfBtn) bfBtn.style.display = 'flex';
 });
 
 // =============================================
