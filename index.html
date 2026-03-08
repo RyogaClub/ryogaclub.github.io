@@ -457,10 +457,57 @@
 
   /* Screen with top offset for ticker */
   .with-ticker { padding-top:70px; }
+
+  /* ========== RESPONSIVE — iPad / iPhone / Desktop ========== */
+  
+  /* Ocultar el botón flotante de idioma en la pantalla welcome (tiene el propio inline) */
+  #screen-welcome.active ~ #langFloatWrap,
+  body:has(#screen-welcome.active) #langFloatWrap { display:none !important; }
+
+  /* iPhone SE / pequeños (< 380px) */
+  @media (max-width: 380px) {
+    .btn-main  { padding:14px 30px; font-size:13px; }
+    .logo-wrap { margin-bottom:18px; }
+    .card      { padding:18px 14px; }
+    .form-group { margin-bottom:14px; }
+  }
+
+  /* iPhone / móvil estándar (< 768px) */
+  @media (max-width: 768px) {
+    .screen { padding:16px; }
+    .card   { padding:20px 16px; border-radius:10px; }
+    .steps  { gap:4px; margin-bottom:16px; }
+    .step-num { width:28px; height:28px; font-size:11px; }
+    .step-label { font-size:9px; }
+    .btn-main    { width:100%; justify-content:center; }
+    .btn-secondary { width:100%; justify-content:center; }
+  }
+
+  /* iPad (768px – 1024px) */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .screen.active { padding:30px 40px; }
+    .card { max-width:580px; padding:32px 36px; }
+    .btn-main { padding:18px 60px; font-size:16px; }
+    .screen-welcome .logo-title { font-size:36px; }
+  }
+
+  /* Landscape móvil */
+  @media (max-height: 600px) and (orientation: landscape) {
+    .screen { padding-top:50px; padding-bottom:20px; }
+    .logo-wrap { margin-bottom:12px; }
+    .logo-wrap svg { width:52px !important; height:52px !important; }
+  }
+
+  /* Pantalla grande / desktop */
+  @media (min-width: 1200px) {
+    .card { max-width:600px; }
+    body  { font-size:16px; }
+  }
+
 </style>
 </head>
 </head>
-<body onclick="if(langMenuOpen && !event.target.closest('#langFloatWrap')) closeLangMenu(); if(destinoMenuOpen && !event.target.closest('#destinoWrap')) closeDestinoMenu()">
+<body onclick="if(langMenuOpen && !event.target.closest('#langFloatWrap')) closeLangMenu(); if(welcomeLangMenuOpen && !event.target.closest('#welcomeLangBtn') && !event.target.closest('#welcomeLangMenu')) closeWelcomeLangMenu(); if(destinoMenuOpen && !event.target.closest('#destinoWrap')) closeDestinoMenu()">
 
 <div class="bg-grid"></div>
 <div class="bg-glow"></div>
@@ -504,57 +551,115 @@
 
 <!-- ===================== SCREEN 1: WELCOME ===================== -->
 <div class="screen active" id="screen-welcome">
-  <div class="logo-wrap">
-    <!-- Bitcoin Icon SVG -->
-    <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 18px #F5C842); margin-bottom:8px;">
+
+  <!-- ── Selector de idioma: fijo debajo del ticker, esquina derecha ── -->
+  <div style="position:fixed; top:35px; right:16px; z-index:60; padding:6px 0;">
+    <div style="position:relative;">
+      <!-- Menú desplegable (hacia abajo) -->
+      <div id="welcomeLangMenu"
+        style="display:none; position:absolute; top:calc(100% + 6px); right:0;
+               background:var(--dark2); border:1px solid var(--border); border-radius:10px;
+               overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.8); min-width:140px; z-index:700;">
+        <button class="lang-menu-item" onclick="pickLang('es'); closeWelcomeLangMenu()">🇬🇹 &nbsp;Español</button>
+        <button class="lang-menu-item" onclick="pickLang('en'); closeWelcomeLangMenu()">🇺🇸 &nbsp;English</button>
+        <button class="lang-menu-item" onclick="pickLang('fr'); closeWelcomeLangMenu()">🇫🇷 &nbsp;Français</button>
+        <button class="lang-menu-item" onclick="pickLang('de'); closeWelcomeLangMenu()">🇩🇪 &nbsp;Deutsch</button>
+        <button class="lang-menu-item" onclick="pickLang('pt'); closeWelcomeLangMenu()">🇧🇷 &nbsp;Português</button>
+      </div>
+      <!-- Botón idioma -->
+      <button id="welcomeLangBtn" onclick="toggleWelcomeLangMenu()"
+        style="background:var(--dark2); border:1px solid rgba(245,200,66,0.3);
+               border-radius:50px; padding:7px 13px; cursor:pointer;
+               display:flex; align-items:center; gap:5px; transition:all 0.2s;
+               box-shadow:0 4px 16px rgba(0,0,0,0.5);"
+        onmouseover="this.style.borderColor='rgba(245,200,66,0.7)'"
+        onmouseout="this.style.borderColor='rgba(245,200,66,0.3)'">
+        <span id="welcomeLangFlag" style="font-size:16px;">🇬🇹</span>
+        <span id="welcomeLangCode"
+          style="font-family:Orbitron,sans-serif; font-size:10px; color:var(--gold); letter-spacing:1px;">ES</span>
+        <span id="welcomeLangArrow" style="font-size:8px; color:var(--text2);">▼</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Contenido central (padding-top para no quedar bajo el ticker+btn) ── -->
+  <div style="display:flex; flex-direction:column; align-items:center; justify-content:center;
+              width:100%; max-width:520px;
+              padding:clamp(80px,12vw,110px) clamp(16px,4vw,32px) clamp(60px,8vw,80px);
+              text-align:center; margin:0 auto;">
+
+    <!-- Logo -->
+    <svg width="clamp(64px,12vw,96px)" height="clamp(64px,12vw,96px)"
+         viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"
+         style="filter:drop-shadow(0 0 18px #F5C842); margin-bottom:clamp(8px,1.5vw,14px); width:clamp(64px,12vw,96px); height:clamp(64px,12vw,96px);">
       <circle cx="40" cy="40" r="38" fill="#0A0A0F" stroke="#F5C842" stroke-width="2.5"/>
       <text x="40" y="56" font-family="Arial Black, sans-serif" font-size="46" font-weight="900"
-            fill="url(#bg)" text-anchor="middle">₿</text>
+            fill="url(#wbg)" text-anchor="middle">₿</text>
       <defs>
-        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="wbg" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#F5C842"/>
           <stop offset="100%" stop-color="#E8A020"/>
         </linearGradient>
       </defs>
     </svg>
-    <div class="logo-title">EXCHANGE CRYPTO</div>
-    <div class="logo-sub" style="font-size:13px; letter-spacing:4px; color:#F5C842; opacity:0.85;">ryoga.club</div>
-    <div style="margin-top:10px; display:inline-block; background:linear-gradient(135deg,rgba(245,200,66,0.12),rgba(232,160,32,0.08)); border:1px solid rgba(245,200,66,0.35); border-radius:5px; padding:5px 22px;">
-      <span style="font-family:'Orbitron',sans-serif; font-size:11px; letter-spacing:5px; color:#F5C842; text-transform:uppercase;">EXCHANGE</span>
+
+    <div class="logo-title" style="font-size:clamp(22px,5.5vw,42px); margin-bottom:4px;">EXCHANGE CRYPTO</div>
+    <div style="font-size:clamp(10px,1.5vw,13px); letter-spacing:4px; color:#F5C842; opacity:0.85; margin-bottom:10px;">
+      ryoga.club
     </div>
-  </div>
-  <!-- Versión -->
-  <div style="position:absolute; bottom:15px; right:20px; font-family:'Orbitron',sans-serif; font-size:10px; color:rgba(245,200,66,0.4); letter-spacing:2px;">v3.1.2</div>
-  <div style="text-align:center; max-width:400px; margin-bottom:40px;">
-    <p style="color:var(--text2); font-size:16px; line-height:1.6;">
+    <div style="display:inline-block; background:linear-gradient(135deg,rgba(245,200,66,0.12),rgba(232,160,32,0.08));
+                border:1px solid rgba(245,200,66,0.35); border-radius:5px;
+                padding:4px clamp(14px,3vw,22px); margin-bottom:clamp(20px,4vw,32px);">
+      <span style="font-family:Orbitron,sans-serif; font-size:clamp(9px,1.3vw,11px);
+                   letter-spacing:5px; color:#F5C842; text-transform:uppercase;">FLORES, PETÉN</span>
+    </div>
+
+    <p style="color:var(--text2); font-size:clamp(13px,2vw,16px); line-height:1.6;
+              margin-bottom:clamp(24px,5vw,40px); max-width:380px;">
       <span data-t="welcome_sub">Plataforma segura para cambio de criptomonedas a Quetzales guatemaltecos</span>
     </p>
-  </div>
-  <button class="btn-main" onclick="goTo('screen-lang')">
-    ▶ &nbsp;<span data-t="welcome_start">INICIAR</span>
-  </button>
-  <div style="margin-top:20px;">
-    <button onclick="goToAdmin()" title="Panel Admin"
-      style="background:none; border:1px solid rgba(0,229,255,0.2); color:rgba(0,229,255,0.6); font-size:18px; padding:8px 14px; border-radius:6px; cursor:pointer; transition:all 0.2s; line-height:1;"
-      onmouseover="this.style.borderColor='rgba(0,229,255,0.5)'; this.style.color='rgba(0,229,255,0.9)'; this.style.boxShadow='0 0 12px rgba(0,229,255,0.15)'"
-      onmouseout="this.style.borderColor='rgba(0,229,255,0.2)'; this.style.color='rgba(0,229,255,0.6)'; this.style.boxShadow='none'">
-      ◈
+
+    <!-- Botón principal -->
+    <button class="btn-main"
+      style="font-size:clamp(13px,2vw,16px); padding:clamp(14px,2.5vw,18px) clamp(36px,6vw,50px);"
+      onclick="goTo('screen-lang')">
+      ▶ &nbsp;<span data-t="welcome_start">INICIAR</span>
     </button>
+
+    <!-- Badges -->
+    <div style="margin-top:clamp(28px,5vw,44px); display:flex; gap:clamp(18px,4vw,36px);
+                flex-wrap:wrap; justify-content:center;">
+      <div style="text-align:center;">
+        <div style="font-family:Orbitron; font-size:clamp(16px,3vw,22px); color:var(--gold);">100%</div>
+        <div style="font-size:clamp(10px,1.5vw,12px); color:var(--text2);"><span data-t="welcome_badge1">SEGURO</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:Orbitron; font-size:clamp(16px,3vw,22px); color:var(--gold);">2.5%</div>
+        <div style="font-size:clamp(10px,1.5vw,12px); color:var(--text2);"><span data-t="welcome_badge2">COMISIÓN</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:Orbitron; font-size:clamp(16px,3vw,22px); color:var(--gold);">24/7</div>
+        <div style="font-size:clamp(10px,1.5vw,12px); color:var(--text2);"><span data-t="welcome_badge3">DISPONIBLE</span></div>
+      </div>
+    </div>
+
+    <!-- Botón Admin -->
+    <div style="margin-top:clamp(16px,3vw,24px);">
+      <button onclick="goToAdmin()" title="Panel Admin"
+        style="background:none; border:1px solid rgba(0,229,255,0.35); color:rgba(0,229,255,0.8);
+               font-size:20px; padding:10px 20px; border-radius:6px;
+               cursor:pointer; transition:all 0.2s; line-height:1;"
+        onmouseover="this.style.borderColor='rgba(0,229,255,0.7)'; this.style.color='#00E5FF'; this.style.boxShadow='0 0 16px rgba(0,229,255,0.2)'"
+        onmouseout="this.style.borderColor='rgba(0,229,255,0.35)'; this.style.color='rgba(0,229,255,0.8)'; this.style.boxShadow='none'">
+        ◈ <span style="font-family:Orbitron,sans-serif; font-size:10px; letter-spacing:2px; vertical-align:middle;">ADMIN</span>
+      </button>
+    </div>
   </div>
-  <div style="margin-top:40px; display:flex; gap:30px; flex-wrap:wrap; justify-content:center;">
-    <div style="text-align:center;">
-      <div style="font-family:Orbitron; font-size:20px; color:var(--gold);">100%</div>
-      <div style="font-size:12px; color:var(--text2);"><span data-t="welcome_badge1">SEGURO</span></div>
-    </div>
-    <div style="text-align:center;">
-      <div style="font-family:Orbitron; font-size:20px; color:var(--gold);">2.5%</div>
-      <div style="font-size:12px; color:var(--text2);"><span data-t="welcome_badge2">COMISIÓN</span></div>
-    </div>
-    <div style="text-align:center;">
-      <div style="font-family:Orbitron; font-size:20px; color:var(--gold);">24/7</div>
-      <div style="font-size:12px; color:var(--text2);"><span data-t="welcome_badge3">DISPONIBLE</span></div>
-    </div>
-  </div>
+
+  <!-- Versión -->
+  <div style="position:absolute; bottom:clamp(10px,1.5vw,15px); right:clamp(12px,2vw,20px);
+              font-family:Orbitron,sans-serif; font-size:clamp(8px,1vw,10px);
+              color:rgba(245,200,66,0.35); letter-spacing:2px;">v3.2.0</div>
 </div>
 
 <!-- BOTÓN BENEFICIO — esquina inferior izquierda -->
@@ -1647,6 +1752,11 @@ function goTo(screenId) {
   window.scrollTo(0,0);
 
   const showLang = screenId !== 'screen-welcome' && screenId !== 'screen-admin';
+  // Mostrar/ocultar selector de idioma del welcome
+  var wlb = document.getElementById('welcomeLangBtn') ? document.getElementById('welcomeLangBtn').parentElement.parentElement : null;
+  if (wlb) wlb.style.display = (screenId === 'screen-welcome') ? 'block' : 'none';
+  // Cerrar menú welcome si salimos
+  if (screenId !== 'screen-welcome') closeWelcomeLangMenu();
   // langBar legacy — ignorado // document.getElementById('langBar').style.display = showLang ? 'flex' : 'none';
 
   if (screenId === 'screen-payment') buildPaymentScreen();
@@ -1718,6 +1828,31 @@ function closeLangMenu() {
   if (arrow) arrow.textContent = '▲';
 }
 
+// ── Selector de idioma del Welcome (esquina superior derecha) ──
+var welcomeLangMenuOpen = false;
+function toggleWelcomeLangMenu() {
+  welcomeLangMenuOpen = !welcomeLangMenuOpen;
+  var menu  = document.getElementById('welcomeLangMenu');
+  var arrow = document.getElementById('welcomeLangArrow');
+  if (menu)  menu.style.display = welcomeLangMenuOpen ? 'block' : 'none';
+  if (arrow) arrow.textContent  = welcomeLangMenuOpen ? '▲' : '▼';
+}
+function closeWelcomeLangMenu() {
+  welcomeLangMenuOpen = false;
+  var menu  = document.getElementById('welcomeLangMenu');
+  var arrow = document.getElementById('welcomeLangArrow');
+  if (menu)  menu.style.display = 'none';
+  if (arrow) arrow.textContent  = '▼';
+}
+function syncWelcomeLangBtn(lang) {
+  var flags = { es:'🇬🇹', en:'🇺🇸', fr:'🇫🇷', de:'🇩🇪', pt:'🇧🇷' };
+  var codes = { es:'ES', en:'EN', fr:'FR', de:'DE', pt:'PT' };
+  var flag = document.getElementById('welcomeLangFlag');
+  var code = document.getElementById('welcomeLangCode');
+  if (flag) flag.textContent = flags[lang] || '🌐';
+  if (code) code.textContent = (codes[lang] || lang).toUpperCase();
+}
+
 function pickLang(lang) {
   setLang(lang);
   closeLangMenu();
@@ -1730,6 +1865,7 @@ function pickLang(lang) {
   document.querySelectorAll('.lang-menu-item').forEach(function(b) {
     b.classList.toggle('active', b.getAttribute('onclick').includes("'" + lang + "'"));
   });
+  syncWelcomeLangBtn(lang);
 }
 
 function setLang(lang) {
