@@ -3587,13 +3587,6 @@ function stopPolling() {
 }
 
 // =============================================
-//  INIT
-// =============================================
-buildTicker(null); // ticker con valores fallback mientras cargan las APIs
-loadRates();
-setInterval(loadRates, 60000); // refresh rates every 60s (respetar rate limits de CoinGecko)
-
-  // =============================================
 </script>
 
 <script>
