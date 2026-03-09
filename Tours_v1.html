@@ -562,7 +562,7 @@
     <button class="btn-main" style="width:100%; margin-bottom:10px;" onclick="submitSubscription()">
       ✨ Quiero mis 3 meses gratis
     </button>
-    <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="goTo('screen-welcome')">
+    <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="goBackToExchange()">
       Ahora no
     </button>
   </div>
@@ -609,7 +609,7 @@
       </button>
     </div>
 
-    <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="goTo('screen-welcome')">
+    <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="goBackToExchange()">
       Volver al inicio
     </button>
   </div>
@@ -925,7 +925,7 @@
 
 <!-- ===================== SCREEN PEDRO EL PINTOR ===================== -->
 <div class="screen" id="screen-pedro">
-  <button class="nav-back" onclick="goTo('screen-welcome')">← Volver</button>
+  <button class="nav-back" onclick="goBackToExchange()">← Volver</button>
   <div class="card" style="max-width:680px; width:100%;">
 
     <!-- Header -->
@@ -1512,10 +1512,14 @@ function buildTicker(cryptoPrices) {
 }
 
 function calcRate() {
-  const amt = parseFloat(document.getElementById('inputAmount').value) || 0;
-  const crypto = document.getElementById('cryptoSelect').value;
+  var inputEl   = document.getElementById('inputAmount');
+  var cryptoEl  = document.getElementById('cryptoSelect');
+  var networkEl = document.getElementById('networkSelect');
+  if (!inputEl || !cryptoEl || !networkEl) return; // elementos del Exchange no disponibles en Tours
+  const amt = parseFloat(inputEl.value) || 0;
+  const crypto = cryptoEl.value;
   state.selectedCrypto = crypto;
-  state.selectedNetwork = document.getElementById('networkSelect').value;
+  state.selectedNetwork = networkEl.value;
   state.inputAmount = amt;
   
   const rate = state.cryptoRates[crypto] || BASE_GTQ[crypto] || 1;
@@ -4166,7 +4170,7 @@ async function submitTourReserva() {
     setTimeout(function(){ try{frm.remove();ifr.remove();}catch(e){} },8000);
   } catch(e) { console.warn('submitTourReserva:',e); }
   showToast('✅ ¡Reserva confirmada! Revisa tu correo.', 'success');
-  setTimeout(function() { goTo('screen-welcome'); }, 2500);
+  setTimeout(function() { goBackToExchange(); }, 2500);
 }
 
 function guardarConfigTours() {
@@ -4322,7 +4326,7 @@ function startApprovalPolling() {
       } else if (tx.status === 'RECHAZADO') {
         clearInterval(pollingInterval);
         showToast('Transaccion rechazada por el administrador.', 'error');
-        setTimeout(() => goTo('screen-welcome'), 2500);
+        setTimeout(() => goBackToExchange(), 2500);
       }
     } catch(e) {
       // Sin conexion, seguir esperando
