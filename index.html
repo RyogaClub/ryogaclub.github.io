@@ -536,7 +536,7 @@
 </style>
 </head>
 </head>
-<body onclick="if(langMenuOpen && !event.target.closest('#langFloatWrap')) closeLangMenu(); if(welcomeLangMenuOpen && !event.target.closest('#welcomeLangBtn') && !event.target.closest('#welcomeLangMenu')) closeWelcomeLangMenu(); if(destinoMenuOpen && !event.target.closest('#destinoWrap')) closeDestinoMenu()">
+<body onclick="if(langMenuOpen && !event.target.closest('#langFloatWrap')) closeLangMenu(); if(welcomeLangMenuOpen && !event.target.closest('#welcomeLangBtn') && !event.target.closest('#welcomeLangMenu')) closeWelcomeLangMenu(); if(typeof destinoMenuOpen !== "undefined" && destinoMenuOpen && !event.target.closest('#destinoWrap')) closeDestinoMenu()">
 
 <div class="bg-grid"></div>
 <div class="bg-glow"></div>
@@ -898,6 +898,321 @@
     <input type="hidden" id="subscribeRequiredTarget" value="">
     <button class="btn-main" style="width:100%; margin-bottom:10px;" onclick="goToSubscribeFromModal()">✨ Suscribirme gratis</button>
     <button class="btn-secondary" style="width:100%; font-size:12px;" onclick="closeSubscribeRequired()">Quizás después</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-guia" style="padding:0; align-items:stretch; justify-content:flex-start; overflow-y:auto;">
+
+  <!-- Hero inmersivo -->
+  <div style="position:relative; background:linear-gradient(180deg,#060d08 0%,#0a1a0d 40%,#0d1a10 70%,#080d06 100%); padding:65px 24px 50px; text-align:center; overflow:hidden; min-height:340px;" id="tikалHero">
+
+    <!-- RUINAS TIKAL SVG de fondo -->
+    <div id="tikалBg" style="position:absolute; inset:0; pointer-events:none; overflow:hidden;">
+      <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg"
+        style="position:absolute; bottom:0; left:0; width:100%; height:100%; opacity:0.55;">
+        <defs>
+          <linearGradient id="niebla" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#060d08" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#060d08" stop-opacity="1"/>
+          </linearGradient>
+          <linearGradient id="piedra" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a5c30"/>
+            <stop offset="100%" stop-color="#1a2e14"/>
+          </linearGradient>
+          <linearGradient id="piedra2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2e4a26"/>
+            <stop offset="100%" stop-color="#152310"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Estrellas -->
+        <circle cx="25"  cy="12" r="1"   fill="#F5C842" opacity="0.7"/>
+        <circle cx="70"  cy="6"  r="0.7" fill="#fff"    opacity="0.5"/>
+        <circle cx="130" cy="10" r="1"   fill="#F5C842" opacity="0.5"/>
+        <circle cx="195" cy="5"  r="0.8" fill="#fff"    opacity="0.4"/>
+        <circle cx="260" cy="9"  r="1.1" fill="#F5C842" opacity="0.6"/>
+        <circle cx="340" cy="7"  r="0.7" fill="#fff"    opacity="0.4"/>
+        <circle cx="385" cy="14" r="1"   fill="#F5C842" opacity="0.5"/>
+
+        <!-- Luna detrás del templo central -->
+        <circle cx="200" cy="55" r="16" fill="rgba(245,200,66,0.06)" stroke="#F5C842" stroke-width="0.6" opacity="0.4"/>
+
+        <!-- ============================================ -->
+        <!-- TEMPLO PEQUEÑO IZQUIERDA                    -->
+        <!-- ============================================ -->
+        <!-- 6 escalones simétricos -->
+        <polygon points="18,170 62,170 59,162 21,162" fill="url(#piedra2)"/>
+        <polygon points="21,162 59,162 56,154 24,154" fill="url(#piedra2)"/>
+        <polygon points="24,154 56,154 53,146 27,146" fill="url(#piedra2)"/>
+        <polygon points="27,146 53,146 50,139 30,139" fill="url(#piedra2)"/>
+        <polygon points="30,139 50,139 47,132 33,132" fill="url(#piedra2)"/>
+        <polygon points="33,132 47,132 44,126 36,126" fill="url(#piedra2)"/>
+        <!-- Templete -->
+        <rect x="35" y="111" width="10" height="17" fill="#2a4020"/>
+        <!-- Cresta -->
+        <polygon points="36,111 40,96  44,111" fill="#243a1c"/>
+        <line x1="40" y1="96" x2="40" y2="89" stroke="#F5C842" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="40" cy="87" r="1.5" fill="#F5C842" opacity="0.5"/>
+        <!-- Sombras laterales -->
+        <polygon points="18,170 21,162 21,170" fill="rgba(0,0,0,0.3)"/>
+        <polygon points="59,162 62,170 62,162" fill="rgba(0,0,0,0.2)"/>
+
+        <!-- ============================================ -->
+        <!-- GRAN JAGUAR — TEMPLO I (CENTRO)             -->
+        <!-- ============================================ -->
+        <!-- 9 escalones escalonados, muy empinados, simétricos -->
+        <polygon points="118,195 282,195 277,184 123,184" fill="url(#piedra)"/>
+        <polygon points="123,184 277,184 271,173 129,173" fill="url(#piedra)"/>
+        <polygon points="129,173 271,173 265,163 135,163" fill="url(#piedra)"/>
+        <polygon points="135,163 265,163 259,153 141,153" fill="url(#piedra)"/>
+        <polygon points="141,153 259,153 253,144 147,144" fill="url(#piedra)"/>
+        <polygon points="147,144 253,144 247,135 153,135" fill="url(#piedra)"/>
+        <polygon points="153,135 247,135 241,127 159,127" fill="url(#piedra)"/>
+        <polygon points="159,127 241,127 235,119 165,119" fill="url(#piedra)"/>
+        <polygon points="165,119 235,119 229,112 171,112" fill="url(#piedra)"/>
+        <!-- Plataforma superior -->
+        <polygon points="171,112 229,112 224,104 176,104" fill="#3a5c30"/>
+        <!-- Templete (cuarto interior) -->
+        <rect x="180" y="72" width="40" height="34" fill="#2e4a26"/>
+        <!-- Puerta del templete -->
+        <rect x="196" y="86" width="8" height="20" fill="#0d1a08" opacity="0.9"/>
+        <!-- Molduras horizontales del templete -->
+        <rect x="180" y="72" width="40" height="4" fill="#3a5c30"/>
+        <rect x="180" y="84" width="40" height="3" fill="#263e1e"/>
+        <rect x="180" y="95" width="40" height="3" fill="#3a5c30"/>
+        <!-- CRESTA — característica del Gran Jaguar: alta, calada -->
+        <polygon points="183,72 200,28 217,72" fill="#243a1c"/>
+        <!-- Ventanas caladas de la cresta -->
+        <rect x="191" y="38" width="5"  height="6" fill="#060d08" opacity="0.8"/>
+        <rect x="201" y="38" width="5"  height="6" fill="#060d08" opacity="0.8"/>
+        <rect x="191" y="50" width="5"  height="5" fill="#060d08" opacity="0.7"/>
+        <rect x="201" y="50" width="5"  height="5" fill="#060d08" opacity="0.7"/>
+        <rect x="191" y="61" width="5"  height="4" fill="#060d08" opacity="0.6"/>
+        <rect x="201" y="61" width="5"  height="4" fill="#060d08" opacity="0.6"/>
+        <!-- Punta y brillo gold -->
+        <polygon points="198,28 200,18 202,28" fill="#2e4a26"/>
+        <line x1="200" y1="18" x2="200" y2="10" stroke="#F5C842" stroke-width="1" opacity="0.8"/>
+        <circle cx="200" cy="8" r="3" fill="#F5C842" opacity="0.7"/>
+        <!-- Sombras laterales pirámide -->
+        <polygon points="118,195 123,184 129,173 135,163 141,153 147,144 153,135 159,127 165,119 171,112 176,104 180,72 183,72 165,119 159,127 153,135 147,144 141,153 135,163 129,173 123,184 118,195" fill="rgba(0,0,0,0.25)"/>
+        <polygon points="282,195 277,184 271,173 265,163 259,153 253,144 247,135 241,127 235,119 229,112 224,104 220,72 217,72 235,119 241,127 247,135 253,144 259,153 265,163 271,173 277,184 282,195" fill="rgba(0,0,0,0.15)"/>
+
+        <!-- ============================================ -->
+        <!-- TEMPLO II DERECHA (más pequeño)             -->
+        <!-- ============================================ -->
+        <polygon points="308,183 378,183 374,173 312,173" fill="url(#piedra2)"/>
+        <polygon points="312,173 374,173 370,164 316,164" fill="url(#piedra2)"/>
+        <polygon points="316,164 370,164 366,155 320,155" fill="url(#piedra2)"/>
+        <polygon points="320,155 366,155 362,147 324,147" fill="url(#piedra2)"/>
+        <polygon points="324,147 362,147 358,139 328,139" fill="url(#piedra2)"/>
+        <polygon points="328,139 358,139 354,132 332,132" fill="url(#piedra2)"/>
+        <polygon points="332,132 354,132 350,126 336,126" fill="url(#piedra2)"/>
+        <!-- Templete -->
+        <rect x="334" y="107" width="18" height="21" fill="#2e4a26"/>
+        <rect x="339" y="117" width="8"  height="11" fill="#0d1a08" opacity="0.9"/>
+        <rect x="334" y="107" width="18" height="3"  fill="#3a5c30"/>
+        <!-- Cresta -->
+        <polygon points="336,107 343,88 350,107" fill="#243a1c"/>
+        <rect x="340" y="93"  width="3" height="4" fill="#060d08" opacity="0.7"/>
+        <rect x="344" y="93"  width="3" height="4" fill="#060d08" opacity="0.7"/>
+        <rect x="340" y="100" width="3" height="4" fill="#060d08" opacity="0.6"/>
+        <rect x="344" y="100" width="3" height="4" fill="#060d08" opacity="0.6"/>
+        <line x1="343" y1="88" x2="343" y2="81" stroke="#F5C842" stroke-width="0.8" opacity="0.6"/>
+        <circle cx="343" cy="79" r="2" fill="#F5C842" opacity="0.5"/>
+        <!-- Sombra -->
+        <polygon points="308,183 312,173 316,164 320,155 324,147 328,139 332,132 336,126 334,126 330,132 326,139 322,147 318,155 314,164 310,173 308,183" fill="rgba(0,0,0,0.2)"/>
+
+        <!-- Selva en capas -->
+        <ellipse cx="0"   cy="220" rx="50"  ry="30" fill="#0a1e0a"/>
+        <ellipse cx="90"  cy="215" rx="60"  ry="25" fill="#0d2410"/>
+        <ellipse cx="200" cy="222" rx="80"  ry="22" fill="#0a1e0a"/>
+        <ellipse cx="330" cy="217" rx="70"  ry="28" fill="#0d2410"/>
+        <ellipse cx="415" cy="220" rx="55"  ry="26" fill="#0a1e0a"/>
+
+        <!-- Niebla base -->
+        <rect x="0" y="190" width="400" height="50" fill="url(#niebla)"/>
+      </svg>
+
+      <!-- Overlay gradiente para fusionar con el contenido -->
+      <!-- Overlay gradiente para fusionar con el contenido -->
+      <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 50% 120%, rgba(245,200,66,0.04) 0%, transparent 60%), linear-gradient(0deg, rgba(6,13,8,0.7) 0%, transparent 40%);"></div>
+    </div>
+
+    <!-- Botón volver -->
+    <button onclick="goTo('screen-gift')" style="position:absolute; top:15px; left:15px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.7); padding:6px 14px; border-radius:20px; font-size:12px; cursor:pointer;">← Volver</button>
+
+    <!-- SELECTOR DE DESTINOS — esquina superior derecha -->
+    <div id="destinoWrap" style="position:absolute; top:12px; right:12px; z-index:50;">
+      <!-- Menú desplegable -->
+      <div id="destinoMenu" style="display:none; position:absolute; top:42px; right:0;
+        background:var(--dark2); border:1px solid var(--border); border-radius:10px;
+        overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.8); min-width:220px;">
+        <div style="font-family:Orbitron,sans-serif; font-size:8px; color:var(--text2); letter-spacing:2px; padding:10px 14px 6px;">DESTINOS</div>
+        <button class="destino-item active" id="dest-tikal"      onclick="pickDestino('tikal')">      🏛️ &nbsp;Tikal, Petén</button>
+        <button class="destino-item"        id="dest-yaxha"      onclick="pickDestino('yaxha')">      🌊 &nbsp;Yaxhá Sunset</button>
+        <button class="destino-item"        id="dest-craterazul" onclick="pickDestino('craterazul')"> 💧 &nbsp;Cráter Azul</button>
+        <button class="destino-item"        id="dest-riodulce"   onclick="pickDestino('riodulce')">   ⛵ &nbsp;Río Dulce</button>
+        <button class="destino-item"        id="dest-belize"     onclick="pickDestino('belize')">     🇧🇿 &nbsp;Belize / Cayes</button>
+        <button class="destino-item"        id="dest-bacalar"    onclick="pickDestino('bacalar')">    🇲🇽 &nbsp;Bacalar / Chetumal</button>
+        <button class="destino-item"        id="dest-ciudadgt"   onclick="pickDestino('ciudadgt')">   🏙️ &nbsp;Ciudad GT / Antigua</button>
+        <button class="destino-item"        id="dest-semuc"      onclick="pickDestino('semuc')">      💧 &nbsp;Semuc Champey</button>
+        <button class="destino-item"        id="dest-antigua"    onclick="pickDestino('antigua')">    🏰 &nbsp;Antigua Guatemala</button>
+        <button class="destino-item"        id="dest-acatenango" onclick="pickDestino('acatenango')"> 🌋 &nbsp;Volcán Acatenango</button>
+        <button class="destino-item"        id="dest-atitlan"    onclick="pickDestino('atitlan')">    🌊 &nbsp;Lago Atitlán</button>
+      </div>
+      <!-- Botón principal -->
+      <button id="destinoBtn" onclick="toggleDestinoMenu()"
+        style="background:rgba(0,0,0,0.5); border:1px solid rgba(245,200,66,0.3);
+               border-radius:50px; padding:7px 13px; cursor:pointer;
+               display:flex; align-items:center; gap:6px; transition:all 0.2s;
+               backdrop-filter:blur(8px);"
+        onmouseover="this.style.borderColor='rgba(245,200,66,0.7)'"
+        onmouseout="this.style.borderColor='rgba(245,200,66,0.3)'">
+        <span id="destinoCurrentEmoji" style="font-size:15px;">🏛️</span>
+        <span id="destinoCurrentName" style="font-family:Orbitron,sans-serif; font-size:9px; color:var(--gold); letter-spacing:1px; max-width:80px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">TIKAL</span>
+        <span style="font-size:9px; color:var(--text2);">▼</span>
+      </button>
+    </div>
+
+    <!-- Quetzal NFT SVG -->
+    <div style="position:relative; display:inline-block; margin-bottom:15px;">
+      <div id="quetzalNFT" style="width:130px; height:130px; margin:0 auto; position:relative; animation:quetzalFloat 3s ease-in-out infinite; z-index:10;">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%; filter:drop-shadow(0 0 20px rgba(0,230,118,0.6)) drop-shadow(0 0 40px rgba(245,200,66,0.3));">
+          <!-- Cuerpo -->
+          <ellipse cx="50" cy="45" rx="18" ry="22" fill="#00C853"/>
+          <!-- Pecho rojo -->
+          <ellipse cx="50" cy="55" rx="12" ry="14" fill="#FF1744"/>
+          <!-- Cabeza -->
+          <circle cx="50" cy="28" r="14" fill="#00E676"/>
+          <!-- Cresta -->
+          <ellipse cx="50" cy="16" rx="6" ry="10" fill="#69F0AE" opacity="0.9"/>
+          <ellipse cx="44" cy="18" rx="4" ry="7" fill="#B9F6CA" opacity="0.7"/>
+          <ellipse cx="56" cy="18" rx="4" ry="7" fill="#B9F6CA" opacity="0.7"/>
+          <!-- Ojo -->
+          <circle cx="44" cy="26" r="4" fill="#fff"/>
+          <circle cx="44" cy="26" r="2.5" fill="#1A1A26"/>
+          <circle cx="43" cy="25" r="1" fill="#fff"/>
+          <!-- Pico -->
+          <polygon points="38,30 34,33 38,34" fill="#F5C842"/>
+          <!-- Alas -->
+          <ellipse cx="32" cy="48" rx="10" ry="6" fill="#00BFA5" transform="rotate(-20 32 48)"/>
+          <ellipse cx="68" cy="48" rx="10" ry="6" fill="#00BFA5" transform="rotate(20 68 48)"/>
+          <!-- Cola larga característica -->
+          <path d="M 46 67 Q 40 85 35 100" stroke="#69F0AE" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M 50 67 Q 50 88 48 105" stroke="#B9F6CA" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M 54 67 Q 60 85 65 100" stroke="#69F0AE" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Brillo NFT -->
+          <circle cx="70" cy="25" r="3" fill="#F5C842" opacity="0.8"/>
+          <circle cx="75" cy="35" r="1.5" fill="#00E5FF" opacity="0.7"/>
+          <circle cx="25" cy="35" r="2" fill="#F5C842" opacity="0.5"/>
+        </svg>
+      </div>
+      <!-- Badge NFT -->
+      <div style="position:absolute; top:-5px; right:-10px; background:linear-gradient(135deg,var(--gold),#E8A020); color:#000; font-family:Orbitron,sans-serif; font-size:8px; padding:2px 8px; border-radius:10px; font-weight:700;">NFT</div>
+    </div>
+
+    <!-- Mensaje del Quetzal -->
+    <div id="quetzalMsg" style="background:rgba(0,0,0,0.6); border:1px solid rgba(0,230,118,0.4); border-radius:12px; padding:12px 16px; margin:0 auto 15px; max-width:340px; font-size:13px; color:#E0F7E9; line-height:1.5; font-style:italic; position:relative; z-index:10; backdrop-filter:blur(4px);">
+      "Bienvenido a Petén. Soy Kaan, tu guía. Juntos vamos a vivir algo que no olvidarás jamás."
+    </div>
+
+    <div id="destinoTitulo" style="font-family:Orbitron,sans-serif; font-size:20px; color:var(--gold); letter-spacing:3px; margin-bottom:4px; position:relative; z-index:10; text-shadow:0 0 20px rgba(245,200,66,0.5);">TOUR A TIKAL</div>
+    <div id="destinoSubtitulo" style="font-size:12px; color:rgba(255,255,255,0.6); letter-spacing:4px; position:relative; z-index:10;">PETÉN · GUATEMALA · 2026</div>
+  </div>
+
+  <!-- Contenido scrolleable -->
+  <div style="padding:24px; max-width:600px; margin:0 auto; width:100%;">
+
+    <!-- Tours disponibles — dinámicos por destino -->
+    <div style="font-family:Orbitron,sans-serif; font-size:10px; color:var(--text2); letter-spacing:3px; margin-bottom:14px;">ELIGE TU EXPERIENCIA</div>
+    <div id="toursContainer"></div>
+
+    <!-- Qué llevar — Kaan recomienda -->
+    <div style="background:rgba(0,200,80,0.06); border:1px solid rgba(0,200,80,0.2); border-radius:10px; padding:16px; margin-bottom:16px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+        <div style="font-size:24px;">🦜</div>
+        <div style="font-family:Orbitron,sans-serif; font-size:11px; color:#00E676; letter-spacing:1px;">KAAN RECOMIENDA</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div style="font-size:12px; color:var(--text2);">💧 Agua con electrolitos</div>
+        <div style="font-size:12px; color:var(--text2);">👟 Zapatos cómodos</div>
+        <div style="font-size:12px; color:var(--text2);">🦟 Repelente de insectos</div>
+        <div style="font-size:12px; color:var(--text2);">🧢 Gorra o sombrero</div>
+        <div style="font-size:12px; color:var(--text2);">📵 Sin señal en Tikal</div>
+        <div style="font-size:12px; color:var(--text2);">⏰ Llegar 5 min antes</div>
+      </div>
+    </div>
+
+    <!-- Dato exclusivo -->
+    <div style="background:rgba(245,200,66,0.06); border-left:3px solid var(--gold); padding:14px 16px; border-radius:6px; margin-bottom:20px; font-size:12px; color:var(--text2); line-height:1.7; font-style:italic;">
+      🏛️ <strong style="color:var(--gold);">Dato exclusivo:</strong> El Templo IV de Tikal tiene 64 metros de altura. Desde su cima, con suerte, verás las otras pirámides asomarse sobre el dosel de la selva — igual que en Star Wars (fue filmado aquí). Muy pocos visitantes lo saben.
+    </div>
+
+    <!-- CTA -->
+    <div style="background:rgba(245,200,66,0.06); border:1px solid rgba(245,200,66,0.2); border-radius:10px; padding:18px; text-align:center;">
+      <div style="font-size:13px; color:var(--text); margin-bottom:5px;" id="tourSelectedName">Selecciona un tour arriba ↑</div>
+      <div style="font-size:11px; color:var(--text2); margin-bottom:14px;">Suscríbete para reservar y recibir tu boleto digital</div>
+      <button class="btn-main" style="width:100%; margin-bottom:8px;" onclick="usarBeneficio('guia')">
+        🎟️ Reservar mi lugar gratis
+      </button>
+      <div style="font-size:11px; color:var(--text2);">✓ Boleto digital · ✓ Código QR único · ✓ Envío por correo</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SCREEN DESCUENTOS ===================== -->
+
+<div class="screen" id="screen-tour-confirm">
+  <button class="nav-back" onclick="goTo('screen-guia')">← Volver</button>
+  <div class="card" style="max-width:520px; margin-top:20px;">
+    <div class="card-title" style="color:var(--gold);">✅ Confirmar Reserva de Tour</div>
+    <div style="background:var(--dark2); border-radius:8px; padding:16px; margin:16px 0;">
+      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text2);">Destino</span>
+        <span id="confirmDestino" style="color:var(--gold); font-weight:bold;"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text2);">Tour</span>
+        <span id="confirmTourNombre"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text2);">Horario</span>
+        <span id="confirmHora" style="color:var(--text2);"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text2);">Pago</span>
+        <span id="confirmPago" style="color:var(--green);"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0;">
+        <span style="color:var(--text2);">Precio p/persona</span>
+        <div style="text-align:right;">
+          <div id="confirmPrecioUSD" style="color:var(--gold); font-weight:bold;"></div>
+          <div id="confirmPrecioGTQ" style="font-size:12px; color:var(--text2);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Personas</label>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <input class="form-input" id="tourPax" type="number" min="1" max="30" value="1"
+          style="width:80px; text-align:center; font-size:22px;" oninput="actualizarTotalPax()">
+        <div>
+          <div id="confirmTotalUSD" style="font-size:20px; color:var(--gold); font-weight:bold;"></div>
+          <div id="confirmTotalGTQ" style="font-size:13px; color:var(--text2);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nombre completo *</label>
+      <input class="form-input" id="tourNombre" placeholder="Nombre del turista" autocomplete="name">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Correo electrónico *</label>
+      <input class="form-input" id="tourEmail" type="email" placeholder="correo@ejemplo.com" autocomplete="email">
+    </div>
+    <button class="btn-main" style="width:100%; margin-top:12px;" onclick="submitTourReserva()">
+      ✅ Confirmar Reserva
+    </button>
   </div>
 </div>
 
@@ -1538,7 +1853,8 @@
 </div>
 
 <!-- QR Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
 // =============================================
 //  BENEFICIOS — SUSCRIPCIÓN
 // =============================================
@@ -1597,8 +1913,7 @@ function isSubscribed() {
 
 function openGift(tipo) {
   if (tipo === 'guia') {
-    // La guía está en Tours — ir a Tours en screen-guia
-    goToTours('screen-guia');
+    goTo('screen-guia');
     return;
   }
   if (tipo === 'newsletter') { goTo('screen-pedro'); loadPedroPrices(); return; }
@@ -1660,6 +1975,1625 @@ function pedroAction(tipo) {
   showToast(msgs[tipo] || '¡Pronto disponible!', 'success');
 }
 
+
+// ===== JS TOURS (screen-guia) =====
+// =============================================
+//  QUETZAL NFT — KAAN EL GUÍA
+// =============================================
+const KAAN_MSGS = {
+  bienvenida: '"Bienvenido a Petén. Soy Kaan, tu guía. Juntos vamos a vivir algo que no olvidarás jamás."',
+  amanecer:   '"El amanecer en Tikal... cuando el sol toca las pirámides antes que cualquier turista. Eso es magia pura. Buena elección."',
+  manana:     '"El tour de mañana te da tiempo de explorar cada rincón. Los templos tienen historias que solo se escuchan si vas despacio."',
+  atardecer:  '"Al atardecer, los colores del cielo se mezclan con la piedra milenaria. Y si tienes suerte, verás los murciélagos salir en masa."',
+};
+
+let selectedTourType = '';
+
+function selectTour(tipo) {
+  selectedTourType = tipo;
+  document.querySelectorAll('.tour-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('tour-' + tipo).classList.add('selected');
+
+  // Mensaje de Kaan
+  const msg = document.getElementById('quetzalMsg');
+  if (msg && KAAN_MSGS[tipo]) {
+    msg.style.opacity = '0';
+    msg.style.transform = 'translateY(5px)';
+    setTimeout(function() {
+      msg.textContent = KAAN_MSGS[tipo];
+      msg.style.transition = 'all 0.4s ease';
+      msg.style.opacity = '1';
+      msg.style.transform = 'translateY(0)';
+    }, 200);
+  }
+
+  // Actualizar texto del CTA
+  const nombres = { amanecer:'🌅 Amanecer — Q 850', manana:'☀️ Mañana — Q 600', atardecer:'🌇 Atardecer — Q 680' };
+  const el = document.getElementById('tourSelectedName');
+  if (el) el.textContent = 'Seleccionado: ' + (nombres[tipo] || tipo);
+}
+
+
+
+// =============================================
+//  FONDOS SVG POR DESTINO
+// =============================================
+var FONDOS_SVG = {
+
+// ================================================================
+//  TIKAL — Selva maya nocturna, pirámides con musgo y niebla
+// ================================================================
+  tikal: {
+    bg: "linear-gradient(180deg,#010604 0%,#040e07 25%,#071408 55%,#04100a 80%,#020806 100%)",
+    svg: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;bottom:0;left:0;width:100%;height:105%;opacity:0.65;">
+      <defs>
+        <linearGradient id="ng"   x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#010604" stop-opacity="0"/><stop offset="100%" stop-color="#010604" stop-opacity="1"/></linearGradient>
+        <linearGradient id="p1"   x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3f6535"/><stop offset="100%" stop-color="#162a10"/></linearGradient>
+        <linearGradient id="p2"   x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#305228"/><stop offset="100%" stop-color="#10200a"/></linearGradient>
+        <linearGradient id="p3"   x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#254420"/><stop offset="100%" stop-color="#0c1a08"/></linearGradient>
+        <radialGradient id="gl1"  cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F5C842" stop-opacity="0.18"/><stop offset="100%" stop-color="#F5C842" stop-opacity="0"/></radialGradient>
+        <radialGradient id="gl2"  cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00E676" stop-opacity="0.12"/><stop offset="100%" stop-color="#00E676" stop-opacity="0"/></radialGradient>
+        <linearGradient id="nieb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(180,220,180,0)" /><stop offset="100%" stop-color="rgba(180,220,180,0.06)"/></linearGradient>
+      </defs>
+
+      <!-- === CIELO NOCTURNO PROFUNDO === -->
+      <!-- Vía láctea diagonal sutil -->
+      <path d="M 0,55 Q 100,30 200,40 Q 300,50 400,22" stroke="rgba(255,255,255,0.05)" stroke-width="18" fill="none"/>
+      <path d="M 0,52 Q 100,28 200,38 Q 300,48 400,20" stroke="rgba(245,200,66,0.04)"  stroke-width="10" fill="none"/>
+      <!-- Estrellas — muchas y variadas -->
+      <circle cx="8"   cy="5"  r="0.8" fill="#F5C842" opacity="0.75"/>
+      <circle cx="22"  cy="15" r="0.5" fill="#fff"    opacity="0.5"/>
+      <circle cx="38"  cy="4"  r="1.0" fill="#F5C842" opacity="0.6"/>
+      <circle cx="52"  cy="18" r="0.6" fill="#00E5FF" opacity="0.5"/>
+      <circle cx="65"  cy="7"  r="0.8" fill="#fff"    opacity="0.45"/>
+      <circle cx="80"  cy="22" r="0.5" fill="#F5C842" opacity="0.55"/>
+      <circle cx="95"  cy="3"  r="1.0" fill="#fff"    opacity="0.4"/>
+      <circle cx="112" cy="14" r="0.7" fill="#F5C842" opacity="0.65"/>
+      <circle cx="128" cy="8"  r="0.5" fill="#00E5FF" opacity="0.45"/>
+      <circle cx="145" cy="20" r="0.9" fill="#fff"    opacity="0.4"/>
+      <circle cx="160" cy="6"  r="0.6" fill="#F5C842" opacity="0.6"/>
+      <circle cx="175" cy="17" r="0.8" fill="#fff"    opacity="0.45"/>
+      <circle cx="190" cy="3"  r="1.0" fill="#F5C842" opacity="0.55"/>
+      <circle cx="208" cy="13" r="0.5" fill="#00E5FF" opacity="0.5"/>
+      <circle cx="222" cy="22" r="0.7" fill="#fff"    opacity="0.4"/>
+      <circle cx="238" cy="7"  r="0.9" fill="#F5C842" opacity="0.6"/>
+      <circle cx="255" cy="18" r="0.5" fill="#fff"    opacity="0.45"/>
+      <circle cx="270" cy="4"  r="0.8" fill="#F5C842" opacity="0.65"/>
+      <circle cx="285" cy="15" r="0.6" fill="#00E5FF" opacity="0.45"/>
+      <circle cx="302" cy="8"  r="1.0" fill="#fff"    opacity="0.4"/>
+      <circle cx="318" cy="20" r="0.7" fill="#F5C842" opacity="0.55"/>
+      <circle cx="335" cy="5"  r="0.5" fill="#fff"    opacity="0.5"/>
+      <circle cx="350" cy="16" r="0.9" fill="#F5C842" opacity="0.6"/>
+      <circle cx="368" cy="9"  r="0.6" fill="#00E5FF" opacity="0.4"/>
+      <circle cx="382" cy="3"  r="0.8" fill="#fff"    opacity="0.45"/>
+      <circle cx="396" cy="19" r="1.0" fill="#F5C842" opacity="0.6"/>
+      <!-- Constelación Orión sutil -->
+      <line x1="310" y1="8"  x2="320" y2="12" stroke="rgba(245,200,66,0.12)" stroke-width="0.5"/>
+      <line x1="320" y1="12" x2="328" y2="10" stroke="rgba(245,200,66,0.12)" stroke-width="0.5"/>
+      <circle cx="310" cy="8"  r="1.2" fill="#F5C842" opacity="0.5"/>
+      <circle cx="320" cy="12" r="0.9" fill="#F5C842" opacity="0.4"/>
+      <circle cx="328" cy="10" r="1.1" fill="#F5C842" opacity="0.5"/>
+
+      <!-- LUNA con halo y cráter -->
+      <circle cx="58"  cy="36" r="32" fill="url(#gl1)"/>
+      <circle cx="58"  cy="36" r="20" fill="rgba(245,200,66,0.10)" stroke="#F5C842" stroke-width="0.8" opacity="0.55"/>
+      <circle cx="58"  cy="36" r="14" fill="rgba(245,200,66,0.06)"/>
+      <circle cx="53"  cy="30" r="4"  fill="none" stroke="rgba(245,200,66,0.18)" stroke-width="0.7"/>
+      <circle cx="63"  cy="40" r="2.5" fill="none" stroke="rgba(245,200,66,0.14)" stroke-width="0.5"/>
+      <circle cx="56"  cy="42" r="1.5" fill="none" stroke="rgba(245,200,66,0.12)" stroke-width="0.5"/>
+
+      <!-- NUBES BAJAS DE SELVA con movimiento sutil -->
+      <ellipse cx="200" cy="215" rx="230" ry="22" fill="rgba(160,210,160,0.05)"/>
+      <ellipse cx="80"  cy="222" rx="100" ry="15" fill="rgba(160,210,160,0.04)"/>
+      <ellipse cx="330" cy="218" rx="110" ry="14" fill="rgba(160,210,160,0.04)"/>
+      <ellipse cx="200" cy="210" rx="180" ry="10" fill="rgba(200,240,200,0.03)"/>
+
+      <!-- === FONDO LEJANO: ceibas y copas de selva === -->
+      <ellipse cx="20"  cy="112" rx="28" ry="18" fill="#06140a" opacity="0.7"/>
+      <ellipse cx="55"  cy="108" rx="22" ry="15" fill="#08180c" opacity="0.65"/>
+      <ellipse cx="92"  cy="115" rx="26" ry="16" fill="#06140a" opacity="0.6"/>
+      <ellipse cx="310" cy="110" rx="26" ry="16" fill="#06140a" opacity="0.6"/>
+      <ellipse cx="348" cy="106" rx="22" ry="15" fill="#08180c" opacity="0.65"/>
+      <ellipse cx="384" cy="112" rx="28" ry="18" fill="#06140a" opacity="0.7"/>
+
+      <!-- === TEMPLO IV — extremo izquierdo, más pequeño por perspectiva === -->
+      <polygon points="5,215  52,215  48,204  9,204"   fill="url(#p3)"/>
+      <polygon points="9,204  48,204  44,193  13,193"  fill="url(#p3)"/>
+      <polygon points="13,193 44,193  40,183  17,183"  fill="url(#p3)"/>
+      <polygon points="17,183 40,183  37,173  20,173"  fill="url(#p3)"/>
+      <polygon points="20,173 37,173  34,164  23,164"  fill="url(#p3)"/>
+      <polygon points="23,164 34,164  31,156  26,156"  fill="url(#p3)"/>
+      <rect x="25" y="140" width="9" height="18" fill="#253e1e"/>
+      <!-- Cresta Templo IV -->
+      <polygon points="26,140 29,120 32,140" fill="#1a3016"/>
+      <rect x="27" y="124" width="2" height="4" fill="#010604" opacity="0.85"/>
+      <rect x="29" y="124" width="2" height="4" fill="#010604" opacity="0.85"/>
+      <rect x="27" y="131" width="2" height="3" fill="#010604" opacity="0.75"/>
+      <line x1="29" y1="120" x2="29" y2="110" stroke="#F5C842" stroke-width="0.9" opacity="0.65"/>
+      <circle cx="29" cy="108" r="2.5" fill="#F5C842" opacity="0.6"/>
+      <circle cx="29" cy="108" r="5"   fill="url(#gl1)" opacity="0.5"/>
+      <!-- Vegetación en escalones -->
+      <rect x="5"  y="214" width="47" height="2" fill="#0d2a10" opacity="0.55"/>
+      <rect x="9"  y="203" width="39" height="2" fill="#0d2a10" opacity="0.45"/>
+      <rect x="13" y="192" width="31" height="2" fill="#0d2a10" opacity="0.4"/>
+      <!-- Enredadera lateral -->
+      <path d="M 5,215 Q 8,195 6,175 Q 7,160 9,145" stroke="#0d2a10" stroke-width="1.2" fill="none" opacity="0.55"/>
+
+      <!-- === GRAN JAGUAR — TEMPLO I: protagonista central === -->
+      <!-- 9 escalones empinados y simétricos -->
+      <polygon points="100,228 300,228 293,215 107,215"  fill="url(#p1)"/>
+      <polygon points="107,215 293,215 286,202 114,202"  fill="url(#p1)"/>
+      <polygon points="114,202 286,202 279,190 121,190"  fill="url(#p1)"/>
+      <polygon points="121,190 279,190 272,178 128,178"  fill="url(#p1)"/>
+      <polygon points="128,178 272,178 265,167 135,167"  fill="url(#p1)"/>
+      <polygon points="135,167 265,167 258,156 142,156"  fill="url(#p1)"/>
+      <polygon points="142,156 258,156 251,146 149,146"  fill="url(#p1)"/>
+      <polygon points="149,146 251,146 244,136 156,136"  fill="url(#p1)"/>
+      <polygon points="156,136 244,136 237,127 163,127"  fill="url(#p1)"/>
+      <!-- Plataforma cima -->
+      <polygon points="163,127 237,127 230,118 170,118"  fill="#3f6535"/>
+      <!-- Templete superior -->
+      <rect x="172" y="82"  width="56" height="38" fill="#305228"/>
+      <!-- Puerta central con arco -->
+      <rect x="192" y="97"  width="16" height="23" fill="#010604" opacity="0.95"/>
+      <ellipse cx="200" cy="97" rx="8" ry="5.5" fill="#010604" opacity="0.95"/>
+      <!-- Ventanas laterales -->
+      <rect x="178" y="91" width="9"  height="12" fill="#010604" opacity="0.85"/>
+      <ellipse cx="182" cy="91" rx="4.5" ry="3" fill="#010604" opacity="0.85"/>
+      <rect x="213" y="91" width="9"  height="12" fill="#010604" opacity="0.85"/>
+      <ellipse cx="218" cy="91" rx="4.5" ry="3" fill="#010604" opacity="0.85"/>
+      <!-- Molduras decorativas templete -->
+      <rect x="172" y="82"  width="56" height="4" fill="#4a7040"/>
+      <rect x="172" y="94"  width="56" height="3" fill="#223a1a"/>
+      <rect x="172" y="108" width="56" height="3" fill="#4a7040"/>
+      <rect x="172" y="118" width="56" height="3" fill="#223a1a"/>
+      <!-- Columnas -->
+      <rect x="174" y="85"  width="7"  height="37" fill="#264a1e" opacity="0.7"/>
+      <rect x="219" y="85"  width="7"  height="37" fill="#264a1e" opacity="0.7"/>
+      <!-- CRESTA GRAN JAGUAR — la más icónica de Guatemala -->
+      <polygon points="174,82 200,22 226,82" fill="#1a3016"/>
+      <!-- 3 columnas de ventanas caladas -->
+      <rect x="183" y="33" width="6" height="8" fill="#010604" opacity="0.9"/>
+      <rect x="194" y="33" width="6" height="8" fill="#010604" opacity="0.9"/>
+      <rect x="205" y="33" width="6" height="8" fill="#010604" opacity="0.9"/>
+      <rect x="183" y="47" width="6" height="7" fill="#010604" opacity="0.85"/>
+      <rect x="194" y="47" width="6" height="7" fill="#010604" opacity="0.85"/>
+      <rect x="205" y="47" width="6" height="7" fill="#010604" opacity="0.85"/>
+      <rect x="185" y="60" width="6" height="6" fill="#010604" opacity="0.8"/>
+      <rect x="196" y="60" width="6" height="6" fill="#010604" opacity="0.8"/>
+      <rect x="207" y="60" width="6" height="6" fill="#010604" opacity="0.8"/>
+      <rect x="188" y="72" width="5" height="5" fill="#010604" opacity="0.75"/>
+      <rect x="198" y="72" width="5" height="5" fill="#010604" opacity="0.75"/>
+      <rect x="208" y="72" width="5" height="5" fill="#010604" opacity="0.75"/>
+      <!-- Punta y brillo dorado -->
+      <polygon points="197,22 200,10 203,22" fill="#305228"/>
+      <line x1="200" y1="10" x2="200" y2="2" stroke="#F5C842" stroke-width="1.4" opacity="0.95"/>
+      <circle cx="200" cy="0"  r="4"  fill="#F5C842" opacity="0.85"/>
+      <circle cx="200" cy="0"  r="9"  fill="url(#gl1)" opacity="0.7"/>
+      <circle cx="200" cy="0"  r="16" fill="url(#gl1)" opacity="0.35"/>
+      <!-- Sombra izquierda pirámide -->
+      <polygon points="100,228 107,215 114,202 121,190 128,178 135,167 142,156 149,146 156,136 163,127 170,118 172,82 174,82 170,118 163,127 156,136 149,146 142,156 135,167 128,178 121,190 114,202 107,215 100,228" fill="rgba(0,0,0,0.35)"/>
+      <!-- Musgo verde en cada escalón -->
+      <rect x="100" y="227" width="200" height="2" fill="#0d2a12" opacity="0.6"/>
+      <rect x="107" y="214" width="186" height="2" fill="#0d2a12" opacity="0.5"/>
+      <rect x="114" y="201" width="172" height="2" fill="#0d2a12" opacity="0.45"/>
+      <rect x="121" y="189" width="158" height="2" fill="#0d2a12" opacity="0.4"/>
+      <rect x="128" y="177" width="144" height="2" fill="#0d2a12" opacity="0.35"/>
+      <!-- Lianas cayendo -->
+      <path d="M 145,215 Q 142,200 144,185 Q 143,170 146,155" stroke="#0a2010" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M 255,215 Q 258,200 256,185 Q 257,170 254,155" stroke="#0a2010" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M 175,118 Q 172,105 173,95"  stroke="#0a2010" stroke-width="1"   fill="none" opacity="0.4"/>
+      <path d="M 225,118 Q 228,105 227,95"  stroke="#0a2010" stroke-width="1"   fill="none" opacity="0.4"/>
+
+      <!-- === TEMPLO II — derecha === -->
+      <polygon points="315,220 390,220 385,209 320,209" fill="url(#p2)"/>
+      <polygon points="320,209 385,209 380,199 325,199" fill="url(#p2)"/>
+      <polygon points="325,199 380,199 375,189 330,189" fill="url(#p2)"/>
+      <polygon points="330,189 375,189 370,180 335,180" fill="url(#p2)"/>
+      <polygon points="335,180 370,180 365,171 340,171" fill="url(#p2)"/>
+      <polygon points="340,171 365,171 360,163 345,163" fill="url(#p2)"/>
+      <polygon points="345,163 360,163 355,156 350,156" fill="url(#p2)"/>
+      <rect x="347" y="134" width="24" height="24" fill="#2a4822"/>
+      <rect x="353" y="144" width="12" height="14" fill="#010604" opacity="0.9"/>
+      <ellipse cx="359" cy="144" rx="6" ry="4"  fill="#010604" opacity="0.9"/>
+      <rect x="347" y="134" width="24" height="4" fill="#3a5830"/>
+      <!-- Cresta Templo II -->
+      <polygon points="349,134 359,108 369,134" fill="#1a3016"/>
+      <rect x="353" y="113" width="4" height="6" fill="#010604" opacity="0.85"/>
+      <rect x="359" y="113" width="4" height="6" fill="#010604" opacity="0.85"/>
+      <rect x="353" y="122" width="4" height="5" fill="#010604" opacity="0.8"/>
+      <rect x="359" y="122" width="4" height="5" fill="#010604" opacity="0.8"/>
+      <line x1="359" y1="108" x2="359" y2="99"  stroke="#F5C842" stroke-width="1" opacity="0.75"/>
+      <circle cx="359" cy="97" r="3"   fill="#F5C842" opacity="0.65"/>
+      <circle cx="359" cy="97" r="6"   fill="url(#gl1)" opacity="0.5"/>
+      <!-- Musgo Templo II -->
+      <rect x="315" y="219" width="75" height="2" fill="#0d2a12" opacity="0.55"/>
+      <rect x="320" y="208" width="65" height="2" fill="#0d2a12" opacity="0.45"/>
+
+      <!-- === ACRÓPOLIS NORTE — extremo derecho, bajo === -->
+      <rect x="355" y="205" width="45" height="8" fill="#162810" opacity="0.7"/>
+      <rect x="360" y="198" width="35" height="9" fill="#1a2e12" opacity="0.65"/>
+      <rect x="363" y="191" width="28" height="9" fill="#1e3414" opacity="0.6"/>
+
+      <!-- === SELVA DENSA BASE === -->
+      <!-- Ceibas individuales con tronco -->
+      <line x1="82"  y1="228" x2="82"  y2="175" stroke="#061008" stroke-width="4"/>
+      <ellipse cx="82"  cy="168" rx="28" ry="20" fill="#0a1e0c"/>
+      <ellipse cx="75"  cy="178" rx="18" ry="12" fill="#0d2410"/>
+      <ellipse cx="90"  cy="176" rx="16" ry="11" fill="#0a1e0c"/>
+      <line x1="318" y1="228" x2="318" y2="172" stroke="#061008" stroke-width="4"/>
+      <ellipse cx="318" cy="165" rx="28" ry="20" fill="#0a1e0c"/>
+      <ellipse cx="310" cy="175" rx="18" ry="12" fill="#0d2410"/>
+      <ellipse cx="328" cy="173" rx="16" ry="11" fill="#0a1e0c"/>
+      <!-- Palmas -->
+      <line x1="68"  cy="228" x1="68"  y2="228" x2="68"  y1="228" y2="195" stroke="#040c06" stroke-width="2"/>
+      <line x1="68"  y1="228" x2="68"  y2="195" stroke="#040c06" stroke-width="2"/>
+      <path d="M 68,195 Q 55,188 45,192" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <path d="M 68,195 Q 62,182 58,178" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <path d="M 68,195 Q 78,184 85,187" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <line x1="332" y1="228" x2="332" y2="195" stroke="#040c06" stroke-width="2"/>
+      <path d="M 332,195 Q 319,188 309,192" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <path d="M 332,195 Q 326,182 322,178" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <path d="M 332,195 Q 342,184 349,187" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <!-- Masa de selva base -->
+      <ellipse cx="0"   cy="232" rx="60"  ry="34" fill="#060e08"/>
+      <ellipse cx="50"  cy="238" rx="50"  ry="28" fill="#0a1a0c"/>
+      <ellipse cx="108" cy="234" rx="44"  ry="30" fill="#060e08"/>
+      <ellipse cx="168" cy="240" rx="55"  ry="26" fill="#0a1a0c"/>
+      <ellipse cx="232" cy="238" rx="50"  ry="28" fill="#060e08"/>
+      <ellipse cx="292" cy="234" rx="44"  ry="30" fill="#0a1a0c"/>
+      <ellipse cx="350" cy="238" rx="50"  ry="28" fill="#060e08"/>
+      <ellipse cx="410" cy="232" rx="55"  ry="34" fill="#0a1a0c"/>
+      <!-- Fireflies / luciérnagas -->
+      <circle cx="135" cy="200" r="1.5" fill="#00E676" opacity="0.5"/>
+      <circle cx="265" cy="195" r="1"   fill="#00E676" opacity="0.45"/>
+      <circle cx="92"  cy="210" r="1.2" fill="#00E676" opacity="0.4"/>
+      <circle cx="310" cy="205" r="1"   fill="#00E676" opacity="0.5"/>
+      <circle cx="178" cy="218" r="1.2" fill="#00E676" opacity="0.35"/>
+      <circle cx="228" cy="212" r="1"   fill="#00E676" opacity="0.45"/>
+
+      <!-- NIEBLA BASE -->
+      <rect x="0" y="210" width="400" height="50" fill="url(#ng)"/>
+    </svg>`
+  },
+
+// ================================================================
+//  ANTIGUA GUATEMALA — Catedral barroca, volcán Agua, adoquines
+// ================================================================
+  antigua: {
+    bg: "linear-gradient(180deg,#060402 0%,#0e0804 30%,#160c05 60%,#0c0702 100%)",
+    svg: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;bottom:0;left:0;width:100%;height:105%;opacity:0.62;">
+      <defs>
+        <linearGradient id="ag"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#060402" stop-opacity="0"/><stop offset="100%" stop-color="#060402" stop-opacity="1"/></linearGradient>
+        <linearGradient id="ap"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7a5430"/><stop offset="100%" stop-color="#2a1808"/></linearGradient>
+        <linearGradient id="ap2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a3c1e"/><stop offset="100%" stop-color="#1e1006"/></linearGradient>
+        <linearGradient id="ap3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3e2810"/><stop offset="100%" stop-color="#140c04"/></linearGradient>
+        <linearGradient id="vol" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#180e06"/><stop offset="100%" stop-color="#080402"/></linearGradient>
+        <radialGradient id="la"  cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F5C842" stop-opacity="0.14"/><stop offset="100%" stop-color="#F5C842" stop-opacity="0"/></radialGradient>
+        <radialGradient id="fa"  cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF9100" stop-opacity="0.08"/><stop offset="100%" stop-color="#FF9100" stop-opacity="0"/></radialGradient>
+      </defs>
+
+      <!-- CIELO CÁLIDO estrellado -->
+      <circle cx="10"  cy="6"  r="0.8" fill="#F5C842" opacity="0.6"/>
+      <circle cx="28"  cy="14" r="0.5" fill="#fff"    opacity="0.4"/>
+      <circle cx="45"  cy="4"  r="0.9" fill="#F5C842" opacity="0.55"/>
+      <circle cx="62"  cy="18" r="0.6" fill="#fff"    opacity="0.35"/>
+      <circle cx="78"  cy="8"  r="0.7" fill="#F5C842" opacity="0.5"/>
+      <circle cx="98"  cy="3"  r="0.5" fill="#fff"    opacity="0.4"/>
+      <circle cx="118" cy="12" r="0.9" fill="#F5C842" opacity="0.6"/>
+      <circle cx="138" cy="7"  r="0.6" fill="#fff"    opacity="0.35"/>
+      <circle cx="158" cy="16" r="0.8" fill="#F5C842" opacity="0.5"/>
+      <circle cx="178" cy="4"  r="0.5" fill="#fff"    opacity="0.4"/>
+      <circle cx="198" cy="10" r="0.7" fill="#F5C842" opacity="0.55"/>
+      <circle cx="245" cy="6"  r="0.9" fill="#F5C842" opacity="0.5"/>
+      <circle cx="272" cy="15" r="0.6" fill="#fff"    opacity="0.35"/>
+      <circle cx="295" cy="5"  r="0.8" fill="#F5C842" opacity="0.55"/>
+      <circle cx="318" cy="13" r="0.5" fill="#fff"    opacity="0.4"/>
+      <circle cx="342" cy="7"  r="0.9" fill="#F5C842" opacity="0.6"/>
+      <circle cx="365" cy="18" r="0.6" fill="#fff"    opacity="0.35"/>
+      <circle cx="388" cy="4"  r="0.8" fill="#F5C842" opacity="0.55"/>
+
+      <!-- LUNA con atmósfera cálida -->
+      <circle cx="72"  cy="40" r="28" fill="url(#la)"/>
+      <circle cx="72"  cy="40" r="18" fill="rgba(245,200,66,0.10)" stroke="#F5C842" stroke-width="0.7" opacity="0.55"/>
+      <circle cx="72"  cy="40" r="12" fill="rgba(245,200,66,0.06)"/>
+      <circle cx="66"  cy="34" r="4"  fill="none" stroke="rgba(245,200,66,0.2)" stroke-width="0.7"/>
+      <circle cx="76"  cy="44" r="2.5" fill="none" stroke="rgba(245,200,66,0.15)" stroke-width="0.5"/>
+
+      <!-- VOLCÁN AGUA — gran masa al fondo -->
+      <polygon points="185,0 320,162 50,162" fill="url(#vol)" opacity="0.8"/>
+      <!-- Textura de ladera -->
+      <polygon points="190,0 318,162 62,162" fill="#100800" opacity="0.4"/>
+      <polygon points="195,0 315,162 75,162" fill="#0c0600" opacity="0.25"/>
+      <!-- Nieve/nubes en la cima -->
+      <polygon points="178,0 185,0 205,28 168,28" fill="rgba(255,255,255,0.13)"/>
+      <polygon points="183,0 185,0 200,20 175,20" fill="rgba(255,255,255,0.09)"/>
+      <ellipse cx="185" cy="32" rx="28" ry="10" fill="rgba(255,255,255,0.06)"/>
+      <!-- Nubes alrededor del Agua -->
+      <ellipse cx="185" cy="45" rx="40" ry="14" fill="rgba(255,255,255,0.05)"/>
+      <ellipse cx="145" cy="60" rx="30" ry="10" fill="rgba(255,255,255,0.04)"/>
+      <ellipse cx="230" cy="55" rx="32" ry="11" fill="rgba(255,255,255,0.04)"/>
+      <!-- Brillo de Marte u otro planeta -->
+      <circle cx="355" cy="22" r="2.5" fill="#FF6D00" opacity="0.4"/>
+
+      <!-- MURALLA PERIMETRAL -->
+      <rect x="0"   y="162" width="400" height="16" fill="#2a1808" opacity="0.9"/>
+      <line x1="0"   y1="162" x2="400" y2="162" stroke="#3a2210" stroke-width="1.5" opacity="0.7"/>
+      <!-- Almenas -->
+      <rect x="0"   y="155" width="12" height="9" fill="#2a1808"/><rect x="16"  y="155" width="12" height="9" fill="#2a1808"/>
+      <rect x="32"  y="155" width="12" height="9" fill="#2a1808"/><rect x="48"  y="155" width="12" height="9" fill="#2a1808"/>
+      <rect x="64"  y="155" width="12" height="9" fill="#2a1808"/>
+      <rect x="320" y="155" width="12" height="9" fill="#2a1808"/><rect x="336" y="155" width="12" height="9" fill="#2a1808"/>
+      <rect x="352" y="155" width="12" height="9" fill="#2a1808"/><rect x="368" y="155" width="12" height="9" fill="#2a1808"/>
+
+      <!-- CATEDRAL SANTIAGO — detallada -->
+      <!-- Base / plataforma -->
+      <rect x="78" y="115" width="244" height="68" fill="url(#ap3)"/>
+      <!-- Textura piedra horizontal -->
+      <line x1="78" y1="125" x2="322" y2="125" stroke="#100800" stroke-width="0.6" opacity="0.5"/>
+      <line x1="78" y1="135" x2="322" y2="135" stroke="#100800" stroke-width="0.6" opacity="0.5"/>
+      <line x1="78" y1="145" x2="322" y2="145" stroke="#100800" stroke-width="0.6" opacity="0.5"/>
+      <line x1="78" y1="155" x2="322" y2="155" stroke="#100800" stroke-width="0.6" opacity="0.5"/>
+      <!-- TORRE IZQUIERDA -->
+      <rect x="82"  y="58" width="48" height="59" fill="url(#ap2)"/>
+      <rect x="82"  y="52" width="48" height="9"  fill="url(#ap)"/>
+      <!-- Ventanas con arco torre izq -->
+      <rect x="90"  y="64" width="12" height="18" fill="#060402" opacity="0.9"/>
+      <ellipse cx="96"  cy="64" rx="6" ry="4" fill="#060402" opacity="0.9"/>
+      <rect x="108" y="64" width="12" height="18" fill="#060402" opacity="0.9"/>
+      <ellipse cx="114" cy="64" rx="6" ry="4" fill="#060402" opacity="0.9"/>
+      <!-- Segunda fila ventanas -->
+      <rect x="90"  y="88" width="12" height="14" fill="#060402" opacity="0.8"/>
+      <ellipse cx="96"  cy="88" rx="6" ry="4" fill="#060402" opacity="0.8"/>
+      <rect x="108" y="88" width="12" height="14" fill="#060402" opacity="0.8"/>
+      <ellipse cx="114" cy="88" rx="6" ry="4" fill="#060402" opacity="0.8"/>
+      <!-- Remate octogonal torre izq -->
+      <polygon points="82,52 106,28 130,52" fill="url(#ap2)"/>
+      <rect x="100" y="30" width="12" height="20" fill="#8a6030"/>
+      <rect x="97"  y="27" width="18" height="5"  fill="url(#ap)"/>
+      <!-- Cruz torre izq -->
+      <line x1="106" y1="12" x2="106" y2="28" stroke="#F5C842" stroke-width="1.5" opacity="0.8"/>
+      <line x1="99"  y1="19" x2="113" y2="19" stroke="#F5C842" stroke-width="1.5" opacity="0.8"/>
+      <circle cx="106" cy="10" r="2" fill="#F5C842" opacity="0.75"/>
+      <!-- TORRE DERECHA -->
+      <rect x="270" y="58" width="48" height="59" fill="url(#ap2)"/>
+      <rect x="270" y="52" width="48" height="9"  fill="url(#ap)"/>
+      <rect x="278" y="64" width="12" height="18" fill="#060402" opacity="0.9"/>
+      <ellipse cx="284" cy="64" rx="6" ry="4" fill="#060402" opacity="0.9"/>
+      <rect x="296" y="64" width="12" height="18" fill="#060402" opacity="0.9"/>
+      <ellipse cx="302" cy="64" rx="6" ry="4" fill="#060402" opacity="0.9"/>
+      <rect x="278" y="88" width="12" height="14" fill="#060402" opacity="0.8"/>
+      <ellipse cx="284" cy="88" rx="6" ry="4" fill="#060402" opacity="0.8"/>
+      <rect x="296" y="88" width="12" height="14" fill="#060402" opacity="0.8"/>
+      <ellipse cx="302" cy="88" rx="6" ry="4" fill="#060402" opacity="0.8"/>
+      <polygon points="270,52 294,28 318,52" fill="url(#ap2)"/>
+      <rect x="288" y="30" width="12" height="20" fill="#8a6030"/>
+      <rect x="285" y="27" width="18" height="5"  fill="url(#ap)"/>
+      <line x1="294" y1="12" x2="294" y2="28" stroke="#F5C842" stroke-width="1.5" opacity="0.8"/>
+      <line x1="287" y1="19" x2="301" y2="19" stroke="#F5C842" stroke-width="1.5" opacity="0.8"/>
+      <circle cx="294" cy="10" r="2" fill="#F5C842" opacity="0.75"/>
+      <!-- FACHADA CENTRAL -->
+      <rect x="132" y="80" width="136" height="100" fill="url(#ap2)"/>
+      <!-- Molduras horizontales -->
+      <rect x="128" y="106" width="144" height="6" fill="#8a6030"/>
+      <rect x="128" y="135" width="144" height="5" fill="url(#ap)"/>
+      <rect x="128" y="158" width="144" height="4" fill="#6a4820"/>
+      <!-- Roseton central -->
+      <circle cx="200" cy="94" r="14" fill="#060402" opacity="0.8"/>
+      <circle cx="200" cy="94" r="10" fill="none" stroke="#8a6030" stroke-width="2" opacity="0.7"/>
+      <circle cx="200" cy="94" r="6"  fill="none" stroke="#6a4820" stroke-width="1" opacity="0.5"/>
+      <!-- Rayos del rosetón -->
+      <line x1="200" y1="80" x2="200" y2="108" stroke="#6a4820" stroke-width="0.7" opacity="0.5"/>
+      <line x1="186" y1="94" x2="214" y2="94"  stroke="#6a4820" stroke-width="0.7" opacity="0.5"/>
+      <line x1="190" y1="84" x2="210" y2="104" stroke="#6a4820" stroke-width="0.7" opacity="0.4"/>
+      <line x1="210" y1="84" x2="190" y2="104" stroke="#6a4820" stroke-width="0.7" opacity="0.4"/>
+      <!-- ARCO CENTRAL GRANDE -->
+      <rect x="185" y="130" width="30" height="52" fill="#060402" opacity="0.95"/>
+      <ellipse cx="200" cy="130" rx="15" ry="11" fill="#060402" opacity="0.95"/>
+      <!-- Columnas flanqueando arco central -->
+      <rect x="175" y="108" width="8"  height="74" fill="#5a3c1e" opacity="0.75"/>
+      <rect x="217" y="108" width="8"  height="74" fill="#5a3c1e" opacity="0.75"/>
+      <!-- ARCOS LATERALES -->
+      <rect x="140" y="122" width="26" height="38" fill="#060402" opacity="0.88"/>
+      <ellipse cx="153" cy="122" rx="13" ry="9" fill="#060402" opacity="0.88"/>
+      <rect x="234" y="122" width="26" height="38" fill="#060402" opacity="0.88"/>
+      <ellipse cx="247" cy="122" rx="13" ry="9" fill="#060402" opacity="0.88"/>
+      <!-- Pilastras -->
+      <rect x="135" y="108" width="6" height="74" fill="#5a3c1e" opacity="0.6"/>
+      <rect x="259" y="108" width="6" height="74" fill="#5a3c1e" opacity="0.6"/>
+
+      <!-- RUINAS LATERALES con arcos -->
+      <rect x="0"   y="142" width="78" height="36" fill="#2a1808" opacity="0.75"/>
+      <!-- Arcos ruina izq -->
+      <rect x="8"   y="155" width="20" height="23" fill="#060402" opacity="0.8"/>
+      <ellipse cx="18"  cy="155" rx="10" ry="7" fill="#060402" opacity="0.8"/>
+      <rect x="33"  y="158" width="18" height="20" fill="#060402" opacity="0.7"/>
+      <ellipse cx="42"  cy="158" rx="9"  ry="6" fill="#060402" opacity="0.7"/>
+      <rect x="55"  y="160" width="16" height="18" fill="#060402" opacity="0.65"/>
+      <!-- Hierba en ruinas izq -->
+      <ellipse cx="10"  cy="178" rx="8"  ry="4" fill="#1a2e0a" opacity="0.6"/>
+      <ellipse cx="35"  cy="178" rx="6"  ry="3" fill="#1a2e0a" opacity="0.5"/>
+      <rect x="322" y="142" width="78" height="36" fill="#2a1808" opacity="0.75"/>
+      <rect x="328" y="155" width="20" height="23" fill="#060402" opacity="0.8"/>
+      <ellipse cx="338" cy="155" rx="10" ry="7" fill="#060402" opacity="0.8"/>
+      <rect x="354" y="158" width="18" height="20" fill="#060402" opacity="0.7"/>
+      <ellipse cx="363" cy="158" rx="9"  ry="6" fill="#060402" opacity="0.7"/>
+      <rect x="376" y="160" width="16" height="18" fill="#060402" opacity="0.65"/>
+      <ellipse cx="365" cy="178" rx="8"  ry="4" fill="#1a2e0a" opacity="0.6"/>
+      <ellipse cx="390" cy="178" rx="6"  ry="3" fill="#1a2e0a" opacity="0.5"/>
+
+      <!-- FUENTE DE LA PLAZA -->
+      <ellipse cx="200" cy="200" rx="55" ry="12" fill="#1a1005" opacity="0.9"/>
+      <ellipse cx="200" cy="196" rx="40" ry="8"  fill="#221505" opacity="0.7"/>
+      <ellipse cx="200" cy="192" rx="25" ry="5"  fill="#2e1e08" opacity="0.6"/>
+      <rect x="196" y="173" width="8"  height="22" fill="#3a2410"/>
+      <ellipse cx="200" cy="173" rx="16" ry="5"  fill="#2e1e08"/>
+      <ellipse cx="200" cy="170" rx="10" ry="3"  fill="#4a3018" opacity="0.6"/>
+      <!-- Agua de la fuente -->
+      <ellipse cx="200" cy="170" rx="7"  ry="2"  fill="rgba(0,180,220,0.3)"/>
+      <!-- Chorros de agua simbólicos -->
+      <path d="M 200,170 Q 195,162 192,168" stroke="rgba(0,180,220,0.25)" stroke-width="1.5" fill="none"/>
+      <path d="M 200,170 Q 205,162 208,168" stroke="rgba(0,180,220,0.25)" stroke-width="1.5" fill="none"/>
+
+      <!-- ADOQUINES detallados -->
+      <rect x="0" y="215" width="400" height="45" fill="#160e05"/>
+      <!-- Juntas verticales -->
+      <line x1="30"  y1="215" x2="30"  y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="60"  y1="215" x2="60"  y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="90"  y1="215" x2="90"  y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="120" y1="215" x2="120" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="150" y1="215" x2="150" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="180" y1="215" x2="180" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="210" y1="215" x2="210" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="240" y1="215" x2="240" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="270" y1="215" x2="270" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="300" y1="215" x2="300" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="330" y1="215" x2="330" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="360" y1="215" x2="360" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <line x1="390" y1="215" x2="390" y2="260" stroke="#0a0702" stroke-width="0.8" opacity="0.5"/>
+      <!-- Juntas horizontales -->
+      <line x1="0" y1="228" x2="400" y2="228" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="0" y1="241" x2="400" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="0" y1="254" x2="400" y2="254" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <!-- Adoquines desplazados en segunda fila -->
+      <line x1="15"  y1="228" x2="15"  y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="45"  y1="228" x2="45"  y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="75"  y1="228" x2="75"  y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="105" y1="228" x2="105" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="135" y1="228" x2="135" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="165" y1="228" x2="165" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="195" y1="228" x2="195" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="225" y1="228" x2="225" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="255" y1="228" x2="255" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="285" y1="228" x2="285" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="315" y1="228" x2="315" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="345" y1="228" x2="345" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+      <line x1="375" y1="228" x2="375" y2="241" stroke="#0a0702" stroke-width="0.7" opacity="0.4"/>
+
+      <!-- FAROLES coloniales -->
+      <line x1="55"  y1="198" x2="55"  y2="215" stroke="#3a2410" stroke-width="2"/>
+      <rect x="50"   y="190" width="10" height="9" fill="#4a2e12" opacity="0.9"/>
+      <circle cx="55"  cy="193" r="3"   fill="#F5C842" opacity="0.8"/>
+      <circle cx="55"  cy="193" r="7"   fill="rgba(245,200,66,0.2)"/>
+      <circle cx="55"  cy="193" r="12"  fill="rgba(245,200,66,0.08)"/>
+      <line x1="345" y1="198" x2="345" y2="215" stroke="#3a2410" stroke-width="2"/>
+      <rect x="340"  y="190" width="10" height="9" fill="#4a2e12" opacity="0.9"/>
+      <circle cx="345" cy="193" r="3"   fill="#F5C842" opacity="0.8"/>
+      <circle cx="345" cy="193" r="7"   fill="rgba(245,200,66,0.2)"/>
+      <circle cx="345" cy="193" r="12"  fill="rgba(245,200,66,0.08)"/>
+      <!-- Faroles pequeños -->
+      <line x1="145" y1="205" x2="145" y2="215" stroke="#3a2410" stroke-width="1.5"/>
+      <circle cx="145" cy="203" r="2.5" fill="#F5C842" opacity="0.65"/>
+      <circle cx="145" cy="203" r="6"   fill="rgba(245,200,66,0.15)"/>
+      <line x1="255" y1="205" x2="255" y2="215" stroke="#3a2410" stroke-width="1.5"/>
+      <circle cx="255" cy="203" r="2.5" fill="#F5C842" opacity="0.65"/>
+      <circle cx="255" cy="203" r="6"   fill="rgba(245,200,66,0.15)"/>
+
+      <!-- JACARANDAS con flor púrpura -->
+      <line x1="28"  y1="215" x2="28"  y2="175" stroke="#1a0d05" stroke-width="3"/>
+      <ellipse cx="28"  cy="162" rx="22" ry="28" fill="#4a1a38" opacity="0.7"/>
+      <ellipse cx="18"  cy="172" rx="14" ry="16" fill="#3a1030" opacity="0.55"/>
+      <ellipse cx="38"  cy="168" rx="16" ry="18" fill="#5a2048" opacity="0.6"/>
+      <line x1="372" y1="215" x2="372" y2="175" stroke="#1a0d05" stroke-width="3"/>
+      <ellipse cx="372" cy="162" rx="22" ry="28" fill="#4a1a38" opacity="0.7"/>
+      <ellipse cx="362" cy="172" rx="14" ry="16" fill="#3a1030" opacity="0.55"/>
+      <ellipse cx="382" cy="168" rx="16" ry="18" fill="#5a2048" opacity="0.6"/>
+      <!-- Pétalo caído -->
+      <ellipse cx="22"  cy="216" rx="8" ry="2" fill="#4a1a38" opacity="0.4"/>
+      <ellipse cx="376" cy="216" rx="8" ry="2" fill="#4a1a38" opacity="0.4"/>
+
+      <!-- CIPRESES coloniales -->
+      <line x1="118" y1="215" x2="118" y2="170" stroke="#1e1408" stroke-width="2"/>
+      <ellipse cx="118" cy="155" rx="8" ry="22" fill="#1a2e0a" opacity="0.8"/>
+      <ellipse cx="118" cy="160" rx="10" ry="18" fill="#223810" opacity="0.65"/>
+      <line x1="282" y1="215" x2="282" y2="170" stroke="#1e1408" stroke-width="2"/>
+      <ellipse cx="282" cy="155" rx="8" ry="22" fill="#1a2e0a" opacity="0.8"/>
+      <ellipse cx="282" cy="160" rx="10" ry="18" fill="#223810" opacity="0.65"/>
+
+      <rect x="0" y="210" width="400" height="50" fill="url(#ag)"/>
+    </svg>`
+  },
+
+// ================================================================
+//  SEMUC CHAMPEY — Montañas, cañón, río Cahabón, piscinas turquesa
+// ================================================================
+  semuc: {
+    bg: "linear-gradient(180deg,#010809 0%,#020e10 30%,#031518 60%,#020c0e 100%)",
+    svg: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;bottom:0;left:0;width:100%;height:105%;opacity:0.64;">
+      <defs>
+        <linearGradient id="sg"    x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#010809" stop-opacity="0"/><stop offset="100%" stop-color="#010809" stop-opacity="1"/></linearGradient>
+        <linearGradient id="m1"    x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0e2e1a"/><stop offset="100%" stop-color="#041008"/></linearGradient>
+        <linearGradient id="m2"    x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a2414"/><stop offset="100%" stop-color="#030c06"/></linearGradient>
+        <linearGradient id="m3"    x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#122e16"/><stop offset="100%" stop-color="#060e08"/></linearGradient>
+        <linearGradient id="rio"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#004A5A" stop-opacity="0.6"/><stop offset="30%" stop-color="#00838F" stop-opacity="0.85"/><stop offset="50%" stop-color="#00ACC1" stop-opacity="0.9"/><stop offset="70%" stop-color="#00838F" stop-opacity="0.85"/><stop offset="100%" stop-color="#004A5A" stop-opacity="0.6"/></linearGradient>
+        <linearGradient id="pisc1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#26C6DA" stop-opacity="0.9"/><stop offset="100%" stop-color="#006064" stop-opacity="0.6"/></linearGradient>
+        <linearGradient id="pisc2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4DD0E1" stop-opacity="0.95"/><stop offset="100%" stop-color="#00838F" stop-opacity="0.7"/></linearGradient>
+        <radialGradient id="ls"    cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00E5FF" stop-opacity="0.14"/><stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/></radialGradient>
+      </defs>
+
+      <!-- CIELO CON BRILLO TURQUESA -->
+      <circle cx="15"  cy="6"  r="0.9" fill="#00E5FF" opacity="0.55"/>
+      <circle cx="35"  cy="14" r="0.6" fill="#fff"    opacity="0.4"/>
+      <circle cx="58"  cy="4"  r="0.8" fill="#00E5FF" opacity="0.5"/>
+      <circle cx="80"  cy="10" r="0.5" fill="#fff"    opacity="0.35"/>
+      <circle cx="102" cy="18" r="0.9" fill="#00E5FF" opacity="0.55"/>
+      <circle cx="125" cy="5"  r="0.7" fill="#fff"    opacity="0.4"/>
+      <circle cx="148" cy="13" r="0.8" fill="#00E5FF" opacity="0.5"/>
+      <circle cx="172" cy="7"  r="0.5" fill="#fff"    opacity="0.35"/>
+      <circle cx="195" cy="15" r="0.9" fill="#00E5FF" opacity="0.55"/>
+      <circle cx="218" cy="3"  r="0.7" fill="#fff"    opacity="0.4"/>
+      <circle cx="242" cy="11" r="0.8" fill="#00E5FF" opacity="0.5"/>
+      <circle cx="265" cy="18" r="0.6" fill="#fff"    opacity="0.35"/>
+      <circle cx="288" cy="6"  r="0.9" fill="#00E5FF" opacity="0.55"/>
+      <circle cx="312" cy="14" r="0.7" fill="#fff"    opacity="0.4"/>
+      <circle cx="335" cy="4"  r="0.8" fill="#00E5FF" opacity="0.5"/>
+      <circle cx="358" cy="10" r="0.5" fill="#fff"    opacity="0.35"/>
+      <circle cx="382" cy="17" r="0.9" fill="#00E5FF" opacity="0.55"/>
+
+      <!-- LUNA turquesa -->
+      <circle cx="340" cy="32" r="26" fill="url(#ls)"/>
+      <circle cx="340" cy="32" r="16" fill="rgba(0,229,255,0.09)" stroke="#00E5FF" stroke-width="0.6" opacity="0.5"/>
+      <circle cx="340" cy="32" r="10" fill="rgba(0,229,255,0.06)"/>
+
+      <!-- === MONTAÑAS FONDO — 4 capas de profundidad === -->
+      <!-- Capa 1: más lejana, picos altos -->
+      <polygon points="-10,90  30,38  70,65  110,28 150,52  190,22  230,48  270,18  310,44  350,30  390,55  430,38  430,95"
+               fill="url(#m1)" opacity="0.5"/>
+      <!-- Capa 2: media -->
+      <polygon points="-10,115 20,62  65,88  105,45  145,72  185,35  225,60  265,28  305,55  345,38  385,65  430,45  430,120"
+               fill="url(#m2)" opacity="0.68"/>
+      <!-- Capa 3: más cercana izquierda — gran masa del cañón -->
+      <polygon points="-10,260 -10,105 35,60  75,95  115,62  150,105 148,165 130,260"
+               fill="url(#m3)"/>
+      <!-- Vegetación cima montaña izq -->
+      <ellipse cx="35"  cy="58"  rx="25" ry="16" fill="#0e2e14" opacity="0.9"/>
+      <ellipse cx="60"  cy="72"  rx="20" ry="13" fill="#0a2410" opacity="0.85"/>
+      <ellipse cx="80"  cy="62"  rx="22" ry="15" fill="#0e2e14" opacity="0.85"/>
+      <ellipse cx="115" cy="58"  rx="18" ry="12" fill="#0a2410" opacity="0.8"/>
+      <!-- Niebla en cima izq -->
+      <ellipse cx="75"  cy="65"  rx="50" ry="12" fill="rgba(200,240,220,0.06)"/>
+      <!-- Capa 3: más cercana derecha -->
+      <polygon points="430,260 430,105 365,58  325,92  285,60  250,108 252,168 272,260"
+               fill="url(#m3)"/>
+      <!-- Vegetación cima montaña der -->
+      <ellipse cx="365" cy="56"  rx="25" ry="16" fill="#0e2e14" opacity="0.9"/>
+      <ellipse cx="340" cy="70"  rx="20" ry="13" fill="#0a2410" opacity="0.85"/>
+      <ellipse cx="320" cy="60"  rx="22" ry="15" fill="#0e2e14" opacity="0.85"/>
+      <ellipse cx="285" cy="57"  rx="18" ry="12" fill="#0a2410" opacity="0.8"/>
+      <!-- Niebla en cima der -->
+      <ellipse cx="325" cy="65"  rx="50" ry="12" fill="rgba(200,240,220,0.06)"/>
+
+      <!-- === CAÑÓN CENTRAL — paredes de roca caliza === -->
+      <polygon points="130,260 148,165 158,140 180,130 200,132 220,130 242,140 252,168 270,260"
+               fill="#071a0a" opacity="0.95"/>
+      <!-- Textura paredes del cañón -->
+      <line x1="148" y1="165" x2="158" y2="130" stroke="#0a2010" stroke-width="1" opacity="0.5"/>
+      <line x1="252" y1="165" x2="242" y2="130" stroke="#0a2010" stroke-width="1" opacity="0.5"/>
+      <path d="M 150,200 Q 155,185 153,170" stroke="#0d2810" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <path d="M 250,200 Q 245,185 247,170" stroke="#0d2810" stroke-width="1.5" fill="none" opacity="0.4"/>
+
+      <!-- === RÍO CAHABÓN — sinuoso, central === -->
+      <!-- Cuerpo principal del río -->
+      <path d="M -10,182 Q 40,174 90,178 Q 135,182 160,170 Q 180,161 200,163 Q 220,165 240,158 Q 265,150 310,155 Q 355,160 400,150 L 400,192 Q 355,185 310,178 Q 265,172 240,180 Q 220,186 200,184 Q 180,182 160,192 Q 135,202 90,198 Q 40,194 -10,202 Z"
+            fill="url(#rio)"/>
+      <!-- Reflejos y brillos del río -->
+      <path d="M 20,176 Q 90,168 160,168 Q 220,168 275,156 Q 340,148 400,148"
+            stroke="#00E5FF" stroke-width="2"   fill="none" opacity="0.22" stroke-linecap="round"/>
+      <path d="M 10,182 Q 80,174 150,175 Q 210,175 270,164 Q 335,155 400,154"
+            stroke="#4DD0E1" stroke-width="1.2" fill="none" opacity="0.18" stroke-linecap="round"/>
+      <path d="M 30,188 Q 100,182 170,182 Q 230,181 285,172 Q 345,163 400,162"
+            stroke="#fff"    stroke-width="0.7" fill="none" opacity="0.1"  stroke-linecap="round"/>
+      <!-- Espuma en orillas -->
+      <path d="M 90,178 Q 95,175 100,178" stroke="#fff" stroke-width="1" fill="none" opacity="0.2"/>
+      <path d="M 240,160 Q 245,157 250,160" stroke="#fff" stroke-width="1" fill="none" opacity="0.2"/>
+
+      <!-- === PUENTE NATURAL DE CALIZA === -->
+      <ellipse cx="200" cy="162" rx="80" ry="16" fill="#163a20" opacity="0.96"/>
+      <ellipse cx="200" cy="158" rx="72" ry="12" fill="#1a4226" opacity="0.9"/>
+      <!-- Textura caliza -->
+      <ellipse cx="170" cy="158" rx="20" ry="5" fill="#1e4828" opacity="0.5"/>
+      <ellipse cx="230" cy="160" rx="18" ry="4" fill="#163820" opacity="0.5"/>
+      <!-- Grietas naturales -->
+      <path d="M 155,158 Q 165,155 175,160" stroke="#0d2010" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M 225,157 Q 235,155 245,159" stroke="#0d2010" stroke-width="0.8" fill="none" opacity="0.5"/>
+
+      <!-- === PISCINAS NATURALES — 3 terrazas === -->
+      <!-- Piscina 1 — izquierda, azul profundo -->
+      <ellipse cx="152" cy="156" rx="32" ry="10" fill="url(#pisc1)" opacity="0.92"/>
+      <ellipse cx="152" cy="154" rx="26" ry="7"  fill="#4DD0E1" opacity="0.4"/>
+      <ellipse cx="152" cy="153" rx="18" ry="5"  fill="#80DEEA" opacity="0.25"/>
+      <!-- Piscina 2 — centro, turquesa brillante -->
+      <ellipse cx="200" cy="153" rx="38" ry="12" fill="url(#pisc2)" opacity="0.96"/>
+      <ellipse cx="200" cy="151" rx="30" ry="9"  fill="#80DEEA" opacity="0.45"/>
+      <ellipse cx="200" cy="149" rx="20" ry="6"  fill="#B2EBF2" opacity="0.3"/>
+      <!-- Piscina 3 — derecha, verde-turquesa -->
+      <ellipse cx="248" cy="156" rx="32" ry="10" fill="url(#pisc1)" opacity="0.92"/>
+      <ellipse cx="248" cy="154" rx="26" ry="7"  fill="#4DD0E1" opacity="0.4"/>
+      <ellipse cx="248" cy="153" rx="18" ry="5"  fill="#80DEEA" opacity="0.25"/>
+
+      <!-- Cascadas entre piscinas -->
+      <rect x="178" y="145" width="5"  height="14" fill="#00E5FF" opacity="0.55"/>
+      <rect x="180" y="145" width="2"  height="12" fill="#fff"    opacity="0.28"/>
+      <rect x="220" y="146" width="5"  height="13" fill="#00E5FF" opacity="0.55"/>
+      <rect x="222" y="146" width="2"  height="11" fill="#fff"    opacity="0.28"/>
+      <!-- Espuma de cascadas -->
+      <ellipse cx="180" cy="158" rx="8"  ry="3"  fill="#fff" opacity="0.12"/>
+      <ellipse cx="222" cy="158" rx="8"  ry="3"  fill="#fff" opacity="0.12"/>
+      <!-- Reflejos de luz solar en piscinas -->
+      <ellipse cx="200" cy="149" rx="22" ry="4"  fill="#fff" opacity="0.1"/>
+      <ellipse cx="152" cy="153" rx="14" ry="3"  fill="#fff" opacity="0.09"/>
+      <ellipse cx="248" cy="153" rx="14" ry="3"  fill="#fff" opacity="0.09"/>
+      <!-- Reflejo de la luna -->
+      <ellipse cx="200" cy="152" rx="30" ry="5"  fill="url(#ls)" opacity="0.4"/>
+
+      <!-- === VEGETACIÓN TROPICAL DENSA === -->
+      <!-- Selva en paredes del cañón -->
+      <ellipse cx="140" cy="178" rx="22" ry="14" fill="#061808"/>
+      <ellipse cx="155" cy="188" rx="18" ry="11" fill="#0a2010"/>
+      <ellipse cx="260" cy="178" rx="22" ry="14" fill="#061808"/>
+      <ellipse cx="245" cy="188" rx="18" ry="11" fill="#0a2010"/>
+      <!-- Palmas y helechos orilla -->
+      <line x1="138" y1="190" x2="138" y2="168" stroke="#040c06" stroke-width="2"/>
+      <path d="M 138,168 Q 125,160 118,165" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <path d="M 138,168 Q 132,155 130,150" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <path d="M 138,168 Q 148,158 152,162" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <line x1="262" y1="190" x2="262" y2="168" stroke="#040c06" stroke-width="2"/>
+      <path d="M 262,168 Q 275,160 282,165" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <path d="M 262,168 Q 268,155 270,150" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <path d="M 262,168 Q 252,158 248,162" stroke="#0a1e0c" stroke-width="4" fill="none"/>
+      <!-- Helechos -->
+      <ellipse cx="165" cy="168" rx="12" ry="8"  fill="#051408" opacity="0.85"/>
+      <ellipse cx="235" cy="168" rx="12" ry="8"  fill="#051408" opacity="0.85"/>
+      <!-- Masa base selva -->
+      <ellipse cx="-10" cy="235" rx="65"  ry="38" fill="#040e06"/>
+      <ellipse cx="55"  cy="242" rx="55"  ry="30" fill="#081808"/>
+      <ellipse cx="115" cy="238" rx="48"  ry="32" fill="#040e06"/>
+      <ellipse cx="200" cy="244" rx="60"  ry="28" fill="#081808"/>
+      <ellipse cx="285" cy="238" rx="48"  ry="32" fill="#040e06"/>
+      <ellipse cx="345" cy="242" rx="55"  ry="30" fill="#081808"/>
+      <ellipse cx="415" cy="235" rx="60"  ry="36" fill="#040e06"/>
+      <!-- Aves tropicales en vuelo (siluetas) -->
+      <path d="M 80,85  Q 85,80  90,85"  stroke="#040e06" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M 310,78 Q 315,73 320,78" stroke="#040e06" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M 160,55 Q 165,50 170,55" stroke="#040e06" stroke-width="1.5" fill="none" opacity="0.4"/>
+
+      <rect x="0" y="215" width="400" height="45" fill="url(#sg)"/>
+    </svg>`
+  },
+
+// ================================================================
+//  ACATENANGO — Volcán con erupción del Fuego, lava, ceniza
+// ================================================================
+  acatenango: {
+    bg: "linear-gradient(180deg,#0a0300 0%,#180800 30%,#100600 60%,#060200 100%)",
+    svg: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;bottom:0;left:0;width:100%;height:105%;opacity:0.68;">
+      <defs>
+        <linearGradient id="vg"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#060200" stop-opacity="0"/><stop offset="100%" stop-color="#060200" stop-opacity="1"/></linearGradient>
+        <linearGradient id="ac"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e0e04"/><stop offset="100%" stop-color="#0a0600"/></linearGradient>
+        <linearGradient id="ac2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#160a02"/><stop offset="100%" stop-color="#060400"/></linearGradient>
+        <linearGradient id="fu"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a1000"/><stop offset="100%" stop-color="#100500"/></linearGradient>
+        <radialGradient id="eru" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF6D00" stop-opacity="0.95"/><stop offset="50%" stop-color="#FF1744" stop-opacity="0.55"/><stop offset="100%" stop-color="#B71C1C" stop-opacity="0"/></radialGradient>
+        <radialGradient id="gl2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF9100" stop-opacity="0.85"/><stop offset="100%" stop-color="#E65100" stop-opacity="0"/></radialGradient>
+        <radialGradient id="hum" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#3a2010" stop-opacity="0.7"/><stop offset="100%" stop-color="#1a0a00" stop-opacity="0"/></radialGradient>
+      </defs>
+
+      <!-- CIELO VOLCÁNICO rojizo con ceniza -->
+      <rect x="0" y="0" width="400" height="110" fill="rgba(30,10,0,0.55)"/>
+      <!-- Resplandor del Fuego en el cielo -->
+      <ellipse cx="295" cy="90" rx="80" ry="55" fill="rgba(255,109,0,0.10)"/>
+      <ellipse cx="295" cy="100" rx="55" ry="35" fill="rgba(255,80,0,0.08)"/>
+      <!-- Estrellas (pocas, el cielo está cubierto de ceniza) -->
+      <circle cx="18"  cy="8"  r="0.8" fill="#FF6D00" opacity="0.35"/>
+      <circle cx="48"  cy="4"  r="0.6" fill="#FF9100" opacity="0.3"/>
+      <circle cx="82"  cy="12" r="0.7" fill="#FF6D00" opacity="0.35"/>
+      <circle cx="118" cy="5"  r="0.5" fill="#FF9100" opacity="0.28"/>
+      <circle cx="155" cy="14" r="0.8" fill="#FF6D00" opacity="0.32"/>
+      <circle cx="192" cy="7"  r="0.6" fill="#FF9100" opacity="0.3"/>
+      <circle cx="228" cy="15" r="0.7" fill="#FF6D00" opacity="0.35"/>
+      <circle cx="375" cy="9"  r="0.8" fill="#FF9100" opacity="0.32"/>
+      <circle cx="395" cy="18" r="0.6" fill="#FF6D00" opacity="0.3"/>
+
+      <!-- Partículas de ceniza flotando -->
+      <circle cx="30"  cy="35" r="1.5" fill="#3a2010" opacity="0.4"/>
+      <circle cx="70"  cy="28" r="1.2" fill="#2a1808" opacity="0.35"/>
+      <circle cx="115" cy="42" r="1.8" fill="#3a2010" opacity="0.38"/>
+      <circle cx="155" cy="25" r="1.3" fill="#2a1808" opacity="0.32"/>
+      <circle cx="195" cy="50" r="1.6" fill="#3a2010" opacity="0.4"/>
+      <circle cx="240" cy="32" r="1.4" fill="#2a1808" opacity="0.35"/>
+      <circle cx="360" cy="38" r="1.5" fill="#3a2010" opacity="0.38"/>
+      <circle cx="395" cy="22" r="1.2" fill="#2a1808" opacity="0.3"/>
+
+      <!-- === ACATENANGO — volcán principal, más alto === -->
+      <!-- Ladera izquierda con textura -->
+      <polygon points="-10,260 -10,120 55,55  130,100 185,68  210,170 160,260" fill="url(#ac)"/>
+      <polygon points="0,260   5,130  55,55  125,95  180,65  205,175 150,260"  fill="#130800" opacity="0.4"/>
+      <!-- Líneas de lava solidificada (flancos) -->
+      <path d="M 55,55  Q 60,90  58,130 Q 55,165 58,200" stroke="#1e0e04" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <path d="M 55,55  Q 48,88  45,125 Q 42,158 44,198" stroke="#1a0c02" stroke-width="1"   fill="none" opacity="0.35"/>
+      <!-- Roca volcánica expuesta -->
+      <ellipse cx="70"  cy="115" rx="20" ry="10" fill="#0e0600" opacity="0.5"/>
+      <ellipse cx="42"  cy="145" rx="16" ry="8"  fill="#0e0600" opacity="0.45"/>
+      <!-- Nieve/glaciar en la cima del Acatenango -->
+      <polygon points="48,55  55,42  62,55" fill="rgba(255,255,255,0.18)"/>
+      <polygon points="50,55  55,44  60,55" fill="rgba(255,255,255,0.14)"/>
+      <ellipse cx="55"  cy="55"  rx="14" ry="6"  fill="rgba(255,255,255,0.09)"/>
+
+      <!-- Ladera derecha del Acatenango -->
+      <polygon points="410,260 410,120 345,55  270,100 215,68  190,175 240,260" fill="url(#ac2)"/>
+      <polygon points="400,260 395,130 345,55  275,95  220,65  195,178 250,260" fill="#0e0600" opacity="0.35"/>
+      <path d="M 345,55 Q 340,88 342,130 Q 345,162 343,200" stroke="#160a02" stroke-width="1.5" fill="none" opacity="0.35"/>
+
+      <!-- === VOLCÁN DE FUEGO — el protagonista dramático === -->
+      <polygon points="240,260 245,145 295,52  345,145 350,260" fill="url(#fu)"/>
+      <polygon points="248,260 252,148 295,52  338,148 342,260" fill="#1a0800" opacity="0.5"/>
+      <polygon points="255,260 260,152 295,52  330,152 335,260" fill="#100500" opacity="0.35"/>
+      <!-- Textura de ladera del Fuego -->
+      <path d="M 295,52  Q 302,85  305,125 Q 308,155 306,195" stroke="#2a1000" stroke-width="2"   fill="none" opacity="0.45"/>
+      <path d="M 295,52  Q 288,82  285,120 Q 282,150 284,192" stroke="#220e00" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <path d="M 295,52  Q 310,90  318,135 Q 322,162 320,200" stroke="#2a1000" stroke-width="1.5" fill="none" opacity="0.38"/>
+
+      <!-- === ERUPCIÓN ACTIVA DEL FUEGO === -->
+      <!-- Columna de humo/piroclástica alta -->
+      <ellipse cx="295" cy="45"  rx="22" ry="16" fill="rgba(80,40,10,0.65)"/>
+      <ellipse cx="292" cy="30"  rx="30" ry="22" fill="rgba(65,32,8,0.55)"/>
+      <ellipse cx="298" cy="14"  rx="36" ry="22" fill="rgba(50,25,5,0.48)"/>
+      <ellipse cx="294" cy="0"   rx="42" ry="20" fill="rgba(35,18,3,0.4)"/>
+      <!-- Lava en el cráter -->
+      <ellipse cx="295" cy="52"  rx="16" ry="10" fill="url(#eru)"/>
+      <ellipse cx="295" cy="52"  rx="10" ry="7"  fill="#FF6D00" opacity="0.9"/>
+      <ellipse cx="295" cy="52"  rx="6"  ry="4"  fill="#FF9100" opacity="0.95"/>
+      <!-- Resplandor de la erupción -->
+      <ellipse cx="295" cy="52"  rx="40" ry="28" fill="url(#gl2)" opacity="0.75"/>
+      <ellipse cx="295" cy="55"  rx="60" ry="35" fill="url(#gl2)" opacity="0.4"/>
+      <!-- RÍOS DE LAVA por las laderas -->
+      <path d="M 295,52  Q 305,75  315,105 Q 322,135 318,165 Q 315,190 320,220" stroke="#FF6D00" stroke-width="4"   fill="none" opacity="0.7"  stroke-linecap="round"/>
+      <path d="M 295,52  Q 305,73  313,102 Q 319,132 316,162 Q 313,188 318,218" stroke="#FF9100" stroke-width="2.5" fill="none" opacity="0.55" stroke-linecap="round"/>
+      <path d="M 295,52  Q 284,78  278,112 Q 274,142 276,172 Q 278,198 275,225" stroke="#FF6D00" stroke-width="3.5" fill="none" opacity="0.65" stroke-linecap="round"/>
+      <path d="M 295,52  Q 285,76  280,108 Q 276,138 278,168 Q 280,195 278,222" stroke="#FFAB40" stroke-width="2"   fill="none" opacity="0.5"  stroke-linecap="round"/>
+      <path d="M 295,52  Q 308,80  322,115 Q 332,148 328,180 Q 325,208 330,235" stroke="#FF6D00" stroke-width="3"   fill="none" opacity="0.6"  stroke-linecap="round"/>
+      <!-- Lava solidificada (más oscura, lateral) -->
+      <path d="M 295,52  Q 300,95  295,140 Q 292,170 290,210" stroke="#8B2500" stroke-width="5"   fill="none" opacity="0.5"  stroke-linecap="round"/>
+      <!-- Partículas ígneas en el aire -->
+      <circle cx="290" cy="42"  r="2.5" fill="#FF9100" opacity="0.9"/>
+      <circle cx="302" cy="38"  r="2"   fill="#FF6D00" opacity="0.85"/>
+      <circle cx="285" cy="30"  r="1.5" fill="#FFAB40" opacity="0.7"/>
+      <circle cx="308" cy="25"  r="2.5" fill="#FF6D00" opacity="0.8"/>
+      <circle cx="278" cy="38"  r="2"   fill="#FF9100" opacity="0.75"/>
+      <circle cx="312" cy="35"  r="1.8" fill="#FFAB40" opacity="0.7"/>
+      <circle cx="275" cy="48"  r="1.5" fill="#FF6D00" opacity="0.8"/>
+      <circle cx="320" cy="48"  r="2"   fill="#FF9100" opacity="0.75"/>
+      <!-- Lluvia de ceniza -->
+      <circle cx="260" cy="65"  r="1.2" fill="#2a1808" opacity="0.55"/>
+      <circle cx="245" cy="80"  r="1"   fill="#2a1808" opacity="0.5"/>
+      <circle cx="330" cy="70"  r="1.2" fill="#2a1808" opacity="0.55"/>
+      <circle cx="315" cy="85"  r="1"   fill="#2a1808" opacity="0.5"/>
+      <circle cx="268" cy="100" r="1.5" fill="#2a1808" opacity="0.45"/>
+      <circle cx="322" cy="98"  r="1.3" fill="#2a1808" opacity="0.45"/>
+
+      <!-- === BOSQUE DE PINOS DE ALTURA === -->
+      <!-- Pinos estilizados (triángulos) -->
+      <polygon points="10,225  18,190  26,225"  fill="#0c0600" opacity="0.85"/>
+      <polygon points="22,228  32,195  42,228"  fill="#100800" opacity="0.8"/>
+      <polygon points="38,222  48,188  58,222"  fill="#0c0600" opacity="0.85"/>
+      <polygon points="55,226  66,192  77,226"  fill="#100800" opacity="0.8"/>
+      <polygon points="72,224  84,190  96,224"  fill="#0c0600" opacity="0.85"/>
+      <!-- Pinos der -->
+      <polygon points="355,225 363,192 371,225" fill="#0c0600" opacity="0.85"/>
+      <polygon points="368,228 378,196 388,228" fill="#100800" opacity="0.8"/>
+      <polygon points="380,222 390,188 400,222" fill="#0c0600" opacity="0.85"/>
+      <!-- Base del bosque -->
+      <ellipse cx="0"   cy="240" rx="60"  ry="28" fill="#080400"/>
+      <ellipse cx="80"  cy="245" rx="55"  ry="24" fill="#0c0600"/>
+      <ellipse cx="160" cy="242" rx="60"  ry="26" fill="#080400"/>
+      <ellipse cx="240" cy="248" rx="65"  ry="22" fill="#0c0600"/>
+      <ellipse cx="320" cy="244" rx="60"  ry="25" fill="#080400"/>
+      <ellipse cx="400" cy="240" rx="55"  ry="28" fill="#0c0600"/>
+      <!-- Piedras volcánicas -->
+      <ellipse cx="120" cy="238" rx="18" ry="7"  fill="#100800" opacity="0.7"/>
+      <ellipse cx="195" cy="242" rx="14" ry="5"  fill="#0c0600" opacity="0.65"/>
+      <ellipse cx="350" cy="240" rx="16" ry="6"  fill="#100800" opacity="0.7"/>
+
+      <rect x="0" y="215" width="400" height="45" fill="url(#vg)"/>
+    </svg>`
+  },
+
+// ================================================================
+//  LAGO ATITLÁN — Volcanes, lago, pueblos, canoas, luna
+// ================================================================
+  atitlan: {
+    bg: "linear-gradient(180deg,#010508 0%,#020810 30%,#030c16 60%,#020608 100%)",
+    svg: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;bottom:0;left:0;width:100%;height:105%;opacity:0.65;">
+      <defs>
+        <linearGradient id="atg"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#010508" stop-opacity="0"/><stop offset="100%" stop-color="#010508" stop-opacity="1"/></linearGradient>
+        <linearGradient id="vol"  x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#08122e"/><stop offset="100%" stop-color="#020610"/></linearGradient>
+        <linearGradient id="vol2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#060e24"/><stop offset="100%" stop-color="#01040e"/></linearGradient>
+        <linearGradient id="lago" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1565C0" stop-opacity="0.75"/><stop offset="100%" stop-color="#0D2137" stop-opacity="0.95"/></linearGradient>
+        <linearGradient id="lgo2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1976D2" stop-opacity="0.6"/><stop offset="100%" stop-color="#0A1A2E" stop-opacity="0.85"/></linearGradient>
+        <radialGradient id="lun"  cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F5C842" stop-opacity="0.18"/><stop offset="100%" stop-color="#F5C842" stop-opacity="0"/></radialGradient>
+        <radialGradient id="reflejo" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="#F5C842" stop-opacity="0.1"/><stop offset="100%" stop-color="#F5C842" stop-opacity="0"/></radialGradient>
+      </defs>
+
+      <!-- CIELO NOCTURNO — muy estrellado sobre Atitlán -->
+      <!-- Vía láctea diagonal -->
+      <path d="M 0,60 Q 100,35 200,45 Q 300,55 400,28" stroke="rgba(255,255,255,0.06)" stroke-width="22" fill="none"/>
+      <path d="M 0,58 Q 100,33 200,43 Q 300,53 400,26" stroke="rgba(245,200,66,0.04)"  stroke-width="12" fill="none"/>
+      <!-- Estrellas -->
+      <circle cx="8"   cy="4"  r="1.0" fill="#F5C842" opacity="0.75"/>
+      <circle cx="22"  cy="12" r="0.6" fill="#fff"    opacity="0.5"/>
+      <circle cx="36"  cy="5"  r="0.8" fill="#F5C842" opacity="0.6"/>
+      <circle cx="50"  cy="18" r="0.5" fill="#00E5FF" opacity="0.5"/>
+      <circle cx="65"  cy="8"  r="0.9" fill="#fff"    opacity="0.45"/>
+      <circle cx="80"  cy="22" r="0.6" fill="#F5C842" opacity="0.55"/>
+      <circle cx="95"  cy="3"  r="1.0" fill="#fff"    opacity="0.4"/>
+      <circle cx="110" cy="14" r="0.7" fill="#F5C842" opacity="0.65"/>
+      <circle cx="125" cy="7"  r="0.5" fill="#00E5FF" opacity="0.45"/>
+      <circle cx="140" cy="20" r="0.9" fill="#fff"    opacity="0.4"/>
+      <circle cx="155" cy="5"  r="0.7" fill="#F5C842" opacity="0.6"/>
+      <circle cx="170" cy="16" r="0.8" fill="#fff"    opacity="0.45"/>
+      <circle cx="186" cy="4"  r="1.0" fill="#F5C842" opacity="0.55"/>
+      <circle cx="200" cy="13" r="0.5" fill="#00E5FF" opacity="0.5"/>
+      <circle cx="215" cy="22" r="0.7" fill="#fff"    opacity="0.4"/>
+      <circle cx="230" cy="7"  r="0.9" fill="#F5C842" opacity="0.6"/>
+      <circle cx="245" cy="18" r="0.5" fill="#fff"    opacity="0.45"/>
+      <circle cx="260" cy="3"  r="0.8" fill="#F5C842" opacity="0.65"/>
+      <circle cx="275" cy="15" r="0.6" fill="#00E5FF" opacity="0.45"/>
+      <circle cx="290" cy="8"  r="1.0" fill="#fff"    opacity="0.4"/>
+      <circle cx="305" cy="20" r="0.7" fill="#F5C842" opacity="0.55"/>
+      <circle cx="320" cy="4"  r="0.5" fill="#fff"    opacity="0.5"/>
+      <circle cx="335" cy="14" r="0.9" fill="#F5C842" opacity="0.6"/>
+      <circle cx="350" cy="6"  r="0.6" fill="#00E5FF" opacity="0.4"/>
+      <circle cx="365" cy="18" r="0.8" fill="#fff"    opacity="0.45"/>
+      <circle cx="380" cy="10" r="1.0" fill="#F5C842" opacity="0.6"/>
+      <circle cx="395" cy="3"  r="0.7" fill="#fff"    opacity="0.5"/>
+      <!-- Planeta -->
+      <circle cx="350" cy="30" r="3"   fill="#FF9100" opacity="0.45"/>
+      <circle cx="350" cy="30" r="6"   fill="rgba(255,145,0,0.1)"/>
+
+      <!-- LUNA LLENA grande y brillante -->
+      <circle cx="200" cy="42" r="36" fill="url(#lun)"/>
+      <circle cx="200" cy="42" r="24" fill="rgba(245,200,66,0.11)" stroke="#F5C842" stroke-width="0.8" opacity="0.6"/>
+      <circle cx="200" cy="42" r="16" fill="rgba(245,200,66,0.07)"/>
+      <circle cx="200" cy="42" r="10" fill="rgba(245,200,66,0.04)"/>
+      <!-- Cráter lunar -->
+      <circle cx="194" cy="36" r="5"  fill="none" stroke="rgba(245,200,66,0.2)" stroke-width="0.8"/>
+      <circle cx="206" cy="47" r="3"  fill="none" stroke="rgba(245,200,66,0.15)" stroke-width="0.6"/>
+      <circle cx="198" cy="50" r="2"  fill="none" stroke="rgba(245,200,66,0.12)" stroke-width="0.5"/>
+
+      <!-- === VOLCANES ALREDEDOR DEL LAGO — 3 + cerro === -->
+      <!-- Volcán San Pedro — izquierda, cónico perfecto -->
+      <polygon points="-15,260 -15,120 48,45  120,130 135,260" fill="url(#vol)"/>
+      <polygon points="-5,260  0,128  48,45  115,125 125,260"  fill="#050e1e" opacity="0.5"/>
+      <!-- Nieve San Pedro -->
+      <polygon points="40,45  48,32  56,45" fill="rgba(255,255,255,0.14)"/>
+      <!-- Nubes alrededor San Pedro -->
+      <ellipse cx="48"  cy="55"  rx="25" ry="9"  fill="rgba(255,255,255,0.05)"/>
+      <ellipse cx="30"  cy="68"  rx="18" ry="7"  fill="rgba(255,255,255,0.04)"/>
+
+      <!-- Volcán Atitlán — centro izquierda, el más alto -->
+      <polygon points="85,260  90,140  162,42  235,145 240,260" fill="url(#vol2)"/>
+      <polygon points="95,260  98,144  162,42  228,142 232,260" fill="#040c1a" opacity="0.5"/>
+      <polygon points="105,260 108,148 162,42  220,140 224,260" fill="#020810" opacity="0.3"/>
+      <!-- Nieve Atitlán — el más nevado -->
+      <polygon points="152,42 162,26 172,42" fill="rgba(255,255,255,0.18)"/>
+      <polygon points="156,42 162,30 168,42" fill="rgba(255,255,255,0.14)"/>
+      <ellipse cx="162" cy="44"  rx="16" ry="6"  fill="rgba(255,255,255,0.09)"/>
+      <!-- Nubes -->
+      <ellipse cx="162" cy="55"  rx="35" ry="12" fill="rgba(255,255,255,0.06)"/>
+      <ellipse cx="140" cy="68"  rx="25" ry="9"  fill="rgba(255,255,255,0.05)"/>
+      <ellipse cx="188" cy="65"  rx="22" ry="8"  fill="rgba(255,255,255,0.05)"/>
+
+      <!-- Volcán Tolimán — centro derecha -->
+      <polygon points="195,260 200,148 262,55  325,148 330,260" fill="url(#vol)"/>
+      <polygon points="205,260 208,152 262,55  318,145 322,260" fill="#050e1e" opacity="0.5"/>
+      <!-- Nieve Tolimán -->
+      <polygon points="254,55 262,40 270,55" fill="rgba(255,255,255,0.14)"/>
+      <ellipse cx="262" cy="58"  rx="18" ry="7"  fill="rgba(255,255,255,0.07)"/>
+      <!-- Nubes -->
+      <ellipse cx="262" cy="70"  rx="30" ry="10" fill="rgba(255,255,255,0.05)"/>
+
+      <!-- Cerro Oro — pequeño, extremo derecho -->
+      <polygon points="340,260 345,165 388,100 415,165 415,260" fill="url(#vol2)"/>
+      <polygon points="350,260 352,168 388,100 408,165 410,260" fill="#040c1a" opacity="0.45"/>
+
+      <!-- === LAGO ATITLÁN — el corazón azul === -->
+      <rect x="0" y="158" width="400" height="80" fill="url(#lago)"/>
+      <!-- Gradiente de profundidad en el lago -->
+      <rect x="0" y="158" width="400" height="40" fill="url(#lgo2)" opacity="0.5"/>
+      <!-- REFLEJO DE LA LUNA — el elemento mágico -->
+      <rect x="174" y="158" width="52" height="80" fill="url(#reflejo)"/>
+      <ellipse cx="200" cy="165" rx="35" ry="7"   fill="rgba(245,200,66,0.14)"/>
+      <ellipse cx="200" cy="172" rx="25" ry="5"   fill="rgba(245,200,66,0.10)"/>
+      <ellipse cx="200" cy="180" rx="18" ry="4"   fill="rgba(245,200,66,0.07)"/>
+      <!-- Columna de luz lunar en el lago -->
+      <rect x="197" y="158" width="6" height="78" fill="rgba(245,200,66,0.06)"/>
+      <!-- ONDAS del lago — 5 capas -->
+      <path d="M 0,165 Q 50,161 100,165 Q 150,169 200,165 Q 250,161 300,165 Q 350,169 400,165" stroke="rgba(100,160,220,0.18)" stroke-width="1.2" fill="none"/>
+      <path d="M 0,172 Q 55,168 110,172 Q 165,176 220,172 Q 275,168 330,172 Q 365,175 400,172" stroke="rgba(100,160,220,0.14)" stroke-width="1"   fill="none"/>
+      <path d="M 0,180 Q 60,177 120,180 Q 180,183 240,180 Q 300,177 360,180 Q 385,182 400,180" stroke="rgba(100,160,220,0.11)" stroke-width="0.9"  fill="none"/>
+      <path d="M 0,188 Q 65,185 130,188 Q 195,191 260,188 Q 325,185 390,188" stroke="rgba(100,160,220,0.09)" stroke-width="0.8"  fill="none"/>
+      <path d="M 0,196 Q 70,194 140,196 Q 210,198 280,196 Q 350,194 400,196" stroke="rgba(100,160,220,0.07)" stroke-width="0.7"  fill="none"/>
+
+      <!-- === PUEBLOS ALREDEDOR DEL LAGO === -->
+      <!-- Santiago Atitlán — izquierda -->
+      <rect x="12"  y="151" width="10" height="10" fill="#060e1e" opacity="0.9"/>
+      <rect x="14"  y="147" width="6"  height="6"  fill="#080e20"/>
+      <polygon points="14,147 17,140 20,147" fill="#060c1c"/>
+      <rect x="24"  y="153" width="8"  height="8"  fill="#060e1e" opacity="0.85"/>
+      <rect x="26"  y="149" width="5"  height="5"  fill="#080e20"/>
+      <rect x="34"  y="154" width="9"  height="8"  fill="#060e1e" opacity="0.8"/>
+      <rect x="44"  y="155" width="7"  height="7"  fill="#060e1e" opacity="0.75"/>
+      <!-- Luz Santiago -->
+      <circle cx="17"  cy="141" r="2.5" fill="#F5C842" opacity="0.55"/>
+      <circle cx="17"  cy="141" r="5"   fill="rgba(245,200,66,0.18)"/>
+      <circle cx="17"  cy="141" r="9"   fill="rgba(245,200,66,0.08)"/>
+      <circle cx="28"  cy="150" r="1.5" fill="#F5C842" opacity="0.4"/>
+      <circle cx="28"  cy="150" r="4"   fill="rgba(245,200,66,0.12)"/>
+      <circle cx="38"  cy="154" r="1.5" fill="#F5C842" opacity="0.35"/>
+
+      <!-- San Juan La Laguna — izquierda-centro -->
+      <rect x="68"  y="153" width="9"  height="8"  fill="#060e1e" opacity="0.9"/>
+      <rect x="70"  y="148" width="5"  height="6"  fill="#080e20"/>
+      <polygon points="70,148 73,141 76,148" fill="#060c1c"/>
+      <rect x="79"  y="154" width="8"  height="8"  fill="#060e1e" opacity="0.85"/>
+      <rect x="89"  y="155" width="7"  height="7"  fill="#060e1e" opacity="0.8"/>
+      <!-- Luz San Juan -->
+      <circle cx="73"  cy="142" r="2.5" fill="#F5C842" opacity="0.55"/>
+      <circle cx="73"  cy="142" r="5"   fill="rgba(245,200,66,0.18)"/>
+      <circle cx="73"  cy="142" r="9"   fill="rgba(245,200,66,0.08)"/>
+
+      <!-- Panajachel — derecha -->
+      <rect x="305" y="150" width="12" height="10" fill="#060e1e" opacity="0.9"/>
+      <rect x="307" y="145" width="8"  height="7"  fill="#080e20"/>
+      <polygon points="307,145 311,136 315,145" fill="#060c1c"/>
+      <rect x="319" y="152" width="10" height="9"  fill="#060e1e" opacity="0.88"/>
+      <rect x="330" y="153" width="9"  height="8"  fill="#060e1e" opacity="0.85"/>
+      <rect x="340" y="154" width="8"  height="8"  fill="#060e1e" opacity="0.8"/>
+      <rect x="350" y="155" width="7"  height="7"  fill="#060e1e" opacity="0.75"/>
+      <!-- Luces Panajachel — la más iluminada -->
+      <circle cx="311" cy="137" r="3"   fill="#F5C842" opacity="0.65"/>
+      <circle cx="311" cy="137" r="7"   fill="rgba(245,200,66,0.22)"/>
+      <circle cx="311" cy="137" r="13"  fill="rgba(245,200,66,0.09)"/>
+      <circle cx="323" cy="152" r="2"   fill="#F5C842" opacity="0.5"/>
+      <circle cx="323" cy="152" r="5"   fill="rgba(245,200,66,0.16)"/>
+      <circle cx="334" cy="153" r="1.8" fill="#F5C842" opacity="0.45"/>
+      <circle cx="344" cy="154" r="1.5" fill="#F5C842" opacity="0.4"/>
+      <circle cx="354" cy="155" r="1.5" fill="#F5C842" opacity="0.38"/>
+      <!-- San Pedro La Laguna -->
+      <rect x="115" y="155" width="8"  height="7"  fill="#060e1e" opacity="0.8"/>
+      <rect x="125" y="156" width="7"  height="6"  fill="#060e1e" opacity="0.75"/>
+      <circle cx="119" cy="155" r="1.5" fill="#F5C842" opacity="0.4"/>
+      <circle cx="119" cy="155" r="4"   fill="rgba(245,200,66,0.13)"/>
+
+      <!-- CANOAS TÍPICAS en el lago -->
+      <!-- Canoa 1 -->
+      <path d="M 128,168 Q 138,165 148,168 Q 138,172 128,168 Z" fill="#0a1828" opacity="0.85"/>
+      <line x1="138" y1="165" x2="138" y2="155" stroke="#08141e" stroke-width="1.2"/>
+      <path d="M 134,155 Q 138,150 142,155" fill="#0a1828" opacity="0.7"/>
+      <!-- Canoa 2 -->
+      <path d="M 248,172 Q 260,169 270,172 Q 260,176 248,172 Z" fill="#0a1828" opacity="0.8"/>
+      <line x1="259" y1="169" x2="259" y2="159" stroke="#08141e" stroke-width="1.2"/>
+      <path d="M 255,159 Q 259,154 263,159" fill="#0a1828" opacity="0.65"/>
+      <!-- Canoa 3 — pesquera -->
+      <path d="M 178,185 Q 192,182 205,185 Q 192,189 178,185 Z" fill="#0a1828" opacity="0.75"/>
+      <!-- Reflejo de canoas -->
+      <ellipse cx="138" cy="170" rx="12" ry="2"  fill="rgba(0,100,160,0.25)"/>
+      <ellipse cx="259" cy="174" rx="12" ry="2"  fill="rgba(0,100,160,0.22)"/>
+
+      <!-- ORILLAS del lago con vegetación acuática -->
+      <ellipse cx="0"   cy="160" rx="30" ry="10" fill="#020810" opacity="0.7"/>
+      <ellipse cx="400" cy="160" rx="30" ry="10" fill="#020810" opacity="0.7"/>
+      <!-- Tule/junco en orillas -->
+      <line x1="8"   y1="162" x2="8"   y2="148" stroke="#041020" stroke-width="1.5"/>
+      <line x1="14"  y1="160" x2="14"  y2="147" stroke="#041020" stroke-width="1.5"/>
+      <line x1="388" y1="162" x2="388" y2="148" stroke="#041020" stroke-width="1.5"/>
+      <line x1="394" y1="160" x2="394" y2="147" stroke="#041020" stroke-width="1.5"/>
+
+      <!-- === PUEBLOS MAYAS — vegetación exuberante === -->
+      <!-- Árboles de aguacate y café en terrazas -->
+      <ellipse cx="50"  cy="157" rx="12" ry="8"  fill="#041010" opacity="0.7"/>
+      <ellipse cx="62"  cy="155" rx="10" ry="6"  fill="#061418" opacity="0.65"/>
+      <ellipse cx="360" cy="157" rx="12" ry="8"  fill="#041010" opacity="0.7"/>
+      <ellipse cx="375" cy="155" rx="10" ry="6"  fill="#061418" opacity="0.65"/>
+
+      <!-- MASA BASE — tierra y vegetación alrededor -->
+      <ellipse cx="0"   cy="248" rx="65"  ry="30" fill="#020608"/>
+      <ellipse cx="65"  cy="252" rx="55"  ry="26" fill="#030810"/>
+      <ellipse cx="130" cy="250" rx="50"  ry="28" fill="#020608"/>
+      <ellipse cx="200" cy="255" rx="60"  ry="24" fill="#030810"/>
+      <ellipse cx="270" cy="250" rx="50"  ry="28" fill="#020608"/>
+      <ellipse cx="335" cy="252" rx="55"  ry="26" fill="#030810"/>
+      <ellipse cx="400" cy="248" rx="60"  ry="30" fill="#020608"/>
+
+      <rect x="0" y="218" width="400" height="42" fill="url(#atg)"/>
+    </svg>`
+  }
+
+};
+
+function updateFondoDestino(id) {
+  var d = FONDOS_SVG[id];
+  if (!d) return;
+  var hero = document.querySelector('#screen-guia > div:first-child');
+  if (!hero) return;
+  // Fade out
+  hero.style.transition = 'background 0.6s ease';
+  hero.style.background = d.bg;
+  // Reemplazar SVG
+  var bgDiv = document.getElementById('tikалBg');
+  if (bgDiv) bgDiv.innerHTML = d.svg + bgDiv.innerHTML.replace(/<svg[\s\S]*?<\/svg>/, '');
+}
+
+// =============================================
+//  SELECTOR DE DESTINOS
+// =============================================
+var destinoMenuOpen = false;
+
+var DESTINOS = {
+  tikal: {
+    emoji:'🏛️', name:'TIKAL', color:'var(--gold)',
+    titulo:'TOUR A TIKAL', subtitulo:'PETÉN · GUATEMALA · 2026',
+    kaanMsg:'"Bienvenido a Petén. Soy Kaan, tu guía. Juntos vamos a vivir algo que no olvidarás jamás."',
+    tours:[
+      { id:'amanecer',  emoji:'🌅', nombre:'TIKAL AMANECER',  hora:'Salida 3:00 AM · Permiso especial', color:'var(--gold)',   precioUSD:248, precioLiq:150, conGuia:true,  tags:['🔑 Acceso antes de abrir','🦜 Selva al amanecer','📸 Luz perfecta','★ MÁS POPULAR'] },
+      { id:'manana',    emoji:'☀️', nombre:'TIKAL DÍA',       hora:'04:30 · 06:00 · 08:00 · 10:00 AM', color:'var(--accent)', precioUSD:182, precioLiq:100, conGuia:true, precioUSD_sin:142, precioLiq_sin:70, tags:['🎙️ Con guía $182 / 🚶 Sin guía $142','🐒 Monos aulladores','🌿 Selva viva'] },
+      { id:'atardecer', emoji:'🌇', nombre:'TIKAL ATARDECER', hora:'Salida 12:00 PM · Permiso especial', color:'#FF7043',     precioUSD:222, precioLiq:130, conGuia:true,  tags:['🦇 Murciélagos al atardecer','🌅 Cielo épico','★ ÉPICA'] },
+    ]
+  },
+  yaxha: {
+    emoji:'🌊', name:'YAXHÁ', color:'#00BCD4',
+    titulo:'YAXHÁ SUNSET TOUR', subtitulo:'PETÉN · LAGO YAXHÁ · GUATEMALA',
+    kaanMsg:'"Yaxhá al atardecer. El sol sobre el lago, las ruinas en silencio. Solo tú y la eternidad."',
+    tours:[
+      { id:'sunset', emoji:'🌅', nombre:'YAXHÁ SUNSET TOUR', hora:'Salida 12:00 PM', color:'#00BCD4', precioUSD:215, precioLiq:125, tags:['🌅 Atardecer sobre el lago','🏛️ Ruinas mayas','🦜 Fauna silvestre'] },
+    ]
+  },
+  craterazul: {
+    emoji:'💧', name:'CRÁTER AZUL', color:'#0288D1',
+    titulo:'CRÁTER AZUL', subtitulo:'PETÉN · GUATEMALA',
+    kaanMsg:'"El Cráter Azul — aguas cristalinas turquesa en medio de la selva. Un paraíso escondido."',
+    tours:[
+      { id:'sin_almuerzo', emoji:'🏊', nombre:'CRÁTER AZUL',               hora:'Salida 8:00 AM · Sin almuerzo', color:'#0288D1', precioUSD:406, precioLiq:270, tags:['💧 Aguas turquesa','🌿 Sendero selva','🏊 Nado en cráter'] },
+      { id:'con_almuerzo', emoji:'🍽️', nombre:'CRÁTER AZUL + ALMUERZO',    hora:'Salida 8:00 AM · Con almuerzo', color:'#0288D1', precioUSD:472, precioLiq:320, tags:['💧 Aguas turquesa','🍽️ Almuerzo incluido','★ RECOMENDADO'] },
+    ]
+  },
+  riodulce: {
+    emoji:'⛵', name:'RÍO DULCE', color:'#26A69A',
+    titulo:'RÍO DULCE', subtitulo:'PETÉN · IZABAL · GUATEMALA',
+    kaanMsg:'"Río Dulce — mangles, castillos coloniales y el Caribe a tu alcance desde Flores."',
+    tours:[
+      { id:'riodulce',    emoji:'⛵', nombre:'RÍO DULCE',             hora:'Salida 6:00 AM',  color:'#26A69A', precioUSD:215, precioLiq:125, tags:['⛵ Río y manglares','🏰 Castillo San Felipe','🌊 Lago Izabal'] },
+      { id:'riodulce_gt', emoji:'🚌', nombre:'RÍO DULCE → CIUDAD GT', hora:'Salida 11:00 AM', color:'#26A69A', precioUSD:248, precioLiq:150, tags:['🚌 Transfer incluido','🌊 Río Dulce','🏙️ Ciudad Guatemala'] },
+    ]
+  },
+  belize: {
+    emoji:'🇧🇿', name:'BELIZE', color:'#1565C0',
+    titulo:'TOURS A BELIZE', subtitulo:'BELIZE · CARIBE · CENTROAMÉRICA',
+    kaanMsg:'"Belize — el Caribe más cercano. Cayes, arrecifes de coral y selva virgen."',
+    tours:[
+      { id:'belize_city', emoji:'🏙️', nombre:'BELIZE CITY / SAN IGNACIO', hora:'Salida 6:00 AM', color:'#1565C0', precioUSD:222, precioLiq:130, tags:['🇧🇿 Belize','🏙️ Ciudad costera','🌿 Jungla San Ignacio'] },
+      { id:'caye_ida',    emoji:'🏝️', nombre:'CAYE CAULKER (UNA VÍA)',    hora:'Salida 6:00 AM', color:'#0097A7', precioUSD:393, precioLiq:260, tags:['🏝️ Isla caribeña','🐠 Arrecife coral','🌊 Go Slow'] },
+      { id:'caye_rt',     emoji:'🔄', nombre:'CAYE CAULKER (IDA Y VUELTA)',hora:'Salida 6:00 AM', color:'#0097A7', precioUSD:486, precioLiq:330, tags:['🔄 Ida y vuelta','🏝️ Caye Caulker','🐠 Snorkel'] },
+      { id:'san_pedro',   emoji:'🌴', nombre:'SAN PEDRO BELIZE',           hora:'Salida 6:00 AM', color:'#0288D1', precioUSD:446, precioLiq:300, tags:['🌴 San Pedro Ambergris','🐠 Barrera coralina'] },
+      { id:'san_pedro_rt',emoji:'🔄', nombre:'SAN PEDRO (IDA Y VUELTA)',   hora:'Salida 6:00 AM', color:'#0288D1', precioUSD:578, precioLiq:400, tags:['🔄 Ida y vuelta','🌴 San Pedro','★ ÉPICA'] },
+    ]
+  },
+  bacalar: {
+    emoji:'🇲🇽', name:'BACALAR/CHETUMAL', color:'#7B1FA2',
+    titulo:'BACALAR / CHETUMAL', subtitulo:'QUINTANA ROO · MÉXICO',
+    kaanMsg:'"El Lago de los 7 Colores. Bacalar — el Caribe mexicano desde Guatemala."',
+    tours:[
+      { id:'bacalar', emoji:'🌈', nombre:'BACALAR / CHETUMAL', hora:'Salida 6:00 AM', color:'#7B1FA2', precioUSD:578, precioLiq:400, tags:['🌈 Lago 7 Colores','🇲🇽 México','★ ÉPICA'] },
+    ]
+  },
+  ciudadgt: {
+    emoji:'🏙️', name:'CIUDAD GT / ANTIGUA', color:'#455A64',
+    titulo:'CIUDAD DE GUATEMALA & ANTIGUA', subtitulo:'GUATEMALA CITY · ANTIGUA',
+    kaanMsg:'"La capital y Antigua Guatemala — cultura, historia colonial y gastronomía."',
+    tours:[
+      { id:'ciudadgt_am', emoji:'🌅', nombre:'CIUDAD GT (AM)', hora:'Salida 6:00 AM',  color:'#455A64', precioUSD:314, precioLiq:200, tags:['🏙️ Ciudad Guatemala','🌅 Tour matutino'] },
+      { id:'ciudadgt_pm', emoji:'🌆', nombre:'CIUDAD GT (PM)', hora:'Salida 21:00 PM', color:'#455A64', precioUSD:380, precioLiq:250, tags:['🌆 Tour nocturno','🏙️ Ciudad Guatemala'] },
+      { id:'antigua_am',  emoji:'⛪', nombre:'ANTIGUA (AM)',   hora:'Salida 6:00 AM',  color:'#795548', precioUSD:380, precioLiq:250, tags:['⛪ Antigua colonial','🏛️ Patrimonio UNESCO'] },
+      { id:'antigua_pm',  emoji:'🌆', nombre:'ANTIGUA (PM)',   hora:'Salida 21:00 PM', color:'#795548', precioUSD:479, precioLiq:325, tags:['🌆 Nocturno','⛪ Antigua','🍽️ Cena'] },
+    ]
+  },
+  semuc: {
+    emoji:'💧', name:'SEMUC CHAMPEY', color:'#00897B',
+    titulo:'SEMUC CHAMPEY', subtitulo:'ALTA VERAPAZ · GUATEMALA',
+    kaanMsg:'"Semuc Champey — pozas de agua turquesa sobre el río Cahabón. La joya oculta de Guatemala."',
+    tours:[
+      { id:'semuc', emoji:'💧', nombre:'SEMUC CHAMPEY', hora:'Salida 8:00 AM', color:'#00897B', precioUSD:248, precioLiq:150, tags:['💧 Pozas turquesa','🌿 Alta Verapaz','★ IMPERDIBLE'] },
+    ]
+  },
+  antigua: {
+    emoji:'🏰', name:'ANTIGUA', color:'#795548',
+    titulo:'ANTIGUA GUATEMALA', subtitulo:'SACATEPÉQUEZ · PATRIMONIO UNESCO',
+    kaanMsg:'"Antigua — la ciudad colonial más bella de América. Calles empedradas y volcanes."',
+    tours:[
+      { id:'antigua_am', emoji:'⛪', nombre:'ANTIGUA AM', hora:'Salida 6:00 AM',  color:'#795548', precioUSD:380, precioLiq:250, tags:['⛪ Colonial','🌅 AM'] },
+      { id:'antigua_pm', emoji:'🌆', nombre:'ANTIGUA PM', hora:'Salida 21:00 PM', color:'#795548', precioUSD:479, precioLiq:325, tags:['🌆 Nocturno','⛪ Antigua'] },
+    ]
+  },
+  acatenango: {
+    emoji:'🌋', name:'ACATENANGO', color:'#E64A19',
+    titulo:'VOLCÁN ACATENANGO', subtitulo:'CHIMALTENANGO · GUATEMALA',
+    kaanMsg:'"Acatenango — observar al Volcán de Fuego desde la cima. Una experiencia que te cambia la vida."',
+    tours:[
+      { id:'trekking1', emoji:'🥾', nombre:'TREKKING 1 DÍA', hora:'Salida 5:00 AM', color:'#E64A19', precio:'Q 650', tags:['🥾 Senderismo','🌋 Vista Fuego'] },
+      { id:'camping2',  emoji:'⛺', nombre:'CAMPING 2 DÍAS', hora:'Salida 8:00 AM', color:'#FF5722', precio:'Q 950', tags:['⛺ Camping','🌋 Amanecer volcán','★ ÉPICA'] },
+    ]
+  },
+  atitlan: {
+    emoji:'🌊', name:'ATITLÁN', color:'#1565C0',
+    titulo:'LAGO ATITLÁN', subtitulo:'SOLOLÁ · GUATEMALA',
+    kaanMsg:'"Atitlán — el lago más bello del mundo, rodeado de volcanes y pueblos mayas."',
+    tours:[
+      { id:'pueblos', emoji:'🛶', nombre:'PUEBLOS DEL LAGO', hora:'Salida 7:00 AM', color:'#1565C0', precio:'Q 550', tags:['🛶 Lancha','🏘️ Pueblos mayas'] },
+      { id:'kayak',   emoji:'🚣', nombre:'KAYAK ATITLÁN',   hora:'Salida 8:00 AM', color:'#0097A7', precio:'Q 400', tags:['🚣 Kayak','🌊 Lago'] },
+      { id:'indian',  emoji:'🏔️', nombre:'INDIAN NOSE',     hora:'Salida 4:00 AM', color:'#1565C0', precio:'Q 350', tags:['🏔️ Mirador','🌅 Amanecer'] },
+    ]
+  },
+};
+
+var currentDestino = 'tikal';
+
+function toggleDestinoMenu() {
+  destinoMenuOpen = !destinoMenuOpen;
+  var menu = document.getElementById('destinoMenu');
+  var arrow = document.querySelector('#destinoBtn span:last-child');
+  if (menu) menu.style.display = destinoMenuOpen ? 'block' : 'none';
+  if (arrow) arrow.textContent = destinoMenuOpen ? '▲' : '▼';
+}
+
+function closeDestinoMenu() {
+  destinoMenuOpen = false;
+  var menu = document.getElementById('destinoMenu');
+  var arrow = document.querySelector('#destinoBtn span:last-child');
+  if (menu) menu.style.display = 'none';
+  if (arrow) arrow.textContent = '▼';
+}
+
+function pickDestino(id) {
+  currentDestino = id;
+  var d = DESTINOS[id];
+  if (!d) return;
+  closeDestinoMenu();
+
+  // Actualizar botón
+  document.getElementById('destinoCurrentEmoji').textContent = d.emoji;
+  document.getElementById('destinoCurrentName').textContent  = d.name;
+
+  // Marcar activo en menú
+  document.querySelectorAll('.destino-item').forEach(function(b) {
+    b.classList.toggle('active', b.id === 'dest-' + id);
+  });
+
+  // Actualizar título con fade
+  var titulo = document.getElementById('destinoTitulo');
+  var sub    = document.getElementById('destinoSubtitulo');
+  if (titulo) { titulo.style.opacity='0'; setTimeout(function(){ titulo.textContent=d.titulo; titulo.style.transition='opacity 0.4s'; titulo.style.opacity='1'; },200); }
+  if (sub)    { sub.style.opacity='0';    setTimeout(function(){ sub.textContent=d.subtitulo; sub.style.transition='opacity 0.4s'; sub.style.opacity='1'; },200); }
+
+  // Mensaje de Kaan
+  var msg = document.getElementById('quetzalMsg');
+  if (msg) {
+    msg.style.opacity='0';
+    setTimeout(function(){ msg.textContent=d.kaanMsg; msg.style.transition='opacity 0.4s'; msg.style.opacity='1'; },200);
+  }
+
+  // Actualizar fondo SVG
+  updateFondoDestino(id);
+  // Renderizar tours del destino
+  renderTours(d.tours);
+}
+
+function renderTours(tours) {
+  var container = document.getElementById('toursContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  var fp = state.tourFormaPago || 'efectivo';
+  tours.forEach(function(t) {
+    var tags = t.tags.map(function(tag) {
+      var extra = (tag.indexOf('MÁS POPULAR')>=0||tag.indexOf('ÉPICA')>=0||tag.indexOf('IMPERDIBLE')>=0||tag.indexOf('RECOMENDADO')>=0)
+        ? 'style="background:rgba(245,200,66,0.2);color:var(--gold);"' : '';
+      return '<span class="tour-tag" ' + extra + '>' + tag + '</span>';
+    }).join('');
+
+    var precioHTML;
+    if (t.precioUSD) {
+      // Tour con precio en USD: mostrar precio dinámico según forma de pago y guía
+      var usaGuia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+      var base    = (t.conGuia && !usaGuia && t.precioUSD_sin) ? t.precioUSD_sin : t.precioUSD;
+      var p       = calcTourPrice(base, fp);
+      precioHTML  = '<div style="font-family:Orbitron,sans-serif;font-size:15px;color:'+t.color+';">$'+p.usd.toFixed(0)+' USD</div>'
+                  + '<div style="font-size:11px;color:var(--text2);">Q'+p.gtq.toFixed(0)+' GTQ · p/persona</div>';
+    } else {
+      // Tour con precio fijo en GTQ
+      precioHTML  = '<div style="font-family:Orbitron,sans-serif;font-size:15px;color:'+t.color+';">'+(t.precio||'')+'</div>'
+                  + '<div style="font-size:10px;color:var(--text2);">por persona</div>';
+    }
+
+    // Selector de guía inline (solo Tikal Día)
+    var guiaSelector = '';
+    if (t.conGuia && t.precioUSD_sin) {
+      var usaGuia = !state.guiaTour || state.guiaTour[t.id] !== false;
+      guiaSelector = '<div style="display:flex;gap:6px;margin-top:8px;" onclick="event.stopPropagation()">'
+        + '<button style="flex:1;padding:4px 8px;border-radius:6px;border:1px solid '+(usaGuia?'var(--accent)':'rgba(255,255,255,0.2)')+';background:'+(usaGuia?'rgba(0,188,212,0.15)':'transparent')+';color:var(--text);font-size:12px;cursor:pointer;" onclick="setGuiaTour(this.dataset.id,true)" data-id=\''+t.id+'\'>🎙️ Con guía</button>'
+        + '<button style="flex:1;padding:4px 8px;border-radius:6px;border:1px solid '+(!usaGuia?'var(--green)':'rgba(255,255,255,0.2)')+';background:'+(!usaGuia?'rgba(0,200,83,0.1)':'transparent')+';color:var(--text);font-size:12px;cursor:pointer;" onclick="setGuiaTour(this.dataset.id,false)" data-id=\''+t.id+'\'>🚶 Sin guía</button>'
+        + '</div>';
+    }
+
+    container.innerHTML += '<div class="tour-card" onclick="selectTour(this.dataset.id)" data-id="'+t.id+'" id="tour-'+t.id+'">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">'
+      + '<div style="display:flex;align-items:center;gap:10px;">'
+      + '<span style="font-size:28px;">'+t.emoji+'</span>'
+      + '<div><div style="font-family:Orbitron,sans-serif;font-size:13px;color:'+t.color+';">'+t.nombre+'</div>'
+      + '<div style="font-size:11px;color:var(--text2);">'+t.hora+'</div></div>'
+      + '</div>'
+      + '<div style="text-align:right;">'+precioHTML+'</div>'
+      + '</div>'
+      + '<div style="display:flex;gap:6px;flex-wrap:wrap;">'+tags+'</div>'
+      + guiaSelector
+      + '</div>';
+  });
+}
+
+// ============================================================
+//  TOURS — CÁLCULO DE PRECIOS Y RESERVAS  v3.3
+// ============================================================
+
+function goToTours() { goTo('screen-guia'); }
+
+async function cargarConfigDesdeSheets() {
+  if (!CONFIG.TOURS_SCRIPT_URL) return;
+  try {
+    var r = await fetch(CONFIG.TOURS_SCRIPT_URL + '?action=getConfig');
+    var d = await r.json();
+    if (d.ok && d.config) {
+      if (d.config.TOUR_CARGO_TARJETA) CONFIG.TOUR_CARGO_TARJETA = parseFloat(d.config.TOUR_CARGO_TARJETA);
+      if (d.config.TOUR_DESC_CRIPTO)   CONFIG.TOUR_DESC_CRIPTO   = parseFloat(d.config.TOUR_DESC_CRIPTO);
+      if (d.config.TOUR_GTQ_RATE)      CONFIG.TOUR_GTQ_RATE      = parseFloat(d.config.TOUR_GTQ_RATE);
+      if (currentDestino && DESTINOS[currentDestino]) renderTours(DESTINOS[currentDestino].tours);
+    }
+  } catch(e) { /* config remota no disponible */ }
+}
+
+function setGuiaTour(tourId, conGuia) {
+  if (!state.guiaTour) state.guiaTour = {};
+  state.guiaTour[tourId] = conGuia;
+  if (currentDestino && DESTINOS[currentDestino]) {
+    renderTours(DESTINOS[currentDestino].tours);
+    if (selectedTourType) {
+      var c = document.getElementById('tour-' + selectedTourType);
+      if (c) c.classList.add('selected');
+    }
+    actualizarCTATour();
+  }
+}
+
+function calcTourPrice(precioUSD, formaPago) {
+  var usd = precioUSD || 0;
+  var rate = CONFIG.TOUR_GTQ_RATE || 7.75;
+  if (formaPago === 'tarjeta') usd *= (1 + (CONFIG.TOUR_CARGO_TARJETA || 0.05));
+  if (formaPago === 'cripto')  usd *= (1 - (CONFIG.TOUR_DESC_CRIPTO   || 0.06));
+  return { usd: usd, gtq: usd * rate };
+}
+
+function setTourPago(fp) {
+  state.tourFormaPago = fp;
+  var colors = { efectivo:'var(--green)', tarjeta:'var(--gold)', cripto:'var(--accent)' };
+  ['efectivo','tarjeta','cripto'].forEach(function(p) {
+    var btn = document.getElementById('pago-' + p);
+    if (!btn) return;
+    var on = p === fp;
+    btn.style.background  = on ? 'rgba(245,200,66,0.12)' : 'var(--dark2)';
+    btn.style.borderColor = on ? colors[p] : 'rgba(245,200,66,0.2)';
+    var lbl = btn.querySelector('div:nth-child(2)');
+    if (lbl) lbl.style.color = on ? colors[p] : 'var(--text2)';
+  });
+  var lt = document.getElementById('labelTarjeta');
+  var lc = document.getElementById('labelCripto');
+  if (lt) lt.textContent = '+' + Math.round((CONFIG.TOUR_CARGO_TARJETA||0.05)*100) + '%';
+  if (lc) lc.textContent = '-' + Math.round((CONFIG.TOUR_DESC_CRIPTO||0.06)*100) + '% desc.';
+  if (currentDestino && DESTINOS[currentDestino]) {
+    renderTours(DESTINOS[currentDestino].tours);
+    if (selectedTourType) {
+      var c = document.getElementById('tour-' + selectedTourType);
+      if (c) c.classList.add('selected');
+    }
+  }
+  actualizarCTATour();
+}
+
+function actualizarCTATour() {
+  var elN = document.getElementById('tourSelectedName');
+  var elU = document.getElementById('tourPrecioFinal');
+  var elG = document.getElementById('tourPrecioGTQ');
+  if (!selectedTourType || !currentDestino) return;
+  var tours = DESTINOS[currentDestino] ? DESTINOS[currentDestino].tours : [];
+  var t = tours.find(function(x){ return x.id === selectedTourType; });
+  if (!t) return;
+  var fp  = state.tourFormaPago || 'efectivo';
+  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : (t.precioUSD || 0);
+  if (elN) elN.textContent = t.emoji + ' ' + t.nombre + ' · ' + t.hora;
+  if (base) {
+    var p = calcTourPrice(base, fp);
+    var fpl = { efectivo:'Efectivo', tarjeta:'Tarjeta +' + Math.round((CONFIG.TOUR_CARGO_TARJETA||0.05)*100) + '%', cripto:'Cripto -' + Math.round((CONFIG.TOUR_DESC_CRIPTO||0.06)*100) + '%' };
+    if (elU) elU.textContent = '$' + p.usd.toFixed(0) + ' USD · ' + fpl[fp] + (t.conGuia ? (guia ? ' · 🎙️ Con guía' : ' · 🚶 Sin guía') : '');
+    if (elG) elG.textContent = 'Q' + p.gtq.toFixed(0) + ' GTQ por persona';
+  } else if (t.precio) {
+    if (elU) elU.textContent = t.precio;
+  }
+}
+
+function abrirConfirmacionTour() {
+  if (!selectedTourType || !currentDestino) { showToast('Selecciona un tour primero', 'error'); return; }
+  var dest  = DESTINOS[currentDestino];
+  var tours = dest ? dest.tours : [];
+  var t     = tours.find(function(x){ return x.id === selectedTourType; });
+  if (!t) return;
+  var fp   = state.tourFormaPago || 'efectivo';
+  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : (t.precioUSD || 0);
+  var p    = calcTourPrice(base, fp);
+  var fl   = { efectivo:'💵 Efectivo', tarjeta:'💳 Tarjeta', cripto:'₿ Cripto' };
+  var g    = function(id){ return document.getElementById(id); };
+  if (g('confirmDestino'))    g('confirmDestino').textContent    = dest.emoji + ' ' + dest.name;
+  if (g('confirmTourNombre')) g('confirmTourNombre').textContent = t.emoji + ' ' + t.nombre;
+  if (g('confirmHora'))       g('confirmHora').textContent       = t.hora;
+  if (g('confirmPago'))       g('confirmPago').textContent       = fl[fp] || fp;
+  if (g('confirmPrecioUSD'))  g('confirmPrecioUSD').textContent  = '$' + p.usd.toFixed(0) + ' USD';
+  if (g('confirmPrecioGTQ'))  g('confirmPrecioGTQ').textContent  = 'Q'  + p.gtq.toFixed(0) + ' GTQ';
+  if (state.client && state.client.name) {
+    if (g('tourNombre')) g('tourNombre').value = state.client.name  || '';
+    if (g('tourEmail'))  g('tourEmail').value  = state.client.email || '';
+  }
+  if (g('tourPax')) g('tourPax').value = '1';
+  actualizarTotalPax();
+  goTo('screen-tour-confirm');
+}
+
+function actualizarTotalPax() {
+  var paxEl = document.getElementById('tourPax');
+  var pax   = parseInt(paxEl ? paxEl.value : 1) || 1;
+  var tours = DESTINOS[currentDestino] ? DESTINOS[currentDestino].tours : [];
+  var t     = tours.find(function(x){ return x.id === selectedTourType; });
+  if (!t || !t.precioUSD) return;
+  var fp   = state.tourFormaPago || 'efectivo';
+  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : t.precioUSD;
+  var p    = calcTourPrice(base, fp);
+  var tu   = document.getElementById('confirmTotalUSD');
+  var tg   = document.getElementById('confirmTotalGTQ');
+  if (tu) tu.textContent = '$' + (p.usd * pax).toFixed(0) + ' USD';
+  if (tg) tg.textContent = 'Q'  + (p.gtq * pax).toFixed(0) + ' GTQ';
+}
+
+async function submitTourReserva() {
+  var gn = function(id){ var e = document.getElementById(id); return e ? e.value.trim() : ''; };
+  var nombre = gn('tourNombre'); var email = gn('tourEmail');
+  var pax    = parseInt((document.getElementById('tourPax')||{}).value) || 1;
+  if (!nombre) { showToast('Ingresa tu nombre', 'error'); return; }
+  if (!email)  { showToast('Ingresa tu correo', 'error'); return; }
+  var dest  = DESTINOS[currentDestino];
+  var tours = dest ? dest.tours : [];
+  var t     = tours.find(function(x){ return x.id === selectedTourType; });
+  if (!t) return;
+  var fp   = state.tourFormaPago || 'efectivo';
+  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
+  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : (t.precioUSD || 0);
+  var p    = calcTourPrice(base, fp);
+  var payload = {
+    action:'registerTour', txId:'TOUR-'+Date.now(), nombre:nombre, email:email, pax:pax,
+    destino:dest?dest.name:currentDestino, tour:t.nombre, horario:t.hora, formaPago:fp,
+    precioUSDpp:p.usd.toFixed(2), precioLiq:t.precioLiq||0,
+    conGuia:guia?'SI':'NO', totalUSD:(p.usd*pax).toFixed(2),
+    totalGTQ:(p.gtq*pax).toFixed(2), fecha:new Date().toISOString()
+  };
+  showToast('Registrando reserva...', 'info');
+  try {
+    var nm = 'tf_'+Date.now(); var ifr = document.createElement('iframe');
+    ifr.name=nm; ifr.style.display='none'; document.body.appendChild(ifr);
+    var frm=document.createElement('form'); frm.method='POST';
+    frm.action=CONFIG.TOURS_SCRIPT_URL||CONFIG.APPS_SCRIPT_URL;
+    frm.target=nm; frm.style.display='none';
+    var inp=document.createElement('input'); inp.type='hidden';
+    inp.name='payload'; inp.value=JSON.stringify(payload);
+    frm.appendChild(inp); document.body.appendChild(frm); frm.submit();
+    setTimeout(function(){ try{frm.remove();ifr.remove();}catch(e){} },8000);
+  } catch(e) { console.warn('submitTourReserva:',e); }
+  showToast('✅ ¡Reserva confirmada! Revisa tu correo.', 'success');
+  setTimeout(function() { goTo('screen-welcome'); }, 2500);
+}
+
+function guardarConfigTours() {
+  var gv = function(id){ var e=document.getElementById(id); return e?parseFloat(e.value):null; };
+  var rate = gv('cfgGTQRate') || CONFIG.TOUR_GTQ_RATE;
+  var tarj = gv('cfgTarjeta'); if(tarj) CONFIG.TOUR_CARGO_TARJETA = tarj/100;
+  var crip = gv('cfgCripto');  if(crip) CONFIG.TOUR_DESC_CRIPTO   = crip/100;
+  CONFIG.TOUR_GTQ_RATE = rate;
+  var payload = { action:'saveToursConfig', TOUR_GTQ_RATE:rate,
+    TOUR_CARGO_TARJETA:CONFIG.TOUR_CARGO_TARJETA, TOUR_DESC_CRIPTO:CONFIG.TOUR_DESC_CRIPTO };
+  try {
+    var nm='cf_'+Date.now(); var ifr=document.createElement('iframe');
+    ifr.name=nm; ifr.style.display='none'; document.body.appendChild(ifr);
+    var frm=document.createElement('form'); frm.method='POST';
+    frm.action=CONFIG.TOURS_SCRIPT_URL||CONFIG.APPS_SCRIPT_URL;
+    frm.target=nm; frm.style.display='none';
+    var inp=document.createElement('input'); inp.type='hidden';
+    inp.name='payload'; inp.value=JSON.stringify(payload);
+    frm.appendChild(inp); document.body.appendChild(frm); frm.submit();
+    setTimeout(function(){ try{frm.remove();ifr.remove();}catch(e){} },5000);
+  } catch(e){}
+  showToast('✅ Configuración guardada', 'success');
+}
+
+function cargarLiquidacion(filtro) {
+  var container = document.getElementById('liqContainer');
+  if (!container) return;
+  container.innerHTML = '<p style="color:var(--text2);text-align:center;padding:30px;">Cargando...</p>';
+  fetch((CONFIG.TOURS_SCRIPT_URL||CONFIG.APPS_SCRIPT_URL)+'?action=getReservas')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (!d.reservas||!d.reservas.length) {
+        container.innerHTML='<p style="color:var(--text2);text-align:center;padding:30px;">Sin reservas.</p>'; return;
+      }
+      var h='<table style="width:100%;border-collapse:collapse;font-size:13px;">';
+      h+='<tr style="background:var(--dark2);"><th style="padding:8px;color:var(--gold);">Tour</th><th style="padding:8px;color:var(--gold);">Total</th><th style="padding:8px;color:var(--gold);">Estado</th></tr>';
+      d.reservas.forEach(function(r,i){
+        h+='<tr style="background:'+(i%2?'var(--dark2)':'var(--card)')+';">';
+        h+='<td style="padding:8px;">'+(r.tour||r.destino||'')+'</td>';
+        h+='<td style="padding:8px;color:var(--green);">$'+(r.totalUSD||0)+'</td>';
+        h+='<td style="padding:8px;"><span style="padding:2px 8px;border-radius:4px;background:rgba(0,200,83,0.15);color:var(--green);">'+(r.estado||'Pendiente')+'</span></td></tr>';
+      });
+      h+='</table>';
+      container.innerHTML=h;
+    })
+    .catch(function(){ container.innerHTML='<p style="color:var(--text2);text-align:center;padding:30px;">Error al cargar. Verifica URL del script de tours.</p>'; });
+}
+
+// Funciones panel admin de usuarios
+var currentRoleSection = null;
+function showUserSection(role) {
+  currentRoleSection = role;
+  document.querySelectorAll('.role-card').forEach(function(c){ c.style.borderColor=''; });
+  var card = document.getElementById('card-'+role);
+  if (card) card.style.borderColor = 'var(--accent)';
+  var sec = document.getElementById('user-section');
+  if (sec) { sec.style.display='block'; sec.scrollIntoView({behavior:'smooth',block:'start'}); }
+  renderUsersForRole(role);
+}
+function hideUserSection() {
+  var sec = document.getElementById('user-section');
+  if (sec) sec.style.display = 'none';
+  document.querySelectorAll('.role-card').forEach(function(c){ c.style.borderColor=''; });
+  currentRoleSection = null;
+}
+function showAddUserModal() {
+  var m = document.getElementById('userModal');
+  if (m) m.style.display = 'flex';
+}
+function closeUserModal() {
+  var m = document.getElementById('userModal');
+  if (m) m.style.display = 'none';
+}
+function renderUsersForRole(role) {
+  var c = document.getElementById('usersList');
+  if (!c) return;
+  var users = JSON.parse(localStorage.getItem('users')||'[]');
+  var filtered = users.filter(function(u){ return u.tipo===role; });
+  if (!filtered.length) { c.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;">Sin usuarios en este rol.</p>'; return; }
+  c.innerHTML = filtered.map(function(u){
+    return '<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">'
+      +'<div><div style="font-weight:bold;color:var(--text);">'+(u.nombre||'Sin nombre')+'</div>'
+      +'<div style="font-size:12px;color:var(--text2);">'+(u.email||'')+'</div></div>'
+      +'<span style="font-size:11px;padding:3px 8px;background:rgba(0,200,83,0.15);color:var(--green);border-radius:4px;">'+(u.status||'activo')+'</span></div>';
+  }).join('');
+}
+
+// Beneficios / suscripción
+// selectedBenefit declared above
+
+
+// =============================================
+//  PARALLAX TIKAL
+// =============================================
+(function() {
+  var screen = document.getElementById('screen-guia');
+  if (!screen) return;
+
+  screen.addEventListener('scroll', function() {
+    var scrollY = screen.scrollTop;
+    var svgEl = document.querySelector('#tikалBg svg');
+    if (svgEl) {
+      // El fondo se mueve a la mitad de velocidad — efecto profundidad
+      svgEl.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
+    }
+    // El hero (Quetzal + texto) también se desvanece levemente
+    var hero = document.querySelector('#screen-guia > div:first-child');
+    if (hero) {
+      var opacity = Math.max(0.4, 1 - scrollY * 0.003);
+      hero.style.opacity = opacity;
+    }
+  });
+})();
+
+// Parallax reset — integrado en goTo principal
+
+// =============================================
+//  POLLING — Espera aprobacion del admin
+// =============================================
+let pollingInterval = null;
+
+function startApprovalPolling() {
+  // Verificar cada 5 segundos si el admin ya aprobo
+  pollingInterval = setInterval(async () => {
+    try {
+      const url = CONFIG.APPS_SCRIPT_URL + '?action=getTransactions';
+      const resp = await fetch(url);
+      if (!resp.ok) return;
+      const data = await resp.json();
+      if (!data.transactions) return;
+
+      const tx = data.transactions.find(t => t.txId === state.txId);
+      if (!tx) return;
+
+      if (tx.status === 'APROBADO') {
+        clearInterval(pollingInterval);
+        // Obtener PIN desde localStorage (lo guardó approveTx)
+        const localTx = JSON.parse(localStorage.getItem('tx_' + state.txId) || '{}');
+        const pin = localTx.deliveryPin || '';
+        if (pin) {
+          state.deliveryPin = pin;
+          showPinScreen();
+        } else {
+          // Si no hay PIN local, pedir al recepcionista que lo ingrese manualmente
+          state.deliveryPin = '';
+          showPinScreen();
+        }
+      } else if (tx.status === 'RECHAZADO') {
+        clearInterval(pollingInterval);
+        showToast('Transaccion rechazada por el administrador.', 'error');
+        setTimeout(() => goTo('screen-welcome'), 2500);
+      }
+    } catch(e) {
+      // Sin conexion, seguir esperando
+    }
+  }, 5000);
+}
+
+function stopPolling() {
+  clearInterval(pollingInterval);
+}
+
+// =============================================
+//  INIT
+// =============================================
+buildTicker(null); // ticker con valores fallback mientras cargan las APIs
+loadRates();
+setInterval(loadRates, 60000); // refresh rates every 60s (respetar rate limits de CoinGecko)
+
+  // =============================================
 </script>
 
 <script>
@@ -2085,7 +4019,7 @@ function calcRate() {
   state.selectedNetwork = document.getElementById('networkSelect').value;
   state.inputAmount = amt;
   
-  const rate = state.cryptoRates[crypto] || BASE_GTQ[crypto] || 1;
+  const rate = state.cryptoRates[crypto] || (typeof FALLBACK_USD !== "undefined" && FALLBACK_USD[crypto] ? FALLBACK_USD[crypto] * 7.7 : 1);
   const gtq = amt * rate;
   const comm = gtq * CONFIG.COMMISSION;
   const final = gtq - comm;
@@ -2154,7 +4088,7 @@ function goTo(screenId) {
   // Ocultar botón de beneficio en pantallas donde no aplica
   var bfBtn = document.getElementById('benefitFloatBtn');
   if (bfBtn) {
-    var hideIn = ['screen-admin','screen-gift','screen-subscribe','screen-descuentos','screen-pedro'];
+    var hideIn = ['screen-admin','screen-gift','screen-subscribe','screen-descuentos','screen-pedro','screen-guia','screen-tour-confirm'];
     bfBtn.style.display = hideIn.indexOf(screenId) >= 0 ? 'none' : 'flex';
   }
 }
@@ -3205,7 +5139,6 @@ function goToTours(targetScreen) {
     var p = new URLSearchParams(window.location.search).get('screen');
     if (p) goTo(p);
   })();
-</script>
 </script>
 
 <!-- 
