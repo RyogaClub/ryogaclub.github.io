@@ -4355,7 +4355,10 @@ setInterval(loadRates, 60000); // refresh rates every 60s (respetar rate limits 
     buildTicker(null);
     loadRates();
     setInterval(loadRates, 60000);
-    goTo('screen-guia');
+    // Ir a pantalla destino si viene del Exchange con un target específico
+    var target = localStorage.getItem('cc_tours_target') || 'screen-guia';
+    localStorage.removeItem('cc_tours_target');
+    goTo(target);
   })();
 </script>
 

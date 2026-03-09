@@ -3180,7 +3180,7 @@ function deleteUser(id) {
 // =============================================
 //  BRIDGE → Tours (archivo separado)
 // =============================================
-function goToTours() {
+function goToTours(targetScreen) {
   // Guardar estado actual (idioma, cliente, txId) para que tours lo lea
   try {
     localStorage.setItem('cc_state', JSON.stringify({
@@ -3188,6 +3188,7 @@ function goToTours() {
       client: state.client || null,
       txId: state.txId || null
     }));
+    if (targetScreen) localStorage.setItem('cc_tours_target', targetScreen);
   } catch(e) {}
   window.location.href = 'Tours_v1.html';
 }
