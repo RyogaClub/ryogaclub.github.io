@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Exchange Crypto GT</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -457,6 +457,74 @@
 
   /* Screen with top offset for ticker */
   .with-ticker { padding-top:70px; }
+
+  /* ========== RESPONSIVE ========== */
+
+  /* iPhone pequeño (≤390px) */
+  @media (max-width: 390px) {
+    .card { padding:18px 14px; }
+    .btn-main { padding:14px 24px; font-size:13px; }
+    .btn-secondary { padding:11px 20px; font-size:13px; }
+    .amount-big { font-size:clamp(22px,7vw,36px); }
+    .tour-card { padding:14px; }
+    #quetzalNFT { width:90px !important; height:90px !important; }
+    .ticker-item { font-size:10px; }
+    #destinoCurrentName { max-width:60px !important; font-size:8px !important; }
+  }
+
+  /* iPhone (391px – 767px) */
+  @media (max-width: 767px) {
+    .card { padding:20px 16px; max-width:100%; }
+    .btn-main { padding:15px 30px; font-size:14px; width:100%; justify-content:center; }
+    .btn-secondary { width:100%; justify-content:center; }
+    .amount-big { font-size:clamp(24px,8vw,40px); }
+    #quetzalNFT { width:100px !important; height:100px !important; }
+    /* Hero más compacto en móvil */
+    #tikалHero { padding:75px 16px 40px !important; min-height:280px !important; }
+    /* Tour cards en móvil: texto más pequeño */
+    .tour-card { padding:14px 12px; }
+    /* Grid de tours a 1 columna */
+    #toursGrid { grid-template-columns:1fr !important; }
+    /* Forma de pago: botones más compactos */
+    #formaPagoWrap { flex-wrap:wrap; gap:8px !important; }
+    /* Confirmar: ocultar columnas extra */
+    .confirm-table td, .confirm-table th { padding:6px 8px; font-size:12px; }
+    /* Selector destino más pequeño */
+    #destinoCurrentName { max-width:70px !important; }
+    /* Screen-tour-confirm padding */
+    #screen-tour-confirm .card { margin-top:55px; }
+  }
+
+  /* iPad (768px – 1024px) */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .card { max-width:640px; padding:28px 24px; }
+    #quetzalNFT { width:120px !important; height:120px !important; }
+    #tikалHero { padding:80px 32px 50px !important; }
+    #toursGrid { grid-template-columns:repeat(2,1fr) !important; }
+    .btn-main { padding:16px 40px; }
+  }
+
+  /* Escritorio (>1024px) */
+  @media (min-width: 1025px) {
+    .card { max-width:680px; }
+    #toursGrid { grid-template-columns:repeat(3,1fr) !important; }
+    #tikалHero { min-height:380px !important; }
+    #quetzalNFT { width:140px !important; height:140px !important; }
+  }
+
+  /* Safari iOS — fix inputs */
+  @supports (-webkit-touch-callout: none) {
+    .form-input { font-size:16px; } /* evita zoom en focus */
+    .screen { -webkit-overflow-scrolling: touch; }
+    #screen-guia { -webkit-overflow-scrolling: touch; }
+  }
+
+  /* Landscape móvil */
+  @media (max-height: 500px) and (orientation: landscape) {
+    #tikалHero { min-height:200px !important; padding:60px 16px 30px !important; }
+    #quetzalNFT { width:70px !important; height:70px !important; }
+    .screen { justify-content:flex-start; padding-top:50px; }
+  }
 </style>
 </head>
 </head>
@@ -471,6 +539,19 @@
 </div>
 
 <!-- LANGUAGE FLOATING BUTTON -->
+<!-- Botón admin — inferior izquierda, solo icono -->
+<button onclick="goToAdmin()"
+  style="position:fixed; bottom:24px; left:20px; z-index:500;
+         width:36px; height:36px; border-radius:50%;
+         background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.07);
+         cursor:pointer; font-size:15px; color:rgba(255,255,255,0.25);
+         display:flex; align-items:center; justify-content:center;
+         transition:all 0.3s; backdrop-filter:blur(6px);"
+  onmouseover="this.style.borderColor='rgba(245,200,66,0.5)';this.style.color='var(--gold)';this.style.background='rgba(245,200,66,0.1)'"
+  onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.25)';this.style.background='rgba(0,0,0,0.35)'">
+  ⚙
+</button>
+
 <div id="langFloatWrap" style="position:fixed; bottom:24px; right:20px; z-index:500;">
 
   <!-- Menú desplegable -->
@@ -504,6 +585,46 @@
 
 <!-- Tours Screens -->
 <!-- ===================== SCREEN SUBSCRIBE ===================== -->
+<!-- BOTÓN VOLVER TOURS — fixed, solo visible en screen-guia -->
+<button id="toursVolverBtn" onclick="goBackToExchange('screen-gift')"
+  style="display:none; position:fixed; top:44px; left:12px; z-index:200;
+         background:rgba(0,0,0,0.55); border:1px solid rgba(255,255,255,0.2);
+         color:rgba(255,255,255,0.8); padding:6px 14px; border-radius:20px;
+         font-size:12px; cursor:pointer; backdrop-filter:blur(8px); transition:all 0.2s;"
+  onmouseover="this.style.borderColor='rgba(245,200,66,0.7)'; this.style.color='var(--gold)'"
+  onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.color='rgba(255,255,255,0.8)'">← Volver</button>
+
+<!-- SELECTOR DESTINOS TOURS — fixed, solo visible en screen-guia -->
+<div id="destinoWrap" style="display:none; position:fixed; top:44px; right:12px; z-index:200;">
+  <div id="destinoMenu" style="display:none; position:absolute; top:42px; right:0;
+    background:var(--dark2); border:1px solid var(--border); border-radius:10px;
+    overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.9); min-width:220px; z-index:300;">
+    <div style="font-family:Orbitron,sans-serif; font-size:8px; color:var(--text2); letter-spacing:2px; padding:10px 14px 6px;">DESTINOS</div>
+    <button class="destino-item active" id="dest-tikal"      onclick="pickDestino('tikal')">      🏛️ &nbsp;Tikal, Petén</button>
+    <button class="destino-item"        id="dest-yaxha"      onclick="pickDestino('yaxha')">      🌊 &nbsp;Yaxhá Sunset</button>
+    <button class="destino-item"        id="dest-craterazul" onclick="pickDestino('craterazul')"> 💧 &nbsp;Cráter Azul</button>
+    <button class="destino-item"        id="dest-riodulce"   onclick="pickDestino('riodulce')">   ⛵ &nbsp;Río Dulce</button>
+    <button class="destino-item"        id="dest-belize"     onclick="pickDestino('belize')">     🇧🇿 &nbsp;Belize / Cayes</button>
+    <button class="destino-item"        id="dest-bacalar"    onclick="pickDestino('bacalar')">    🇲🇽 &nbsp;Bacalar / Chetumal</button>
+    <button class="destino-item"        id="dest-ciudadgt"   onclick="pickDestino('ciudadgt')">   🏙️ &nbsp;Ciudad GT / Antigua</button>
+    <button class="destino-item"        id="dest-semuc"      onclick="pickDestino('semuc')">      💧 &nbsp;Semuc Champey</button>
+    <button class="destino-item"        id="dest-antigua"    onclick="pickDestino('antigua')">    🏰 &nbsp;Antigua Guatemala</button>
+    <button class="destino-item"        id="dest-acatenango" onclick="pickDestino('acatenango')"> 🌋 &nbsp;Volcán Acatenango</button>
+    <button class="destino-item"        id="dest-atitlan"    onclick="pickDestino('atitlan')">    🌊 &nbsp;Lago Atitlán</button>
+  </div>
+  <button id="destinoBtn" onclick="toggleDestinoMenu()"
+    style="background:rgba(0,0,0,0.55); border:1px solid rgba(245,200,66,0.35);
+           border-radius:50px; padding:6px 12px; cursor:pointer;
+           display:flex; align-items:center; gap:6px; transition:all 0.2s;
+           backdrop-filter:blur(8px);"
+    onmouseover="this.style.borderColor='rgba(245,200,66,0.8)'; this.style.background='rgba(245,200,66,0.12)'"
+    onmouseout="this.style.borderColor='rgba(245,200,66,0.35)'; this.style.background='rgba(0,0,0,0.55)'">
+    <span id="destinoCurrentEmoji" style="font-size:15px;">🏛️</span>
+    <span id="destinoCurrentName" style="font-family:Orbitron,sans-serif; font-size:9px; color:var(--gold); letter-spacing:1px; max-width:90px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">TIKAL</span>
+    <span style="font-size:9px; color:var(--text2);">▼</span>
+  </button>
+</div>
+
 <div class="screen" id="screen-guia" style="padding:0; align-items:stretch; justify-content:flex-start; overflow-y:auto;">
 
   <!-- Hero inmersivo -->
@@ -641,42 +762,6 @@
       <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 50% 120%, rgba(245,200,66,0.04) 0%, transparent 60%), linear-gradient(0deg, rgba(6,13,8,0.7) 0%, transparent 40%);"></div>
     </div>
 
-    <!-- Botón volver -->
-    <button onclick="goBackToExchange('screen-gift')" style="position:absolute; top:15px; left:15px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.7); padding:6px 14px; border-radius:20px; font-size:12px; cursor:pointer;">← Volver</button>
-
-    <!-- SELECTOR DE DESTINOS — esquina superior derecha -->
-    <div id="destinoWrap" style="position:absolute; top:12px; right:12px; z-index:50;">
-      <!-- Menú desplegable -->
-      <div id="destinoMenu" style="display:none; position:absolute; top:42px; right:0;
-        background:var(--dark2); border:1px solid var(--border); border-radius:10px;
-        overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.8); min-width:220px;">
-        <div style="font-family:Orbitron,sans-serif; font-size:8px; color:var(--text2); letter-spacing:2px; padding:10px 14px 6px;">DESTINOS</div>
-        <button class="destino-item active" id="dest-tikal"      onclick="pickDestino('tikal')">      🏛️ &nbsp;Tikal, Petén</button>
-        <button class="destino-item"        id="dest-yaxha"      onclick="pickDestino('yaxha')">      🌊 &nbsp;Yaxhá Sunset</button>
-        <button class="destino-item"        id="dest-craterazul" onclick="pickDestino('craterazul')"> 💧 &nbsp;Cráter Azul</button>
-        <button class="destino-item"        id="dest-riodulce"   onclick="pickDestino('riodulce')">   ⛵ &nbsp;Río Dulce</button>
-        <button class="destino-item"        id="dest-belize"     onclick="pickDestino('belize')">     🇧🇿 &nbsp;Belize / Cayes</button>
-        <button class="destino-item"        id="dest-bacalar"    onclick="pickDestino('bacalar')">    🇲🇽 &nbsp;Bacalar / Chetumal</button>
-        <button class="destino-item"        id="dest-ciudadgt"   onclick="pickDestino('ciudadgt')">   🏙️ &nbsp;Ciudad GT / Antigua</button>
-        <button class="destino-item"        id="dest-semuc"      onclick="pickDestino('semuc')">      💧 &nbsp;Semuc Champey</button>
-        <button class="destino-item"        id="dest-antigua"    onclick="pickDestino('antigua')">    🏰 &nbsp;Antigua Guatemala</button>
-        <button class="destino-item"        id="dest-acatenango" onclick="pickDestino('acatenango')"> 🌋 &nbsp;Volcán Acatenango</button>
-        <button class="destino-item"        id="dest-atitlan"    onclick="pickDestino('atitlan')">    🌊 &nbsp;Lago Atitlán</button>
-      </div>
-      <!-- Botón principal -->
-      <button id="destinoBtn" onclick="toggleDestinoMenu()"
-        style="background:rgba(0,0,0,0.5); border:1px solid rgba(245,200,66,0.3);
-               border-radius:50px; padding:7px 13px; cursor:pointer;
-               display:flex; align-items:center; gap:6px; transition:all 0.2s;
-               backdrop-filter:blur(8px);"
-        onmouseover="this.style.borderColor='rgba(245,200,66,0.7)'"
-        onmouseout="this.style.borderColor='rgba(245,200,66,0.3)'">
-        <span id="destinoCurrentEmoji" style="font-size:15px;">🏛️</span>
-        <span id="destinoCurrentName" style="font-family:Orbitron,sans-serif; font-size:9px; color:var(--gold); letter-spacing:1px; max-width:80px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">TIKAL</span>
-        <span style="font-size:9px; color:var(--text2);">▼</span>
-      </button>
-    </div>
-
     <!-- Quetzal NFT SVG -->
     <div style="position:relative; display:inline-block; margin-bottom:15px;">
       <div id="quetzalNFT" style="width:130px; height:130px; margin:0 auto; position:relative; animation:quetzalFloat 3s ease-in-out infinite; z-index:10;">
@@ -764,57 +849,427 @@
 </div>
 
 <!-- ===================== SCREEN DESCUENTOS ===================== -->
-<div class="screen" id="screen-tour-confirm">
-  <button class="nav-back" onclick="goTo('screen-guia')">← Volver</button>
-  <div class="card" style="max-width:520px; margin-top:20px;">
-    <div class="card-title" style="color:var(--gold);">✅ Confirmar Reserva de Tour</div>
-    <div style="background:var(--dark2); border-radius:8px; padding:16px; margin:16px 0;">
-      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
-        <span style="color:var(--text2);">Destino</span>
-        <span id="confirmDestino" style="color:var(--gold); font-weight:bold;"></span>
+<!-- ===================== PASO 2b: DATOS DEL TURISTA ===================== -->
+<div class="screen" id="screen-tour-datos" style="padding-top:60px;">
+  <div class="card" style="max-width:520px; width:100%;">
+
+    <!-- Header paso -->
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <button onclick="goTo('screen-guia')" style="background:none;border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;">← Volver</button>
+      <div>
+        <div style="font-family:Orbitron,sans-serif;font-size:11px;color:var(--text2);letter-spacing:2px;">PASO 2 DE 4</div>
+        <div style="font-family:Orbitron,sans-serif;font-size:14px;color:var(--gold);">👤 TUS DATOS</div>
       </div>
-      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
-        <span style="color:var(--text2);">Tour</span>
-        <span id="confirmTourNombre"></span>
+      <!-- Resumen mini tour seleccionado -->
+      <div style="margin-left:auto;text-align:right;">
+        <div id="datosTourNombre" style="font-size:12px;color:var(--text2);"></div>
+        <div id="datosTourPrecio" style="font-family:Orbitron,sans-serif;font-size:13px;color:var(--gold);"></div>
       </div>
-      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
-        <span style="color:var(--text2);">Horario</span>
-        <span id="confirmHora" style="color:var(--text2);"></span>
-      </div>
-      <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border);">
-        <span style="color:var(--text2);">Pago</span>
-        <span id="confirmPago" style="color:var(--green);"></span>
-      </div>
-      <div style="display:flex; justify-content:space-between; padding:6px 0;">
-        <span style="color:var(--text2);">Precio p/persona</span>
-        <div style="text-align:right;">
-          <div id="confirmPrecioUSD" style="color:var(--gold); font-weight:bold;"></div>
-          <div id="confirmPrecioGTQ" style="font-size:12px; color:var(--text2);"></div>
-        </div>
-      </div>
+    </div>
+
+    <!-- Progreso visual -->
+    <div style="display:flex;gap:4px;margin-bottom:24px;">
+      <div style="flex:1;height:3px;background:var(--gold);border-radius:2px;"></div>
+      <div style="flex:1;height:3px;background:var(--gold);border-radius:2px;"></div>
+      <div style="flex:1;height:3px;background:var(--border);border-radius:2px;"></div>
+      <div style="flex:1;height:3px;background:var(--border);border-radius:2px;"></div>
+    </div>
+
+    <!-- Formulario -->
+    <div class="form-group">
+      <label class="form-label">👤 Nombre completo *</label>
+      <input class="form-input" id="tNombre" placeholder="Sophie Martin" autocomplete="name">
     </div>
     <div class="form-group">
-      <label class="form-label">Personas</label>
-      <div style="display:flex; align-items:center; gap:16px;">
-        <input class="form-input" id="tourPax" type="number" min="1" max="30" value="1"
-          style="width:80px; text-align:center; font-size:22px;" oninput="actualizarTotalPax()">
-        <div>
-          <div id="confirmTotalUSD" style="font-size:20px; color:var(--gold); font-weight:bold;"></div>
-          <div id="confirmTotalGTQ" style="font-size:13px; color:var(--text2);"></div>
-        </div>
+      <label class="form-label">✉️ Email *</label>
+      <input class="form-input" id="tEmail" type="email" placeholder="correo@ejemplo.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label">📱 WhatsApp / Teléfono *</label>
+      <div style="display:flex;gap:8px;">
+        <select class="form-input form-select" id="tTelPais" style="width:110px;flex-shrink:0;">
+          <option value="+502">🇬🇹 +502</option>
+          <option value="+1" selected>🇺🇸 +1</option>
+          <option value="+52">🇲🇽 +52</option>
+          <option value="+34">🇪🇸 +34</option>
+          <option value="+33">🇫🇷 +33</option>
+          <option value="+49">🇩🇪 +49</option>
+          <option value="+55">🇧🇷 +55</option>
+          <option value="+44">🇬🇧 +44</option>
+          <option value="+39">🇮🇹 +39</option>
+          <option value="+31">🇳🇱 +31</option>
+          <option value="+61">🇦🇺 +61</option>
+          <option value="+86">🇨🇳 +86</option>
+          <option value="+81">🇯🇵 +81</option>
+          <option value="+82">🇰🇷 +82</option>
+          <option value="+91">🇮🇳 +91</option>
+          <option value="+7">🇷🇺 +7</option>
+          <option value="+54">🇦🇷 +54</option>
+          <option value="+56">🇨🇱 +56</option>
+          <option value="+57">🇨🇴 +57</option>
+          <option value="+51">🇵🇪 +51</option>
+          <option value="+506">🇨🇷 +506</option>
+          <option value="+503">🇸🇻 +503</option>
+          <option value="+504">🇭🇳 +504</option>
+          <option value="+505">🇳🇮 +505</option>
+          <option value="+507">🇵🇦 +507</option>
+          <option value="+972">🇮🇱 +972</option>
+          <option value="+27">🇿🇦 +27</option>
+          <option value="+20">🇪🇬 +20</option>
+          <option value="+212">🇲🇦 +212</option>
+        </select>
+        <input class="form-input" id="tTel" type="tel" placeholder="5550 0000" autocomplete="tel" style="flex:1;">
       </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Nombre completo *</label>
-      <input class="form-input" id="tourNombre" placeholder="Nombre del turista" autocomplete="name">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group">
+        <label class="form-label">🌍 País de origen *</label>
+        <select class="form-input form-select" id="tPais">
+          <option value="">— Seleccionar —</option>
+          <option>🇺🇸 United States</option><option>🇬🇧 United Kingdom</option>
+          <option>🇩🇪 Germany</option><option>🇫🇷 France</option>
+          <option>🇮🇹 Italy</option><option>🇪🇸 Spain</option>
+          <option>🇳🇱 Netherlands</option><option>🇨🇦 Canada</option>
+          <option>🇦🇺 Australia</option><option>🇧🇷 Brazil</option>
+          <option>🇲🇽 Mexico</option><option>🇨🇴 Colombia</option>
+          <option>🇦🇷 Argentina</option><option>🇨🇱 Chile</option>
+          <option>🇵🇪 Peru</option><option>🇨🇷 Costa Rica</option>
+          <option>🇬🇹 Guatemala</option><option>🇮🇱 Israel</option>
+          <option>🇯🇵 Japan</option><option>🇰🇷 Korea</option>
+          <option>🇨🇳 China</option><option>🇷🇺 Russia</option>
+          <option>🇿🇦 South Africa</option><option>🇮🇳 India</option>
+          <option>Otro / Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🛂 Pasaporte / ID *</label>
+        <input class="form-input" id="tPasaporte" placeholder="AB123456" autocomplete="off" style="text-transform:uppercase;">
+      </div>
     </div>
+
     <div class="form-group">
-      <label class="form-label">Correo electrónico *</label>
-      <input class="form-input" id="tourEmail" type="email" placeholder="correo@ejemplo.com" autocomplete="email">
+      <label class="form-label">👥 Número de personas *</label>
+      <div style="display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;width:fit-content;">
+        <button onclick="cambiarPax(-1)" style="padding:12px 18px;background:var(--dark3);border:none;color:var(--text);font-size:20px;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(245,200,66,0.15)'" onmouseout="this.style.background='var(--dark3)'">−</button>
+        <div id="paxDisplay" style="padding:12px 24px;font-family:Orbitron,sans-serif;font-size:22px;color:var(--gold);background:var(--dark2);min-width:60px;text-align:center;">1</div>
+        <button onclick="cambiarPax(1)" style="padding:12px 18px;background:var(--dark3);border:none;color:var(--text);font-size:20px;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(245,200,66,0.15)'" onmouseout="this.style.background='var(--dark3)'">+</button>
+      </div>
+      <div id="paxTotalLabel" style="margin-top:8px;font-size:13px;color:var(--text2);"></div>
     </div>
-    <button class="btn-main" style="width:100%; margin-top:12px;" onclick="submitTourReserva()">
-      ✅ Confirmar Reserva
+
+    <button class="btn-main" style="width:100%;margin-top:8px;" onclick="irAFecha()">
+      Continuar → Elegir Fecha
     </button>
+  </div>
+</div>
+
+<!-- ===================== PASO 3: FECHA Y HORARIO ===================== -->
+<div class="screen" id="screen-tour-fecha" style="padding-top:60px;">
+  <div class="card" style="max-width:520px; width:100%;">
+
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <button onclick="goTo('screen-tour-datos')" style="background:none;border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;">← Volver</button>
+      <div>
+        <div style="font-family:Orbitron,sans-serif;font-size:11px;color:var(--text2);letter-spacing:2px;">PASO 3 DE 4</div>
+        <div style="font-family:Orbitron,sans-serif;font-size:14px;color:var(--gold);">📅 FECHA Y HORARIO</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:4px;margin-bottom:24px;">
+      <div style="flex:1;height:3px;background:var(--gold);border-radius:2px;"></div>
+      <div style="flex:1;height:3px;background:var(--gold);border-radius:2px;"></div>
+      <div style="flex:1;height:3px;background:var(--gold);border-radius:2px;"></div>
+      <div style="flex:1;height:3px;background:var(--border);border-radius:2px;"></div>
+    </div>
+
+    <!-- Selector de fecha — próximos 7 días -->
+    <div style="margin-bottom:20px;">
+      <div style="font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">📅 Selecciona el día</div>
+      <div id="calendarDays" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;"></div>
+    </div>
+
+    <!-- Selector de horario -->
+    <div style="margin-bottom:20px;">
+      <div style="font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">⏰ Selecciona el horario</div>
+      <div id="horariosGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;"></div>
+    </div>
+
+    <!-- Resumen reserva -->
+    <div id="resumenFecha" style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px;display:none;">
+      <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:12px;">RESUMEN DE TU RESERVA</div>
+      <div id="resumenLineas" style="display:flex;flex-direction:column;gap:8px;"></div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <span style="color:var(--text2);font-size:13px;">TOTAL</span>
+        <div style="text-align:right;">
+          <div id="resumenTotal" style="font-family:Orbitron,sans-serif;font-size:20px;color:var(--gold);"></div>
+          <div id="resumenTotalUSD" style="font-size:11px;color:var(--text2);"></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-main" id="btnIrConfirmar" style="width:100%;display:none;" onclick="irAConfirmar()">
+      Continuar → Confirmar y Pagar
+    </button>
+  </div>
+</div>
+
+<!-- ===================== PASO 4: CONFIRMAR Y PAGAR ===================== -->
+<div class="screen" id="screen-tour-confirm" style="padding-top:60px;">
+  <div class="card" style="max-width:520px; width:100%;">
+
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <button onclick="goTo('screen-tour-fecha')" style="background:none;border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;">← Volver</button>
+      <div>
+        <div style="font-family:Orbitron,sans-serif;font-size:11px;color:var(--text2);letter-spacing:2px;">PASO 4 DE 4</div>
+        <div style="font-family:Orbitron,sans-serif;font-size:14px;color:var(--gold);">💳 CONFIRMAR Y PAGAR</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:4px;margin-bottom:24px;">
+      <div style="flex:1;height:3px;background:var(--gold);border-radius:2px;"></div>
+      <div style="flex:1;height:3px;background:var(--gold);border-radius:2px;"></div>
+      <div style="flex:1;height:3px;background:var(--gold);border-radius:2px;"></div>
+      <div style="flex:1;height:3px;background:var(--gold);border-radius:2px;"></div>
+    </div>
+
+    <!-- Resumen final -->
+    <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px;">
+      <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:12px;">📋 RESUMEN FINAL</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);font-size:13px;">Destino</span><span id="confirmDestino" style="color:var(--gold);font-weight:bold;font-size:13px;"></span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);font-size:13px;">Tour</span><span id="confirmTourNombre" style="font-size:13px;text-align:right;max-width:220px;"></span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);font-size:13px;">Fecha</span><span id="confirmFecha" style="color:var(--accent);font-size:13px;"></span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);font-size:13px;">Horario</span><span id="confirmHora" style="font-size:13px;"></span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);font-size:13px;">Turista</span><span id="confirmNombre" style="font-size:13px;"></span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);font-size:13px;">Personas</span><span id="confirmPax" style="color:var(--gold);font-size:13px;"></span></div>
+        <div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="color:var(--text2);font-size:13px;">Pago</span>
+          <span id="confirmPago" style="color:var(--green);font-weight:bold;font-size:13px;"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+          <span style="color:var(--text2);font-size:13px;">Total</span>
+          <div style="text-align:right;">
+            <div id="confirmTotalGTQ" style="font-family:Orbitron,sans-serif;font-size:22px;color:var(--gold);"></div>
+            <div id="confirmTotalUSD" style="font-size:11px;color:var(--text2);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 BOTONES DE PAGO -->
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <!-- Tarjeta -->
+      <button id="btnPagarTarjeta" onclick="pagarConTarjeta()"
+        style="display:none;width:100%;padding:16px;border-radius:10px;border:1px solid var(--gold);
+               background:linear-gradient(135deg,rgba(245,200,66,0.12),rgba(245,200,66,0.05));
+               color:var(--gold);font-family:Orbitron,sans-serif;font-size:13px;cursor:pointer;
+               transition:all 0.2s;letter-spacing:1px;">
+        💳 PAGAR CON TARJETA
+        <div style="font-size:10px;color:var(--text2);font-family:Rajdhani,sans-serif;margin-top:3px;letter-spacing:0;">Recurrente · Visa / Mastercard · Pago seguro</div>
+      </button>
+
+      <!-- Efectivo -->
+      <button id="btnPagarEfectivo" onclick="pagarEfectivo()"
+        style="display:none;width:100%;padding:16px;border-radius:10px;border:1px solid var(--green);
+               background:rgba(0,230,118,0.07);
+               color:var(--green);font-family:Orbitron,sans-serif;font-size:13px;cursor:pointer;
+               transition:all 0.2s;letter-spacing:1px;">
+        💵 GENERAR TICKET — PAGAR EN CAJA
+        <div style="font-size:10px;color:var(--text2);font-family:Rajdhani,sans-serif;margin-top:3px;letter-spacing:0;">Genera tu ticket y preséntate en caja · −5% por pagar en efectivo</div>
+      </button>
+
+      <!-- Crypto -->
+      <button id="btnPagarCrypto" onclick="pagarCrypto()"
+        style="display:none;width:100%;padding:16px;border-radius:10px;border:1px solid var(--accent);
+               background:rgba(0,229,255,0.07);
+               color:var(--accent);font-family:Orbitron,sans-serif;font-size:13px;cursor:pointer;
+               transition:all 0.2s;letter-spacing:1px;">
+        ₿ PAGAR CON USDT (ERC-20)
+        <div style="font-size:10px;color:var(--text2);font-family:Rajdhani,sans-serif;margin-top:3px;letter-spacing:0;">Envía USDT a nuestra wallet · Verificación manual · ~15 min</div>
+      </button>
+
+    </div>
+
+    <!-- Inputs ocultos para compatibilidad -->
+    <input type="hidden" id="tourPax" value="1">
+    <input type="hidden" id="tourNombre" value="">
+    <input type="hidden" id="tourEmail" value="">
+    <div style="display:none;" id="confirmPrecioUSD"></div>
+    <div style="display:none;" id="confirmPrecioGTQ"></div>
+  </div>
+</div>
+
+<!-- ===================== PAGO CRYPTO — WALLET QR ===================== -->
+<div class="screen" id="screen-tour-crypto" style="padding-top:60px;">
+  <div class="card" style="max-width:480px; width:100%;">
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <button onclick="goTo('screen-tour-confirm')" style="background:none;border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;">← Volver</button>
+      <div style="font-family:Orbitron,sans-serif;font-size:14px;color:var(--accent);">₿ PAGO CRYPTO USDT</div>
+    </div>
+
+    <!-- Monto exacto -->
+    <div style="background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.25);border-radius:12px;padding:20px;text-align:center;margin-bottom:20px;">
+      <div style="font-size:11px;color:var(--text2);letter-spacing:2px;margin-bottom:6px;">ENVÍA EXACTAMENTE</div>
+      <div id="cryptoMonto" style="font-family:Orbitron,sans-serif;font-size:32px;color:var(--accent);font-weight:700;"></div>
+      <div style="font-size:12px;color:var(--text2);margin-top:4px;">USDT · Red ERC-20 (Ethereum)</div>
+      <!-- Timer -->
+      <div style="margin-top:14px;padding:8px 16px;background:rgba(0,0,0,0.3);border-radius:20px;display:inline-block;">
+        <span style="font-size:11px;color:var(--text2);">⏱ Tiempo límite: </span>
+        <span id="cryptoTimer" style="font-family:Orbitron,sans-serif;font-size:14px;color:var(--gold);">15:00</span>
+      </div>
+    </div>
+
+    <!-- QR Wallet -->
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:11px;color:var(--text2);letter-spacing:2px;margin-bottom:12px;">WALLET USDT ERC-20</div>
+      <div id="cryptoQR" style="display:inline-block;padding:12px;background:#fff;border-radius:12px;box-shadow:0 0 30px rgba(0,229,255,0.2);"></div>
+      <div style="margin-top:12px;">
+        <div id="cryptoWalletAddr" style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--accent);word-break:break-all;padding:8px 12px;background:var(--dark3);border:1px solid rgba(0,229,255,0.2);border-radius:6px;letter-spacing:1px;cursor:pointer;" onclick="copiarWallet()" title="Toca para copiar"></div>
+        <div style="font-size:10px;color:var(--text2);margin-top:4px;">👆 Toca para copiar la dirección</div>
+      </div>
+    </div>
+
+    <!-- Advertencia red -->
+    <div style="background:rgba(255,171,0,0.08);border:1px solid rgba(255,171,0,0.3);border-radius:8px;padding:12px;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;">
+      <span style="font-size:18px;">⚠️</span>
+      <div style="font-size:12px;color:rgba(255,171,0,0.9);line-height:1.5;">
+        <strong>Importante:</strong> Envía únicamente USDT en la red <strong>ERC-20 (Ethereum)</strong>.<br>
+        Enviar en otra red resultará en pérdida de fondos.
+      </div>
+    </div>
+
+    <!-- Desglose comisiones -->
+    <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:20px;font-size:12px;">
+      <div style="color:var(--text2);margin-bottom:8px;letter-spacing:1px;font-size:10px;text-transform:uppercase;">Desglose del precio</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="color:var(--text2);">Precio efectivo (−5% tarjeta)</span><span id="cryptoBaseLabel"></span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="color:var(--text2);">Conversión USD +5%</span><span style="color:var(--text);">incluido</span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="color:var(--text2);">Comisión Binance retiro +2%</span><span style="color:var(--text);">incluido</span></div>
+      <div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">Comisión servicio +2.5%</span><span style="color:var(--text);">incluido</span></div>
+    </div>
+
+    <!-- Botón ya envié -->
+    <button class="btn-main" style="width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));" onclick="yaEnvie()">
+      ✅ Ya envié — mostrar comprobante
+    </button>
+    <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--text2);">
+      El staff verificará tu pago y confirmará el ticket en minutos
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TICKET DIGITAL ===================== -->
+<div class="screen" id="screen-tour-ticket" style="padding-top:55px;">
+  <div style="width:100%;max-width:440px;padding:0 16px 40px;">
+
+    <!-- Estado del ticket -->
+    <div id="ticketEstadoBanner" style="text-align:center;margin-bottom:16px;padding:10px 20px;border-radius:20px;font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:2px;"></div>
+
+    <!-- TICKET CARD -->
+    <div style="background:linear-gradient(160deg,#0e2412 0%,#091508 60%,#0a1d0d 100%);border:1px solid rgba(123,219,108,0.2);border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px rgba(123,219,108,0.06),0 24px 60px rgba(0,0,0,0.7);">
+
+      <!-- Línea top -->
+      <div style="height:2px;background:linear-gradient(90deg,transparent,#7BDB6C,#F5C842,#7BDB6C,transparent);opacity:0.6;"></div>
+
+      <!-- Hero destino -->
+      <div style="padding:24px 24px 18px;background:linear-gradient(135deg,rgba(123,219,108,0.07) 0%,transparent 60%);">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(123,219,108,0.12);border:1px solid rgba(123,219,108,0.25);border-radius:20px;padding:4px 12px;font-size:9px;font-weight:600;letter-spacing:2px;color:#7BDB6C;text-transform:uppercase;margin-bottom:12px;">
+              <span id="ticketStatusDot" style="width:6px;height:6px;background:#7BDB6C;border-radius:50%;display:inline-block;"></span>
+              <span id="ticketStatusLabel">CONFIRMADO</span>
+            </div>
+            <div id="ticketDestino" style="font-family:Orbitron,sans-serif;font-size:clamp(22px,6vw,30px);font-weight:900;color:#F0F4F0;line-height:1;margin-bottom:4px;letter-spacing:-1px;"></div>
+            <div id="ticketSubtitulo" style="font-size:10px;color:rgba(240,244,240,0.45);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;"></div>
+            <div id="ticketTourTipo" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#F5C842,#E8A020);border-radius:6px;padding:6px 14px;font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:600;color:#000;letter-spacing:0.5px;"></div>
+          </div>
+          <!-- Sello válido -->
+          <div id="ticketSello" style="width:52px;height:52px;border:2px solid rgba(123,219,108,0.4);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(15deg);opacity:0.75;flex-shrink:0;">
+            <div style="font-family:Orbitron,sans-serif;font-size:7px;color:#7BDB6C;letter-spacing:1px;text-align:center;line-height:1.4;">VÁLIDO<br>✓</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid datos -->
+      <div style="margin:0 16px;border:1px solid rgba(123,219,108,0.15);border-radius:12px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;">
+          <div style="padding:14px 16px;background:rgba(123,219,108,0.05);">
+            <div style="font-size:8px;font-weight:600;letter-spacing:2px;color:rgba(240,244,240,0.45);text-transform:uppercase;margin-bottom:5px;">📅 Fecha</div>
+            <div id="ticketFecha" style="font-family:Orbitron,sans-serif;font-size:17px;font-weight:700;color:#F0F4F0;line-height:1;"></div>
+            <div id="ticketDia" style="font-size:10px;color:rgba(240,244,240,0.45);margin-top:2px;"></div>
+          </div>
+          <div style="padding:14px 16px;background:rgba(123,219,108,0.05);border-left:1px solid rgba(123,219,108,0.1);">
+            <div style="font-size:8px;font-weight:600;letter-spacing:2px;color:rgba(240,244,240,0.45);text-transform:uppercase;margin-bottom:5px;">⏰ Salida</div>
+            <div id="ticketHora" style="font-family:Orbitron,sans-serif;font-size:17px;font-weight:700;color:#F5C842;line-height:1;"></div>
+            <div style="font-size:10px;color:rgba(240,244,240,0.45);margin-top:2px;" id="ticketHoraNote">Ser puntual</div>
+          </div>
+        </div>
+        <div style="padding:14px 16px;border-top:1px solid rgba(123,219,108,0.1);">
+          <div style="font-size:8px;font-weight:600;letter-spacing:2px;color:rgba(240,244,240,0.45);text-transform:uppercase;margin-bottom:5px;">👤 Turista</div>
+          <div id="ticketNombre" style="font-family:Orbitron,sans-serif;font-size:15px;font-weight:700;color:#7BDB6C;"></div>
+          <div id="ticketPaxPago" style="font-size:11px;color:rgba(240,244,240,0.45);margin-top:2px;"></div>
+        </div>
+        <div style="padding:14px 16px;border-top:1px solid rgba(123,219,108,0.1);">
+          <div style="font-size:8px;font-weight:600;letter-spacing:2px;color:rgba(240,244,240,0.45);text-transform:uppercase;margin-bottom:5px;">🎫 Ticket ID</div>
+          <div id="ticketId" style="font-family:Orbitron,sans-serif;font-size:12px;color:#00E5FF;letter-spacing:2px;"></div>
+        </div>
+      </div>
+
+      <!-- Punto de encuentro -->
+      <div style="margin:12px 16px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.18);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:36px;height:36px;background:rgba(0,229,255,0.12);border:1px solid rgba(0,229,255,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📍</div>
+        <div>
+          <div style="font-size:8px;font-weight:600;letter-spacing:2px;color:#00E5FF;text-transform:uppercase;margin-bottom:4px;">Punto de encuentro</div>
+          <div style="font-size:13px;font-weight:700;color:#F0F4F0;margin-bottom:2px;">Lobby — CryptoChange Flores</div>
+          <div style="font-size:11px;color:rgba(240,244,240,0.45);line-height:1.5;">Calle Centro América, frente al Parque Central<br>
+          <strong id="ticketPresentarse" style="color:#F0F4F0;"></strong></div>
+        </div>
+      </div>
+
+      <!-- Perforación -->
+      <div style="display:flex;align-items:center;margin:4px 0;padding:0 16px;">
+        <div style="width:18px;height:18px;background:#0A0A0F;border-radius:50%;margin-left:-26px;border:1px solid rgba(123,219,108,0.15);"></div>
+        <div style="flex:1;border-top:2px dashed rgba(123,219,108,0.12);margin:0 8px;"></div>
+        <div style="width:18px;height:18px;background:#0A0A0F;border-radius:50%;margin-right:-26px;border:1px solid rgba(123,219,108,0.15);"></div>
+      </div>
+
+      <!-- QR -->
+      <div style="padding:20px;text-align:center;">
+        <div style="font-size:9px;color:rgba(240,244,240,0.45);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">ESCANEAR PARA VERIFICAR</div>
+        <div style="position:relative;display:inline-block;">
+          <div style="padding:12px;background:#fff;border-radius:14px;box-shadow:0 0 0 1px rgba(123,219,108,0.2),0 8px 32px rgba(0,0,0,0.4);">
+            <div id="ticketQR"></div>
+          </div>
+        </div>
+        <div id="ticketIdSmall" style="font-family:Orbitron,sans-serif;font-size:11px;color:#7BDB6C;letter-spacing:2px;margin-top:10px;"></div>
+        <div style="font-size:10px;color:rgba(240,244,240,0.45);margin-top:4px;">Muestra este código al guía al abordar</div>
+      </div>
+
+      <!-- Footer precio -->
+      <div style="border-top:1px solid rgba(123,219,108,0.15);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-family:Orbitron,sans-serif;font-size:13px;font-weight:800;background:linear-gradient(90deg,#7BDB6C,#F5C842);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">CryptoChange<br>Flores</div>
+        <div style="text-align:right;">
+          <div style="font-size:8px;color:rgba(240,244,240,0.45);letter-spacing:2px;text-transform:uppercase;" id="ticketPagoLabel">PRECIO PAGADO</div>
+          <div id="ticketPrecioFinal" style="font-family:Orbitron,sans-serif;font-size:16px;font-weight:600;color:#F5C842;"></div>
+        </div>
+      </div>
+    </div><!-- /ticket card -->
+
+    <!-- Botones -->
+    <div style="display:flex;gap:10px;margin-top:16px;">
+      <button onclick="window.print()" style="flex:1;padding:14px;border-radius:10px;background:linear-gradient(135deg,#7BDB6C,#5BC950);color:#000;border:none;cursor:pointer;font-family:Rajdhani,sans-serif;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;">
+        ⬇ Descargar
+      </button>
+      <button onclick="compartirTicket()" style="flex:1;padding:14px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(123,219,108,0.2);color:#F0F4F0;cursor:pointer;font-family:Rajdhani,sans-serif;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;">
+        ↗ Compartir
+      </button>
+      <button onclick="goTo('screen-guia')" style="padding:14px 16px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text2);cursor:pointer;font-family:Rajdhani,sans-serif;font-size:13px;">
+        🏠 Inicio
+      </button>
+    </div>
+
   </div>
 </div>
 
@@ -835,7 +1290,8 @@ const CONFIG = {
   
   // Your wallet address per crypto
   WALLETS: {
-    USDT: 'TXhGT8ExampleWalletAddressHere123456',
+    USDT:        'TXhGT8ExampleWalletAddressHere123456',
+    USDT_ERC20:  '0xTuWalletUSDTERC20Aqui',   // ← reemplaza con tu dirección real
     BTC:  '1A1zP1eP5QGefi2DMPTfTL5SLmv7Divf',
     ETH:  '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BA',
     BNB:  'bnb1grpf0955h0ykzq3ar5nmum7y6gdfl6lxfn46h2',
@@ -858,9 +1314,12 @@ const CONFIG = {
   
   DRIVE_FOLDER_ID: '1K93Noif6KKJZcEsU1rD5uGqMYk3-1gj2',
   // Tours pricing
-  TOUR_CARGO_TARJETA: 0.05,
-  TOUR_DESC_CRIPTO:   0.06,
-  TOUR_GTQ_RATE:      7.75,
+  TOUR_CARGO_TARJETA:    0.05,
+  TOUR_DESC_CRIPTO:      0.06,
+  TOUR_GTQ_RATE:         7.75,
+  TOUR_RECARGO_USD:      0.05,
+  TOUR_BINANCE_FEE:      0.02,
+  TOUR_COMISION_CRYPTO:  0.025,
   TOURS_SHEET_ID:     '18oSN9eseH2zJa_93YG4Al1xR40O0zEs8pNMVnWhKyaQ',
   TOURS_SCRIPT_URL:   'https://script.google.com/macros/s/AKfycbxIeG5mMWt4r3JxKEWMNdSqeKEWzMC3p3BKd2ADlc_emdpMksQ5oFifiMXxCcw8M4mt/exec',
 };
@@ -1274,8 +1733,15 @@ function calcRate() {
 //  NAVIGATION
 // =============================================
 function goTo(screenId) {
+  var targetEl = document.getElementById(screenId);
+  if (!targetEl) {
+    console.warn('goTo: pantalla no encontrada → ' + screenId + ' — redirigiendo a screen-guia');
+    screenId = 'screen-guia';
+    targetEl = document.getElementById(screenId);
+    if (!targetEl) return;
+  }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(screenId).classList.add('active');
+  targetEl.classList.add('active');
   window.scrollTo(0,0);
 
   const showLang = screenId !== 'screen-welcome' && screenId !== 'screen-admin';
@@ -1307,15 +1773,20 @@ function goTo(screenId) {
     if (svgParallax) svgParallax.style.transform = 'translateY(0)';
   }
 
-  // Ocultar botón de beneficio en pantallas donde no aplica
-  var bfBtn = document.getElementById('benefitFloatBtn');
-  if (bfBtn) {
-    var hideIn = ['screen-subscribe','screen-gift','screen-guia','screen-descuentos','screen-pedro','screen-admin'];
-    bfBtn.style.display = hideIn.indexOf(screenId) >= 0 ? 'none' : 'flex';
+  // Mostrar botones fixed de tours solo en screen-guia
+  var toursVolver = document.getElementById('toursVolverBtn');
+  var destinoWrap = document.getElementById('destinoWrap');
+  var showTourBtns = (screenId === 'screen-guia');
+  if (toursVolver) toursVolver.style.display = showTourBtns ? 'block' : 'none';
+  if (destinoWrap) destinoWrap.style.display  = showTourBtns ? 'block' : 'none';
+
+  // Sincronizar forma de pago en las pantallas del flujo
+  if (['screen-tour-datos','screen-tour-fecha','screen-tour-confirm','screen-tour-crypto','screen-tour-ticket'].includes(screenId)) {
+    reserva.fp = state.tourFormaPago || 'efectivo';
   }
 }
 
-function goToAdmin() {
+function goToAdminExchange() {
   const pwd = prompt('Contraseña de administrador:');
   if(pwd !== CONFIG.ADMIN_PASSWORD) { showToast('Contraseña incorrecta','error'); return; }
   goTo('screen-admin');
@@ -3401,15 +3872,30 @@ function updateFondoDestino(id) {
 // =============================================
 var destinoMenuOpen = false;
 
+// ── Estado de la reserva en curso (global) ────────────────────
+var reserva = {
+  destino: null, tour: null, fp: 'efectivo',
+  nombre: '', email: '', tel: '', pais: '', pasaporte: '',
+  pax: 1, fecha: null, horario: null,
+  precioBase: 0, totalGTQ: 0, totalUSD: 0, totalUSDT: 0,
+  ticketId: null, estado: 'PENDIENTE'
+};
+var cryptoTimerInterval = null;
+
+// =====================================================================
+// PRECIOS EN GTQ — fuente: Excel Precios_Tour_NFT (pestaña Venta)
+// Fórmula: precioGTQ = Liquidar + IVA(12%) + Tarjeta(5%) + Q50 + Admin(15%)
+// USD mostrado = precioGTQ ÷ 7.75 × 1.05  (+5% por conversión a Q6)
+// =====================================================================
 var DESTINOS = {
   tikal: {
     emoji:'🏛️', name:'TIKAL', color:'var(--gold)',
-    titulo:'TOUR A TIKAL', subtitulo:'PETÉN · GUATEMALA · 2026',
+    titulo:'TOUR A TIKAL', subtitulo:'PETÉN · GUATEMALA · PATRIMONIO MUNDIAL UNESCO',
     kaanMsg:'"Bienvenido a Petén. Soy Kaan, tu guía. Juntos vamos a vivir algo que no olvidarás jamás."',
     tours:[
-      { id:'amanecer',  emoji:'🌅', nombre:'TIKAL AMANECER',  hora:'Salida 3:00 AM · Permiso especial', color:'var(--gold)',   precioUSD:248, precioLiq:150, conGuia:true,  tags:['🔑 Acceso antes de abrir','🦜 Selva al amanecer','📸 Luz perfecta','★ MÁS POPULAR'] },
-      { id:'manana',    emoji:'☀️', nombre:'TIKAL DÍA',       hora:'04:30 · 06:00 · 08:00 · 10:00 AM', color:'var(--accent)', precioUSD:182, precioLiq:100, conGuia:true, precioUSD_sin:142, precioLiq_sin:70, tags:['🎙️ Con guía $182 / 🚶 Sin guía $142','🐒 Monos aulladores','🌿 Selva viva'] },
-      { id:'atardecer', emoji:'🌇', nombre:'TIKAL ATARDECER', hora:'Salida 12:00 PM · Permiso especial', color:'#FF7043',     precioUSD:222, precioLiq:130, conGuia:true,  tags:['🦇 Murciélagos al atardecer','🌅 Cielo épico','★ ÉPICA'] },
+      { id:'amanecer',  emoji:'🌅', nombre:'TIKAL AMANECER',  hora:'Salida 3:00 AM · Permiso especial',  color:'var(--gold)',   precioGTQ:248,   precioLiq:150, conGuia:true,  tags:['🔑 Acceso antes de abrir','🦜 Selva al amanecer','📸 Luz perfecta','★ MÁS POPULAR'] },
+      { id:'manana',    emoji:'☀️', nombre:'TIKAL DÍA',       hora:'04:30 · 06:00 · 08:00 · 10:00 AM',  color:'var(--accent)', precioGTQ:182,   precioLiq:100, conGuia:true, precioGTQ_sin:142.4, precioLiq_sin:70, tags:['🎙️ Con guía Q182 / 🚶 Sin guía Q142','🐒 Monos aulladores','🌿 Selva viva'] },
+      { id:'atardecer', emoji:'🌇', nombre:'TIKAL ATARDECER', hora:'Salida 12:00 PM · Permiso especial', color:'#FF7043',       precioGTQ:221.6, precioLiq:130, conGuia:true,  tags:['🦇 Murciélagos al atardecer','🌅 Cielo épico','★ ÉPICA'] },
     ]
   },
   yaxha: {
@@ -3417,7 +3903,7 @@ var DESTINOS = {
     titulo:'YAXHÁ SUNSET TOUR', subtitulo:'PETÉN · LAGO YAXHÁ · GUATEMALA',
     kaanMsg:'"Yaxhá al atardecer. El sol sobre el lago, las ruinas en silencio. Solo tú y la eternidad."',
     tours:[
-      { id:'sunset', emoji:'🌅', nombre:'YAXHÁ SUNSET TOUR', hora:'Salida 12:00 PM', color:'#00BCD4', precioUSD:215, precioLiq:125, tags:['🌅 Atardecer sobre el lago','🏛️ Ruinas mayas','🦜 Fauna silvestre'] },
+      { id:'sunset', emoji:'🌅', nombre:'YAXHÁ SUNSET TOUR', hora:'Salida 12:00 PM', color:'#00BCD4', precioGTQ:215, precioLiq:125, tags:['🌅 Atardecer sobre el lago','🏛️ Ruinas mayas','🦜 Fauna silvestre'] },
     ]
   },
   craterazul: {
@@ -3425,8 +3911,8 @@ var DESTINOS = {
     titulo:'CRÁTER AZUL', subtitulo:'PETÉN · GUATEMALA',
     kaanMsg:'"El Cráter Azul — aguas cristalinas turquesa en medio de la selva. Un paraíso escondido."',
     tours:[
-      { id:'sin_almuerzo', emoji:'🏊', nombre:'CRÁTER AZUL',               hora:'Salida 8:00 AM · Sin almuerzo', color:'#0288D1', precioUSD:406, precioLiq:270, tags:['💧 Aguas turquesa','🌿 Sendero selva','🏊 Nado en cráter'] },
-      { id:'con_almuerzo', emoji:'🍽️', nombre:'CRÁTER AZUL + ALMUERZO',    hora:'Salida 8:00 AM · Con almuerzo', color:'#0288D1', precioUSD:472, precioLiq:320, tags:['💧 Aguas turquesa','🍽️ Almuerzo incluido','★ RECOMENDADO'] },
+      { id:'sin_alm', emoji:'🏊', nombre:'CRÁTER AZUL',            hora:'Salida 8:00 AM · Sin almuerzo', color:'#0288D1', precioGTQ:406.4, precioLiq:270, tags:['💧 Aguas turquesa','🌿 Sendero selva','🏊 Nado en cráter'] },
+      { id:'con_alm', emoji:'🍽️', nombre:'CRÁTER AZUL + ALMUERZO', hora:'Salida 8:00 AM · Con almuerzo', color:'#0288D1', precioGTQ:472.4, precioLiq:320, tags:['💧 Aguas turquesa','🍽️ Almuerzo incluido','★ RECOMENDADO'] },
     ]
   },
   riodulce: {
@@ -3434,8 +3920,8 @@ var DESTINOS = {
     titulo:'RÍO DULCE', subtitulo:'PETÉN · IZABAL · GUATEMALA',
     kaanMsg:'"Río Dulce — mangles, castillos coloniales y el Caribe a tu alcance desde Flores."',
     tours:[
-      { id:'riodulce',    emoji:'⛵', nombre:'RÍO DULCE',             hora:'Salida 6:00 AM',  color:'#26A69A', precioUSD:215, precioLiq:125, tags:['⛵ Río y manglares','🏰 Castillo San Felipe','🌊 Lago Izabal'] },
-      { id:'riodulce_gt', emoji:'🚌', nombre:'RÍO DULCE → CIUDAD GT', hora:'Salida 11:00 AM', color:'#26A69A', precioUSD:248, precioLiq:150, tags:['🚌 Transfer incluido','🌊 Río Dulce','🏙️ Ciudad Guatemala'] },
+      { id:'riodulce', emoji:'⛵', nombre:'RÍO DULCE',             hora:'Salida 6:00 AM',  color:'#26A69A', precioGTQ:215, precioLiq:125, tags:['⛵ Río y manglares','🏰 Castillo San Felipe','🌊 Lago Izabal'] },
+      { id:'rd_gt',    emoji:'🚌', nombre:'RÍO DULCE → CIUDAD GT', hora:'Salida 11:00 AM', color:'#26A69A', precioGTQ:248, precioLiq:150, tags:['🚌 Transfer incluido','🌊 Río Dulce','🏙️ Ciudad Guatemala'] },
     ]
   },
   belize: {
@@ -3443,11 +3929,11 @@ var DESTINOS = {
     titulo:'TOURS A BELIZE', subtitulo:'BELIZE · CARIBE · CENTROAMÉRICA',
     kaanMsg:'"Belize — el Caribe más cercano. Cayes, arrecifes de coral y selva virgen."',
     tours:[
-      { id:'belize_city', emoji:'🏙️', nombre:'BELIZE CITY / SAN IGNACIO', hora:'Salida 6:00 AM', color:'#1565C0', precioUSD:222, precioLiq:130, tags:['🇧🇿 Belize','🏙️ Ciudad costera','🌿 Jungla San Ignacio'] },
-      { id:'caye_ida',    emoji:'🏝️', nombre:'CAYE CAULKER (UNA VÍA)',    hora:'Salida 6:00 AM', color:'#0097A7', precioUSD:393, precioLiq:260, tags:['🏝️ Isla caribeña','🐠 Arrecife coral','🌊 Go Slow'] },
-      { id:'caye_rt',     emoji:'🔄', nombre:'CAYE CAULKER (IDA Y VUELTA)',hora:'Salida 6:00 AM', color:'#0097A7', precioUSD:486, precioLiq:330, tags:['🔄 Ida y vuelta','🏝️ Caye Caulker','🐠 Snorkel'] },
-      { id:'san_pedro',   emoji:'🌴', nombre:'SAN PEDRO BELIZE',           hora:'Salida 6:00 AM', color:'#0288D1', precioUSD:446, precioLiq:300, tags:['🌴 San Pedro Ambergris','🐠 Barrera coralina'] },
-      { id:'san_pedro_rt',emoji:'🔄', nombre:'SAN PEDRO (IDA Y VUELTA)',   hora:'Salida 6:00 AM', color:'#0288D1', precioUSD:578, precioLiq:400, tags:['🔄 Ida y vuelta','🌴 San Pedro','★ ÉPICA'] },
+      { id:'belize_city',  emoji:'🏙️', nombre:'BELIZE CITY / SAN IGNACIO',    hora:'Salida 6:00 AM', color:'#1565C0', precioGTQ:221.6, precioLiq:130, tags:['🇧🇿 Belize','🏙️ Ciudad costera','🌿 Jungla San Ignacio'] },
+      { id:'caye_ida',     emoji:'🏝️', nombre:'CAYE CAULKER (UNA VÍA)',        hora:'Salida 6:00 AM', color:'#0097A7', precioGTQ:393.2, precioLiq:260, tags:['🏝️ Isla caribeña','🐠 Arrecife coral','🌊 Go Slow'] },
+      { id:'caye_rt',      emoji:'🔄', nombre:'CAYE CAULKER (IDA Y VUELTA)',   hora:'Salida 6:00 AM', color:'#0097A7', precioGTQ:485.6, precioLiq:330, tags:['🔄 Ida y vuelta','🏝️ Caye Caulker','🐠 Snorkel'] },
+      { id:'san_pedro',    emoji:'🌴', nombre:'SAN PEDRO BELIZE',              hora:'Salida 6:00 AM', color:'#0288D1', precioGTQ:446,   precioLiq:300, tags:['🌴 San Pedro Ambergris','🐠 Barrera coralina'] },
+      { id:'san_pedro_rt', emoji:'🔄', nombre:'SAN PEDRO (IDA Y VUELTA)',      hora:'Salida 6:00 AM', color:'#0288D1', precioGTQ:578,   precioLiq:400, tags:['🔄 Ida y vuelta','🌴 San Pedro','★ ÉPICA'] },
     ]
   },
   bacalar: {
@@ -3455,7 +3941,7 @@ var DESTINOS = {
     titulo:'BACALAR / CHETUMAL', subtitulo:'QUINTANA ROO · MÉXICO',
     kaanMsg:'"El Lago de los 7 Colores. Bacalar — el Caribe mexicano desde Guatemala."',
     tours:[
-      { id:'bacalar', emoji:'🌈', nombre:'BACALAR / CHETUMAL', hora:'Salida 6:00 AM', color:'#7B1FA2', precioUSD:578, precioLiq:400, tags:['🌈 Lago 7 Colores','🇲🇽 México','★ ÉPICA'] },
+      { id:'bacalar', emoji:'🌈', nombre:'BACALAR / CHETUMAL', hora:'Salida 6:00 AM', color:'#7B1FA2', precioGTQ:578, precioLiq:400, tags:['🌈 Lago 7 Colores','🇲🇽 México','★ ÉPICA'] },
     ]
   },
   ciudadgt: {
@@ -3463,10 +3949,10 @@ var DESTINOS = {
     titulo:'CIUDAD DE GUATEMALA & ANTIGUA', subtitulo:'GUATEMALA CITY · ANTIGUA',
     kaanMsg:'"La capital y Antigua Guatemala — cultura, historia colonial y gastronomía."',
     tours:[
-      { id:'ciudadgt_am', emoji:'🌅', nombre:'CIUDAD GT (AM)', hora:'Salida 6:00 AM',  color:'#455A64', precioUSD:314, precioLiq:200, tags:['🏙️ Ciudad Guatemala','🌅 Tour matutino'] },
-      { id:'ciudadgt_pm', emoji:'🌆', nombre:'CIUDAD GT (PM)', hora:'Salida 21:00 PM', color:'#455A64', precioUSD:380, precioLiq:250, tags:['🌆 Tour nocturno','🏙️ Ciudad Guatemala'] },
-      { id:'antigua_am',  emoji:'⛪', nombre:'ANTIGUA (AM)',   hora:'Salida 6:00 AM',  color:'#795548', precioUSD:380, precioLiq:250, tags:['⛪ Antigua colonial','🏛️ Patrimonio UNESCO'] },
-      { id:'antigua_pm',  emoji:'🌆', nombre:'ANTIGUA (PM)',   hora:'Salida 21:00 PM', color:'#795548', precioUSD:479, precioLiq:325, tags:['🌆 Nocturno','⛪ Antigua','🍽️ Cena'] },
+      { id:'cgt_am',  emoji:'🌅', nombre:'CIUDAD GT (AM)', hora:'Salida 6:00 AM',  color:'#455A64', precioGTQ:314, precioLiq:200, tags:['🏙️ Ciudad Guatemala','🌅 Tour matutino'] },
+      { id:'cgt_pm',  emoji:'🌆', nombre:'CIUDAD GT (PM)', hora:'Salida 21:00',    color:'#455A64', precioGTQ:380, precioLiq:250, tags:['🌆 Tour nocturno','🏙️ Ciudad Guatemala'] },
+      { id:'ant_am',  emoji:'⛪', nombre:'ANTIGUA (AM)',   hora:'Salida 6:00 AM',  color:'#795548', precioGTQ:380, precioLiq:250, tags:['⛪ Antigua colonial','🏛️ Patrimonio UNESCO'] },
+      { id:'ant_pm',  emoji:'🌆', nombre:'ANTIGUA (PM)',   hora:'Salida 21:00',    color:'#795548', precioGTQ:479, precioLiq:325, tags:['🌆 Nocturno','⛪ Antigua','🍽️ Cena'] },
     ]
   },
   semuc: {
@@ -3474,7 +3960,7 @@ var DESTINOS = {
     titulo:'SEMUC CHAMPEY', subtitulo:'ALTA VERAPAZ · GUATEMALA',
     kaanMsg:'"Semuc Champey — pozas de agua turquesa sobre el río Cahabón. La joya oculta de Guatemala."',
     tours:[
-      { id:'semuc', emoji:'💧', nombre:'SEMUC CHAMPEY', hora:'Salida 8:00 AM', color:'#00897B', precioUSD:248, precioLiq:150, tags:['💧 Pozas turquesa','🌿 Alta Verapaz','★ IMPERDIBLE'] },
+      { id:'semuc', emoji:'💧', nombre:'SEMUC CHAMPEY', hora:'Salida 8:00 AM', color:'#00897B', precioGTQ:248, precioLiq:150, tags:['💧 Pozas turquesa','🌿 Alta Verapaz','★ IMPERDIBLE'] },
     ]
   },
   antigua: {
@@ -3482,8 +3968,8 @@ var DESTINOS = {
     titulo:'ANTIGUA GUATEMALA', subtitulo:'SACATEPÉQUEZ · PATRIMONIO UNESCO',
     kaanMsg:'"Antigua — la ciudad colonial más bella de América. Calles empedradas y volcanes."',
     tours:[
-      { id:'antigua_am', emoji:'⛪', nombre:'ANTIGUA AM', hora:'Salida 6:00 AM',  color:'#795548', precioUSD:380, precioLiq:250, tags:['⛪ Colonial','🌅 AM'] },
-      { id:'antigua_pm', emoji:'🌆', nombre:'ANTIGUA PM', hora:'Salida 21:00 PM', color:'#795548', precioUSD:479, precioLiq:325, tags:['🌆 Nocturno','⛪ Antigua'] },
+      { id:'ant_am', emoji:'⛪', nombre:'ANTIGUA (AM)', hora:'Salida 6:00 AM',  color:'#795548', precioGTQ:380, precioLiq:250, tags:['⛪ Colonial','🌅 Matutino'] },
+      { id:'ant_pm', emoji:'🌆', nombre:'ANTIGUA (PM)', hora:'Salida 21:00',    color:'#795548', precioGTQ:479, precioLiq:325, tags:['🌆 Nocturno','⛪ Antigua'] },
     ]
   },
   acatenango: {
@@ -3491,8 +3977,8 @@ var DESTINOS = {
     titulo:'VOLCÁN ACATENANGO', subtitulo:'CHIMALTENANGO · GUATEMALA',
     kaanMsg:'"Acatenango — observar al Volcán de Fuego desde la cima. Una experiencia que te cambia la vida."',
     tours:[
-      { id:'trekking1', emoji:'🥾', nombre:'TREKKING 1 DÍA', hora:'Salida 5:00 AM', color:'#E64A19', precio:'Q 650', tags:['🥾 Senderismo','🌋 Vista Fuego'] },
-      { id:'camping2',  emoji:'⛺', nombre:'CAMPING 2 DÍAS', hora:'Salida 8:00 AM', color:'#FF5722', precio:'Q 950', tags:['⛺ Camping','🌋 Amanecer volcán','★ ÉPICA'] },
+      { id:'trekking1', emoji:'🥾', nombre:'TREKKING 1 DÍA', hora:'Salida 5:00 AM', color:'#E64A19', precioGTQ:650, precioLiq:500,  tags:['🥾 Senderismo','🌋 Vista Volcán de Fuego'] },
+      { id:'camping2',  emoji:'⛺', nombre:'CAMPING 2 DÍAS', hora:'Salida 8:00 AM', color:'#FF5722', precioGTQ:950, precioLiq:720,  tags:['⛺ Camping','🌋 Amanecer volcán','★ ÉPICA'] },
     ]
   },
   atitlan: {
@@ -3500,9 +3986,9 @@ var DESTINOS = {
     titulo:'LAGO ATITLÁN', subtitulo:'SOLOLÁ · GUATEMALA',
     kaanMsg:'"Atitlán — el lago más bello del mundo, rodeado de volcanes y pueblos mayas."',
     tours:[
-      { id:'pueblos', emoji:'🛶', nombre:'PUEBLOS DEL LAGO', hora:'Salida 7:00 AM', color:'#1565C0', precio:'Q 550', tags:['🛶 Lancha','🏘️ Pueblos mayas'] },
-      { id:'kayak',   emoji:'🚣', nombre:'KAYAK ATITLÁN',   hora:'Salida 8:00 AM', color:'#0097A7', precio:'Q 400', tags:['🚣 Kayak','🌊 Lago'] },
-      { id:'indian',  emoji:'🏔️', nombre:'INDIAN NOSE',     hora:'Salida 4:00 AM', color:'#1565C0', precio:'Q 350', tags:['🏔️ Mirador','🌅 Amanecer'] },
+      { id:'pueblos', emoji:'🛶', nombre:'PUEBLOS DEL LAGO', hora:'Salida 7:00 AM', color:'#1565C0', precioGTQ:550, precioLiq:400, tags:['🛶 Lancha','🏘️ Pueblos mayas'] },
+      { id:'kayak',   emoji:'🚣', nombre:'KAYAK ATITLÁN',   hora:'Salida 8:00 AM', color:'#0097A7', precioGTQ:400, precioLiq:290, tags:['🚣 Kayak','🌊 Lago Atitlán'] },
+      { id:'indian',  emoji:'🏔️', nombre:'INDIAN NOSE',     hora:'Salida 4:00 AM', color:'#1565C0', precioGTQ:350, precioLiq:250, tags:['🏔️ Mirador Indian Nose','🌅 Amanecer épico'] },
     ]
   },
 };
@@ -3572,26 +4058,44 @@ function renderTours(tours) {
     }).join('');
 
     var precioHTML;
-    if (t.precioUSD) {
-      // Tour con precio en USD: mostrar precio dinámico según forma de pago y guía
+    if (t.precioGTQ) {
       var usaGuia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
-      var base    = (t.conGuia && !usaGuia && t.precioUSD_sin) ? t.precioUSD_sin : t.precioUSD;
-      var p       = calcTourPrice(base, fp);
-      precioHTML  = '<div style="font-family:Orbitron,sans-serif;font-size:15px;color:'+t.color+';">$'+p.usd.toFixed(0)+' USD</div>'
-                  + '<div style="font-size:11px;color:var(--text2);">Q'+p.gtq.toFixed(0)+' GTQ · p/persona</div>';
+      var base    = (t.conGuia && !usaGuia && t.precioGTQ_sin) ? t.precioGTQ_sin : t.precioGTQ;
+      // Calcular los 3 precios siempre
+      var pTarj = calcTourPrice(base, 'tarjeta');
+      var pEfec = calcTourPrice(base, 'efectivo');
+      var pCryp = calcTourPrice(base, 'cripto');
+      precioHTML =
+          '<div style="text-align:right;min-width:110px;">'
+        // Fila tarjeta — precio base (mayor)
+        + '<div style="display:flex;align-items:center;justify-content:flex-end;gap:5px;">'
+        + '<span style="font-size:9px;color:var(--text2);">💳</span>'
+        + '<span style="font-family:Orbitron,sans-serif;font-size:15px;color:'+t.color+';">Q'+pTarj.gtq.toFixed(0)+'</span>'
+        + '</div>'
+        // Fila efectivo — descuento 5%
+        + '<div style="display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:2px;">'
+        + '<span style="font-size:9px;color:var(--green);">💵 −5%</span>'
+        + '<span style="font-family:Orbitron,sans-serif;font-size:13px;color:var(--green);">Q'+pEfec.gtq.toFixed(0)+'</span>'
+        + '</div>'
+        // Fila crypto USDT
+        + '<div style="display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:2px;">'
+        + '<span style="font-size:9px;color:var(--accent);">₿ USDT</span>'
+        + '<span style="font-family:Orbitron,sans-serif;font-size:11px;color:var(--accent);">$'+pCryp.usdt.toFixed(2)+'</span>'
+        + '</div>'
+        + '</div>';
     } else {
-      // Tour con precio fijo en GTQ
-      precioHTML  = '<div style="font-family:Orbitron,sans-serif;font-size:15px;color:'+t.color+';">'+(t.precio||'')+'</div>'
-                  + '<div style="font-size:10px;color:var(--text2);">por persona</div>';
+      // Tour sin precioGTQ definido
+      precioHTML = '<div style="font-family:Orbitron,sans-serif;font-size:15px;color:'+t.color+';">'+(t.precio||'Q--')+'</div>'
+                 + '<div style="font-size:10px;color:var(--text2);">por persona</div>';
     }
 
     // Selector de guía inline (solo Tikal Día)
     var guiaSelector = '';
-    if (t.conGuia && t.precioUSD_sin) {
+    if (t.conGuia && t.precioGTQ_sin) {
       var usaGuia = !state.guiaTour || state.guiaTour[t.id] !== false;
       guiaSelector = '<div style="display:flex;gap:6px;margin-top:8px;" onclick="event.stopPropagation()">'
-        + '<button style="flex:1;padding:4px 8px;border-radius:6px;border:1px solid '+(usaGuia?'var(--accent)':'rgba(255,255,255,0.2)')+';background:'+(usaGuia?'rgba(0,188,212,0.15)':'transparent')+';color:var(--text);font-size:12px;cursor:pointer;" onclick="setGuiaTour(this.dataset.id,true)" data-id=\''+t.id+'\'>🎙️ Con guía</button>'
-        + '<button style="flex:1;padding:4px 8px;border-radius:6px;border:1px solid '+(!usaGuia?'var(--green)':'rgba(255,255,255,0.2)')+';background:'+(!usaGuia?'rgba(0,200,83,0.1)':'transparent')+';color:var(--text);font-size:12px;cursor:pointer;" onclick="setGuiaTour(this.dataset.id,false)" data-id=\''+t.id+'\'>🚶 Sin guía</button>'
+        + '<button style="flex:1;padding:4px 8px;border-radius:6px;border:1px solid '+(usaGuia?'var(--accent)':'rgba(255,255,255,0.2)')+';background:'+(usaGuia?'rgba(0,188,212,0.15)':'transparent')+';color:var(--text);font-size:12px;cursor:pointer;" onclick="setGuiaTour(this.dataset.id,true)" data-id=\''+t.id+'\'>🎙️ Con guía Q'+t.precioGTQ+'</button>'
+        + '<button style="flex:1;padding:4px 8px;border-radius:6px;border:1px solid '+(!usaGuia?'var(--green)':'rgba(255,255,255,0.2)')+';background:'+(!usaGuia?'rgba(0,200,83,0.1)':'transparent')+';color:var(--text);font-size:12px;cursor:pointer;" onclick="setGuiaTour(this.dataset.id,false)" data-id=\''+t.id+'\'>🚶 Sin guía Q'+t.precioGTQ_sin+'</button>'
         + '</div>';
     }
 
@@ -3643,12 +4147,33 @@ function setGuiaTour(tourId, conGuia) {
   }
 }
 
-function calcTourPrice(precioUSD, formaPago) {
-  var usd = precioUSD || 0;
-  var rate = CONFIG.TOUR_GTQ_RATE || 7.75;
-  if (formaPago === 'tarjeta') usd *= (1 + (CONFIG.TOUR_CARGO_TARJETA || 0.05));
-  if (formaPago === 'cripto')  usd *= (1 - (CONFIG.TOUR_DESC_CRIPTO   || 0.06));
-  return { usd: usd, gtq: usd * rate };
+// ─── LÓGICA DE PRECIOS ───────────────────────────────────────────────
+// precioGTQ = precio base (ya incluye 5% tarjeta, IVA, admin, ganancia)
+// TARJETA  → precio base sin cambio
+// EFECTIVO → base × 0.95  (-5% porque no usa tarjeta)
+// CRYPTO   → (efectivo ÷ 7.75) × 1.045  (+2% Binance +2.5% comision)
+// ─────────────────────────────────────────────────────────────────────
+function calcTourPrice(precioGTQ, formaPago) {
+  var base    = precioGTQ || 0;
+  var rate    = CONFIG.TOUR_GTQ_RATE      || 7.75;
+  var tarjeta = CONFIG.TOUR_CARGO_TARJETA || 0.05;   // % ya en precio base
+  var recUSD  = CONFIG.TOUR_RECARGO_USD   || 0.05;   // +5% conv USD→Q6
+  var binance = CONFIG.TOUR_BINANCE_FEE   || 0.02;   // +2% retiro Binance
+  var comCrypto = CONFIG.TOUR_COMISION_CRYPTO || 0.025; // +2.5% comision
+
+  var gtq_efectivo = +(base * (1 - tarjeta)).toFixed(2);       // Q sin tarjeta
+  var gtq_tarjeta  = base;                                      // Q precio base
+  var usd_efectivo = +(gtq_efectivo / rate).toFixed(4);
+  var usdt_crypto  = +(usd_efectivo * (1 + recUSD + binance + comCrypto)).toFixed(2);
+
+  if (formaPago === 'tarjeta') {
+    return { gtq: gtq_tarjeta, usd: +(gtq_tarjeta / rate * (1 + recUSD)).toFixed(2), usdt: null };
+  }
+  if (formaPago === 'cripto') {
+    return { gtq: null, usd: null, usdt: usdt_crypto, gtq_ref: gtq_efectivo };
+  }
+  // efectivo (default)
+  return { gtq: gtq_efectivo, usd: +(gtq_efectivo / rate * (1 + recUSD)).toFixed(2), usdt: usdt_crypto };
 }
 
 function setTourPago(fp) {
@@ -3687,97 +4212,541 @@ function actualizarCTATour() {
   if (!t) return;
   var fp  = state.tourFormaPago || 'efectivo';
   var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
-  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : (t.precioUSD || 0);
+  var base = (t.conGuia && !guia && t.precioGTQ_sin) ? t.precioGTQ_sin : (t.precioGTQ || 0);
   if (elN) elN.textContent = t.emoji + ' ' + t.nombre + ' · ' + t.hora;
   if (base) {
     var p = calcTourPrice(base, fp);
-    var fpl = { efectivo:'Efectivo', tarjeta:'Tarjeta +' + Math.round((CONFIG.TOUR_CARGO_TARJETA||0.05)*100) + '%', cripto:'Cripto -' + Math.round((CONFIG.TOUR_DESC_CRIPTO||0.06)*100) + '%' };
-    if (elU) elU.textContent = '$' + p.usd.toFixed(0) + ' USD · ' + fpl[fp] + (t.conGuia ? (guia ? ' · 🎙️ Con guía' : ' · 🚶 Sin guía') : '');
-    if (elG) elG.textContent = 'Q' + p.gtq.toFixed(0) + ' GTQ por persona';
+    var guiaLabel = t.conGuia ? (guia ? ' · 🎙️ Con guía' : ' · 🚶 Sin guía') : '';
+    if (fp === 'tarjeta') {
+      if (elG) elG.textContent = 'Q' + p.gtq.toFixed(0) + ' GTQ por persona · 💳 Tarjeta';
+      if (elU) elU.textContent = '≈ $' + p.usd.toFixed(0) + ' USD' + guiaLabel;
+    } else if (fp === 'cripto') {
+      if (elG) elG.textContent = '$' + p.usdt.toFixed(2) + ' USDT por persona · ₿ Crypto';
+      if (elU) elU.textContent = 'Binance +2% · Comisión +2.5%' + guiaLabel;
+    } else {
+      if (elG) elG.textContent = 'Q' + p.gtq.toFixed(0) + ' GTQ por persona · 💵 Efectivo (−5%)';
+      if (elU) elU.textContent = '≈ $' + p.usd.toFixed(0) + ' USD' + guiaLabel;
+    }
   } else if (t.precio) {
     if (elU) elU.textContent = t.precio;
   }
 }
 
+// ═══════════════════════════════════════════════════════════════
+//  FLUJO DE RESERVA — 5 PASOS
+//  1. screen-guia        → seleccionar tour + forma de pago
+//  2. screen-tour-datos  → datos del turista
+//  3. screen-tour-fecha  → fecha y horario
+//  4. screen-tour-confirm→ resumen + botón de pago
+//     ├─ 💳 Tarjeta  → Recurrente (link externo)
+//     ├─ 💵 Efectivo → ticket pendiente → caja
+//     └─ ₿  Crypto   → screen-tour-crypto → wallet QR
+//  5. screen-tour-ticket → ticket digital con QR
+// ═══════════════════════════════════════════════════════════════
+
+// ─── PASO 1 → PASO 2: ir a datos desde screen-guia ─────────────
 function abrirConfirmacionTour() {
-  if (!selectedTourType || !currentDestino) { showToast('Selecciona un tour primero', 'error'); return; }
+  if (!selectedTourType || !currentDestino) {
+    showToast('Selecciona un tour primero', 'error'); return;
+  }
   var dest  = DESTINOS[currentDestino];
   var tours = dest ? dest.tours : [];
   var t     = tours.find(function(x){ return x.id === selectedTourType; });
   if (!t) return;
-  var fp   = state.tourFormaPago || 'efectivo';
+
+  // Guardar en reserva
+  reserva.destino  = currentDestino;
+  reserva.tour     = t;
+  reserva.fp       = state.tourFormaPago || 'efectivo';
+  reserva.destObj  = dest;
+
   var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
-  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : (t.precioUSD || 0);
-  var p    = calcTourPrice(base, fp);
-  var fl   = { efectivo:'💵 Efectivo', tarjeta:'💳 Tarjeta', cripto:'₿ Cripto' };
-  var g    = function(id){ return document.getElementById(id); };
-  if (g('confirmDestino'))    g('confirmDestino').textContent    = dest.emoji + ' ' + dest.name;
-  if (g('confirmTourNombre')) g('confirmTourNombre').textContent = t.emoji + ' ' + t.nombre;
-  if (g('confirmHora'))       g('confirmHora').textContent       = t.hora;
-  if (g('confirmPago'))       g('confirmPago').textContent       = fl[fp] || fp;
-  if (g('confirmPrecioUSD'))  g('confirmPrecioUSD').textContent  = '$' + p.usd.toFixed(0) + ' USD';
-  if (g('confirmPrecioGTQ'))  g('confirmPrecioGTQ').textContent  = 'Q'  + p.gtq.toFixed(0) + ' GTQ';
-  if (state.client && state.client.name) {
-    if (g('tourNombre')) g('tourNombre').value = state.client.name  || '';
-    if (g('tourEmail'))  g('tourEmail').value  = state.client.email || '';
+  reserva.precioBase = (t.conGuia && !guia && t.precioGTQ_sin) ? t.precioGTQ_sin : (t.precioGTQ || 0);
+  reserva.conGuia    = guia;
+
+  // Pre-rellenar si venimos del Exchange con datos del cliente
+  if (state.client) {
+    var nb = document.getElementById('tNombre');
+    var em = document.getElementById('tEmail');
+    if (nb && !nb.value && state.client.name)  nb.value = state.client.name;
+    if (em && !em.value && state.client.email) em.value = state.client.email;
   }
-  if (g('tourPax')) g('tourPax').value = '1';
-  actualizarTotalPax();
+
+  // Mostrar resumen mini en el header de datos
+  var p = calcTourPrice(reserva.precioBase, reserva.fp);
+  var dn = document.getElementById('datosTourNombre');
+  var dp = document.getElementById('datosTourPrecio');
+  if (dn) dn.textContent = t.emoji + ' ' + t.nombre;
+  if (dp) {
+    if (reserva.fp === 'cripto') dp.textContent = '$' + p.usdt.toFixed(2) + ' USDT';
+    else dp.textContent = 'Q' + p.gtq.toFixed(0);
+  }
+
+  // Reiniciar pax
+  var pd = document.getElementById('paxDisplay');
+  if (pd) pd.textContent = '1';
+  reserva.pax = 1;
+  actualizarLabelPax();
+
+  goTo('screen-tour-datos');
+}
+
+// ─── Contador de personas ───────────────────────────────────────
+function cambiarPax(delta) {
+  reserva.pax = Math.max(1, Math.min(15, (reserva.pax || 1) + delta));
+  var pd = document.getElementById('paxDisplay');
+  if (pd) pd.textContent = reserva.pax;
+  actualizarLabelPax();
+}
+function actualizarLabelPax() {
+  var lbl = document.getElementById('paxTotalLabel');
+  if (!lbl || !reserva.precioBase) return;
+  var p = calcTourPrice(reserva.precioBase, reserva.fp);
+  if (reserva.fp === 'cripto') {
+    lbl.textContent = reserva.pax + ' persona' + (reserva.pax>1?'s':'') + ' × $' + p.usdt.toFixed(2) + ' = $' + (p.usdt * reserva.pax).toFixed(2) + ' USDT';
+  } else {
+    lbl.textContent = reserva.pax + ' persona' + (reserva.pax>1?'s':'') + ' × Q' + p.gtq.toFixed(0) + ' = Q' + (p.gtq * reserva.pax).toFixed(0) + ' GTQ';
+  }
+}
+
+// ─── PASO 2 → PASO 3: validar datos e ir a fecha ───────────────
+function irAFecha() {
+  var g  = function(id){ var e=document.getElementById(id); return e?e.value.trim():''; };
+  var nb = g('tNombre'), em = g('tEmail'), tel = g('tTel');
+  var ps = g('tPais'), pa = g('tPasaporte');
+  if (!nb)  { showToast('Ingresa tu nombre completo', 'error');   return; }
+  if (!em || !em.includes('@')) { showToast('Ingresa un email válido', 'error'); return; }
+  if (!tel) { showToast('Ingresa tu teléfono / WhatsApp', 'error'); return; }
+  if (!ps)  { showToast('Selecciona tu país de origen', 'error'); return; }
+  if (!pa)  { showToast('Ingresa tu número de pasaporte', 'error'); return; }
+
+  var prefix = (document.getElementById('tTelPais')||{}).value || '';
+  reserva.nombre    = nb;
+  reserva.email     = em;
+  reserva.tel       = prefix + ' ' + tel;
+  reserva.pais      = ps.replace(/^.+ /, ''); // quitar emoji
+  reserva.pasaporte = pa.toUpperCase();
+  reserva.pax       = parseInt(document.getElementById('paxDisplay').textContent) || 1;
+
+  renderCalendario();
+  goTo('screen-tour-fecha');
+}
+
+// ─── Renderizar calendario 7 días ──────────────────────────────
+var DIAS_ES   = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+var DIAS_EN   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var MESES_ES  = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+function renderCalendario() {
+  var cont = document.getElementById('calendarDays');
+  if (!cont) return;
+  cont.innerHTML = '';
+  var hoy = new Date();
+  for (var i = 0; i < 8; i++) {
+    var d = new Date(hoy);
+    d.setDate(hoy.getDate() + i);
+    var esHoy = i === 0;
+    var btn = document.createElement('button');
+    btn.setAttribute('data-fecha', d.toISOString().split('T')[0]);
+    btn.style.cssText = 'flex-shrink:0;min-width:60px;padding:10px 8px;border-radius:10px;'
+      + 'border:1px solid var(--border);background:var(--dark3);cursor:pointer;transition:all 0.2s;'
+      + 'font-family:Rajdhani,sans-serif;text-align:center;';
+    btn.innerHTML = '<div style="font-size:9px;color:var(--text2);letter-spacing:1px;">' + DIAS_ES[d.getDay()] + '</div>'
+      + '<div style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--text);font-weight:700;line-height:1.2;">' + d.getDate() + '</div>'
+      + '<div style="font-size:9px;color:var(--text2);">' + MESES_ES[d.getMonth()] + '</div>'
+      + (esHoy ? '<div style="font-size:8px;color:var(--gold);margin-top:2px;">HOY</div>' : '');
+    btn.onclick = (function(fecha, el){ return function(){ seleccionarFecha(fecha, el); }; })(d.toISOString().split('T')[0], btn);
+    cont.appendChild(btn);
+  }
+  // Auto-seleccionar mañana por defecto
+  var manana = new Date(hoy); manana.setDate(hoy.getDate() + 1);
+  seleccionarFecha(manana.toISOString().split('T')[0], cont.children[1]);
+}
+
+function seleccionarFecha(fechaStr, elBtn) {
+  // Desmarcar todos
+  var cont = document.getElementById('calendarDays');
+  if (cont) Array.from(cont.children).forEach(function(b){
+    b.style.background = 'var(--dark3)';
+    b.style.borderColor = 'var(--border)';
+    b.style.color = 'var(--text)';
+  });
+  // Marcar seleccionado
+  if (elBtn) {
+    elBtn.style.background = 'rgba(245,200,66,0.15)';
+    elBtn.style.borderColor = 'var(--gold)';
+  }
+  reserva.fecha = fechaStr;
+  renderHorarios();
+}
+
+function renderHorarios() {
+  var cont = document.getElementById('horariosGrid');
+  if (!cont || !reserva.tour) return;
+  cont.innerHTML = '';
+  var t = reserva.tour;
+  // Horarios del tour (pueden ser múltiples o uno)
+  var horarios = t.horarios || [t.hora];
+  if (!horarios.length) horarios = [t.hora || '06:00'];
+
+  horarios.forEach(function(h) {
+    var btn = document.createElement('button');
+    btn.setAttribute('data-horario', h);
+    btn.style.cssText = 'padding:14px 10px;border-radius:10px;border:1px solid var(--border);'
+      + 'background:var(--dark3);cursor:pointer;transition:all 0.2s;text-align:center;';
+    btn.innerHTML = '<div style="font-family:Orbitron,sans-serif;font-size:16px;color:var(--gold);">' + h + '</div>'
+      + '<div style="font-size:10px;color:var(--text2);margin-top:3px;">Disponible</div>';
+    btn.onclick = (function(horario, el){ return function(){ seleccionarHorario(horario, el); }; })(h, btn);
+    cont.appendChild(btn);
+  });
+
+  // Auto-seleccionar el primero
+  if (cont.children[0]) seleccionarHorario(horarios[0], cont.children[0]);
+}
+
+function seleccionarHorario(horario, elBtn) {
+  var cont = document.getElementById('horariosGrid');
+  if (cont) Array.from(cont.children).forEach(function(b){
+    b.style.background = 'var(--dark3)';
+    b.style.borderColor = 'var(--border)';
+  });
+  if (elBtn) {
+    elBtn.style.background = 'rgba(0,229,255,0.1)';
+    elBtn.style.borderColor = 'var(--accent)';
+  }
+  reserva.horario = horario;
+  actualizarResumenFecha();
+}
+
+function actualizarResumenFecha() {
+  if (!reserva.fecha || !reserva.horario) return;
+  var p   = calcTourPrice(reserva.precioBase, reserva.fp);
+  var t   = reserva.tour;
+  var d   = reserva.destObj;
+
+  // Calcular totales
+  if (reserva.fp === 'cripto') {
+    reserva.totalUSDT = +(p.usdt * reserva.pax).toFixed(2);
+  } else {
+    reserva.totalGTQ  = +(p.gtq * reserva.pax).toFixed(2);
+    reserva.totalUSD  = +(p.usd * reserva.pax).toFixed(2);
+  }
+
+  var res = document.getElementById('resumenFecha');
+  var lin = document.getElementById('resumenLineas');
+  var tot = document.getElementById('resumenTotal');
+  var tou = document.getElementById('resumenTotalUSD');
+  if (!res) return;
+
+  var fp_label = { efectivo:'💵 Efectivo (−5%)', tarjeta:'💳 Tarjeta', cripto:'₿ USDT ERC-20' };
+  var lineas = [
+    ['Destino',    (d?d.emoji+' '+d.name:'')],
+    ['Tour',       (t?t.emoji+' '+t.nombre:'')],
+    ['Fecha',      reserva.fecha.split('-').reverse().join('/')],
+    ['Horario',    reserva.horario],
+    ['Personas',   reserva.pax + ' persona' + (reserva.pax>1?'s':'')],
+    ['Pago',       fp_label[reserva.fp]],
+  ];
+  lin.innerHTML = lineas.map(function(l){
+    return '<div style="display:flex;justify-content:space-between;font-size:13px;">'
+      + '<span style="color:var(--text2);">'+l[0]+'</span>'
+      + '<span style="color:var(--text);">'+l[1]+'</span></div>';
+  }).join('');
+
+  if (reserva.fp === 'cripto') {
+    tot.textContent = '$' + reserva.totalUSDT.toFixed(2) + ' USDT';
+    tou.textContent = 'pago en crypto · ERC-20';
+  } else {
+    tot.textContent = 'Q' + reserva.totalGTQ.toFixed(0) + ' GTQ';
+    tou.textContent = '≈ $' + reserva.totalUSD.toFixed(0) + ' USD';
+  }
+
+  res.style.display = 'block';
+  var btn = document.getElementById('btnIrConfirmar');
+  if (btn) btn.style.display = 'block';
+}
+
+// ─── PASO 3 → PASO 4: ir a confirmación ────────────────────────
+function irAConfirmar() {
+  if (!reserva.fecha)   { showToast('Selecciona una fecha', 'error'); return; }
+  if (!reserva.horario) { showToast('Selecciona un horario', 'error'); return; }
+
+  var g = function(id){ return document.getElementById(id); };
+  var t = reserva.tour, d = reserva.destObj;
+  var fp_label = { efectivo:'💵 Efectivo (−5%)', tarjeta:'💳 Tarjeta', cripto:'₿ USDT ERC-20' };
+  var fechaFmt = reserva.fecha.split('-').reverse().join('/');
+
+  if (g('confirmDestino'))    g('confirmDestino').textContent    = d ? d.emoji+' '+d.name : '';
+  if (g('confirmTourNombre')) g('confirmTourNombre').textContent = t ? t.emoji+' '+t.nombre : '';
+  if (g('confirmFecha'))      g('confirmFecha').textContent      = fechaFmt;
+  if (g('confirmHora'))       g('confirmHora').textContent       = reserva.horario;
+  if (g('confirmNombre'))     g('confirmNombre').textContent     = reserva.nombre;
+  if (g('confirmPax'))        g('confirmPax').textContent        = reserva.pax + ' persona' + (reserva.pax>1?'s':'');
+  if (g('confirmPago'))       g('confirmPago').textContent       = fp_label[reserva.fp];
+
+  if (reserva.fp === 'cripto') {
+    if (g('confirmTotalGTQ')) g('confirmTotalGTQ').textContent = '$' + reserva.totalUSDT.toFixed(2) + ' USDT';
+    if (g('confirmTotalUSD')) g('confirmTotalUSD').textContent = 'Pago en crypto ERC-20';
+  } else {
+    if (g('confirmTotalGTQ')) g('confirmTotalGTQ').textContent = 'Q' + reserva.totalGTQ.toFixed(0) + ' GTQ';
+    if (g('confirmTotalUSD')) g('confirmTotalUSD').textContent = '≈ $' + reserva.totalUSD.toFixed(0) + ' USD total';
+  }
+
+  // Mostrar solo el botón de la forma de pago seleccionada
+  var btns = { tarjeta:'btnPagarTarjeta', efectivo:'btnPagarEfectivo', cripto:'btnPagarCrypto' };
+  Object.keys(btns).forEach(function(k){
+    var b = g(btns[k]);
+    if (b) b.style.display = (k === reserva.fp) ? 'block' : 'none';
+  });
+
   goTo('screen-tour-confirm');
 }
 
-function actualizarTotalPax() {
-  var paxEl = document.getElementById('tourPax');
-  var pax   = parseInt(paxEl ? paxEl.value : 1) || 1;
-  var tours = DESTINOS[currentDestino] ? DESTINOS[currentDestino].tours : [];
-  var t     = tours.find(function(x){ return x.id === selectedTourType; });
-  if (!t || !t.precioUSD) return;
-  var fp   = state.tourFormaPago || 'efectivo';
-  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
-  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : t.precioUSD;
-  var p    = calcTourPrice(base, fp);
-  var tu   = document.getElementById('confirmTotalUSD');
-  var tg   = document.getElementById('confirmTotalGTQ');
-  if (tu) tu.textContent = '$' + (p.usd * pax).toFixed(0) + ' USD';
-  if (tg) tg.textContent = 'Q'  + (p.gtq * pax).toFixed(0) + ' GTQ';
+// ─── PAGO TARJETA — Recurrente ──────────────────────────────────
+function pagarConTarjeta() {
+  // Generar ticket ID primero, luego redirigir a Recurrente
+  reserva.ticketId = generarTicketId();
+  reserva.estado   = 'PENDIENTE_PAGO';
+  // Recurrente: se configura un link de pago por monto dinámico
+  // Por ahora guarda la reserva y abre el link de pago
+  registrarReservaSheets('PENDIENTE_TARJETA');
+  var montoUSD = reserva.totalUSD.toFixed(2);
+  var descripcion = encodeURIComponent('Tour ' + (reserva.tour ? reserva.tour.nombre : '') + ' x' + reserva.pax + ' — CryptoChange Flores');
+  // TODO: reemplazar con tu link real de Recurrente cuando lo tengas
+  var linkRecurrente = 'https://app.recurrente.com/s/cryptochange-tours?amount=' + montoUSD + '&description=' + descripcion + '&ref=' + reserva.ticketId;
+  showToast('Redirigiendo a pago seguro...', 'info');
+  setTimeout(function(){ window.open(linkRecurrente, '_blank'); }, 800);
+  // Mientras, mostramos el ticket como pendiente
+  setTimeout(function(){ mostrarTicket('PENDIENTE_TARJETA'); }, 1500);
 }
 
-async function submitTourReserva() {
-  var gn = function(id){ var e = document.getElementById(id); return e ? e.value.trim() : ''; };
-  var nombre = gn('tourNombre'); var email = gn('tourEmail');
-  var pax    = parseInt((document.getElementById('tourPax')||{}).value) || 1;
-  if (!nombre) { showToast('Ingresa tu nombre', 'error'); return; }
-  if (!email)  { showToast('Ingresa tu correo', 'error'); return; }
-  var dest  = DESTINOS[currentDestino];
-  var tours = dest ? dest.tours : [];
-  var t     = tours.find(function(x){ return x.id === selectedTourType; });
-  if (!t) return;
-  var fp   = state.tourFormaPago || 'efectivo';
-  var guia = !t.conGuia || !state.guiaTour || state.guiaTour[t.id] !== false;
-  var base = (t.conGuia && !guia && t.precioUSD_sin) ? t.precioUSD_sin : (t.precioUSD || 0);
-  var p    = calcTourPrice(base, fp);
-  var payload = {
-    action:'registerTour', txId:'TOUR-'+Date.now(), nombre:nombre, email:email, pax:pax,
-    destino:dest?dest.name:currentDestino, tour:t.nombre, horario:t.hora, formaPago:fp,
-    precioUSDpp:p.usd.toFixed(2), precioLiq:t.precioLiq||0,
-    conGuia:guia?'SI':'NO', totalUSD:(p.usd*pax).toFixed(2),
-    totalGTQ:(p.gtq*pax).toFixed(2), fecha:new Date().toISOString()
-  };
-  showToast('Registrando reserva...', 'info');
-  try {
-    var nm = 'tf_'+Date.now(); var ifr = document.createElement('iframe');
-    ifr.name=nm; ifr.style.display='none'; document.body.appendChild(ifr);
-    var frm=document.createElement('form'); frm.method='POST';
-    frm.action=CONFIG.TOURS_SCRIPT_URL||CONFIG.APPS_SCRIPT_URL;
-    frm.target=nm; frm.style.display='none';
-    var inp=document.createElement('input'); inp.type='hidden';
-    inp.name='payload'; inp.value=JSON.stringify(payload);
-    frm.appendChild(inp); document.body.appendChild(frm); frm.submit();
-    setTimeout(function(){ try{frm.remove();ifr.remove();}catch(e){} },8000);
-  } catch(e) { console.warn('submitTourReserva:',e); }
-  showToast('✅ ¡Reserva confirmada! Revisa tu correo.', 'success');
-  setTimeout(function() { goBackToExchange(); }, 2500);
+// ─── PAGO EFECTIVO — genera ticket pendiente ────────────────────
+function pagarEfectivo() {
+  reserva.ticketId = generarTicketId();
+  reserva.estado   = 'PENDIENTE_CAJA';
+  registrarReservaSheets('PENDIENTE_CAJA');
+  mostrarTicket('PENDIENTE_CAJA');
 }
+
+// ─── PAGO CRYPTO — mostrar wallet QR ───────────────────────────
+function pagarCrypto() {
+  reserva.ticketId = generarTicketId();
+  reserva.estado   = 'PENDIENTE_CRYPTO';
+
+  var g = function(id){ return document.getElementById(id); };
+
+  // Wallet USDT ERC-20 — reemplaza con tu dirección real
+  var WALLET_ERC20 = CONFIG.WALLETS && CONFIG.WALLETS.USDT_ERC20
+    ? CONFIG.WALLETS.USDT_ERC20
+    : '0xTuWalletERC20Aqui';
+
+  if (g('cryptoMonto'))      g('cryptoMonto').textContent      = '$' + reserva.totalUSDT.toFixed(2) + ' USDT';
+  if (g('cryptoWalletAddr')) g('cryptoWalletAddr').textContent = WALLET_ERC20;
+  if (g('cryptoBaseLabel'))  g('cryptoBaseLabel').textContent  = 'Q' + (reserva.totalGTQ || 0).toFixed(0) || '';
+
+  // QR con la dirección
+  var qrEl = g('cryptoQR');
+  if (qrEl) {
+    qrEl.innerHTML = '';
+    if (typeof QRCode !== 'undefined') {
+      new QRCode(qrEl, { text: WALLET_ERC20, width: 160, height: 160, colorDark: '#000', colorLight: '#fff' });
+    } else {
+      // Fallback: QR via API
+      var img = document.createElement('img');
+      img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent(WALLET_ERC20);
+      img.style.cssText = 'width:160px;height:160px;border-radius:4px;';
+      qrEl.appendChild(img);
+    }
+  }
+
+  // Timer 15 minutos
+  iniciarTimerCrypto(15 * 60);
+  registrarReservaSheets('PENDIENTE_CRYPTO');
+  goTo('screen-tour-crypto');
+}
+
+function iniciarTimerCrypto(segundos) {
+  if (cryptoTimerInterval) clearInterval(cryptoTimerInterval);
+  var restante = segundos;
+  var el = document.getElementById('cryptoTimer');
+  function tick() {
+    if (restante <= 0) {
+      clearInterval(cryptoTimerInterval);
+      if (el) { el.textContent = '00:00'; el.style.color = 'var(--danger)'; }
+      showToast('Tiempo agotado. Vuelve a intentar.', 'error');
+      return;
+    }
+    var m = Math.floor(restante / 60), s = restante % 60;
+    if (el) el.textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    if (restante <= 60 && el) el.style.color = 'var(--danger)';
+    restante--;
+  }
+  tick();
+  cryptoTimerInterval = setInterval(tick, 1000);
+}
+
+function copiarWallet() {
+  var el = document.getElementById('cryptoWalletAddr');
+  if (!el) return;
+  var txt = el.textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(txt).then(function(){
+      showToast('✅ Dirección copiada al portapapeles', 'success');
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = txt; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('✅ Dirección copiada', 'success');
+  }
+}
+
+function yaEnvie() {
+  if (cryptoTimerInterval) clearInterval(cryptoTimerInterval);
+  showToast('✅ El staff verificará tu pago y confirmará el ticket', 'success');
+  setTimeout(function(){ mostrarTicket('PENDIENTE_VERIFICACION_CRYPTO'); }, 800);
+}
+
+// ─── MOSTRAR TICKET DIGITAL ─────────────────────────────────────
+function mostrarTicket(estado) {
+  var t  = reserva.tour;
+  var d  = reserva.destObj;
+  var fp = reserva.fp;
+  var p  = calcTourPrice(reserva.precioBase, fp);
+
+  var fechaFmt   = reserva.fecha ? reserva.fecha.split('-').reverse().join('/') : '--';
+  var fechaDia   = reserva.fecha ? (function(){
+    var dd = new Date(reserva.fecha + 'T12:00:00');
+    return DIAS_ES[dd.getDay()] + ' · ' + MESES_ES[dd.getMonth()] + ' ' + dd.getFullYear();
+  })() : '';
+
+  // Hora de presentación = hora del tour - 15 min
+  function restarMins(horaStr, mins) {
+    var parts = horaStr.split(':');
+    var total = parseInt(parts[0])*60 + parseInt(parts[1]) - mins;
+    if (total < 0) total += 1440;
+    return (Math.floor(total/60)<10?'0':'')+Math.floor(total/60)+':'+(total%60<10?'0':'')+total%60;
+  }
+  var horaPresentarse = reserva.horario ? restarMins(reserva.horario, 15) : '--';
+
+  // Estado visual
+  var estados = {
+    'PENDIENTE_CAJA':                  { label:'⏳ PAGAR EN CAJA', color:'#F5C842', dot:'#F5C842', banner:'background:rgba(245,200,66,0.12);border:1px solid rgba(245,200,66,0.3);color:#F5C842;' },
+    'PENDIENTE_TARJETA':               { label:'⏳ PAGO PENDIENTE', color:'#F5C842', dot:'#F5C842', banner:'background:rgba(245,200,66,0.12);border:1px solid rgba(245,200,66,0.3);color:#F5C842;' },
+    'PENDIENTE_CRYPTO':                { label:'⏳ ENVIANDO CRYPTO', color:'#00E5FF', dot:'#00E5FF', banner:'background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.3);color:#00E5FF;' },
+    'PENDIENTE_VERIFICACION_CRYPTO':   { label:'🔍 VERIFICANDO PAGO', color:'#00E5FF', dot:'#00E5FF', banner:'background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.3);color:#00E5FF;' },
+    'CONFIRMADO':                      { label:'✅ CONFIRMADO', color:'#7BDB6C', dot:'#7BDB6C', banner:'background:rgba(123,219,108,0.1);border:1px solid rgba(123,219,108,0.3);color:#7BDB6C;' },
+  };
+  var est = estados[estado] || estados['PENDIENTE_CAJA'];
+
+  var g = function(id){ return document.getElementById(id); };
+  if (g('ticketEstadoBanner')) { g('ticketEstadoBanner').textContent = est.label; g('ticketEstadoBanner').style.cssText = est.banner; }
+  if (g('ticketStatusDot'))    g('ticketStatusDot').style.background = est.dot;
+  if (g('ticketStatusLabel'))  g('ticketStatusLabel').textContent = est.label.replace(/^[^ ]+ /,'');
+  if (g('ticketDestino'))      g('ticketDestino').textContent = d ? d.name.toUpperCase() : '';
+  if (g('ticketSubtitulo'))    g('ticketSubtitulo').textContent = d ? 'PETÉN · GUATEMALA' : '';
+  if (g('ticketTourTipo'))     g('ticketTourTipo').textContent = t ? t.emoji + ' ' + t.nombre : '';
+  if (g('ticketFecha'))        g('ticketFecha').textContent = fechaFmt;
+  if (g('ticketDia'))          g('ticketDia').textContent = fechaDia;
+  if (g('ticketHora'))         g('ticketHora').textContent = reserva.horario || '--';
+  if (g('ticketNombre'))       g('ticketNombre').textContent = reserva.nombre;
+  if (g('ticketPaxPago'))      g('ticketPaxPago').textContent = reserva.pax + ' persona' + (reserva.pax>1?'s':'') + ' · ' + { efectivo:'💵 Efectivo', tarjeta:'💳 Tarjeta', cripto:'₿ Crypto' }[fp];
+  if (g('ticketId'))           g('ticketId').textContent = reserva.ticketId;
+  if (g('ticketIdSmall'))      g('ticketIdSmall').textContent = reserva.ticketId;
+  if (g('ticketPresentarse'))  g('ticketPresentarse').textContent = '⏰ Preséntate a las ' + horaPresentarse + ' (15 min antes)';
+
+  // Precio
+  var pagoLabel = 'PRECIO TOTAL';
+  var precioFmt = '';
+  if (fp === 'cripto')        { precioFmt = '$' + reserva.totalUSDT.toFixed(2) + ' USDT'; pagoLabel = 'PAGO CRYPTO'; }
+  else if (fp === 'efectivo') { precioFmt = 'Q' + reserva.totalGTQ.toFixed(0) + ' GTQ'; }
+  else                        { precioFmt = 'Q' + reserva.totalGTQ.toFixed(0) + ' GTQ'; }
+  if (estado === 'PENDIENTE_CAJA') pagoLabel = 'PAGAR EN CAJA';
+  if (g('ticketPagoLabel'))   g('ticketPagoLabel').textContent = pagoLabel;
+  if (g('ticketPrecioFinal')) g('ticketPrecioFinal').textContent = precioFmt;
+
+  // QR ticket
+  var qrEl = g('ticketQR');
+  if (qrEl) {
+    qrEl.innerHTML = '';
+    var qrData = 'TOUR:' + reserva.ticketId + '|' + reserva.nombre + '|' + fechaFmt + '|' + reserva.horario;
+    if (typeof QRCode !== 'undefined') {
+      new QRCode(qrEl, { text: qrData, width: 140, height: 140, colorDark: '#000', colorLight: '#fff' });
+    } else {
+      var img = document.createElement('img');
+      img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=' + encodeURIComponent(qrData);
+      img.style.cssText = 'width:140px;height:140px;';
+      qrEl.appendChild(img);
+    }
+  }
+
+  goTo('screen-tour-ticket');
+}
+
+// ─── Helpers ────────────────────────────────────────────────────
+function generarTicketId() {
+  var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var id = 'TK-';
+  for (var i = 0; i < 8; i++) id += chars[Math.floor(Math.random() * chars.length)];
+  return id;
+}
+
+function compartirTicket() {
+  var texto = '🎫 Mi ticket CryptoChange Tours\n'
+    + '📍 ' + (reserva.destObj ? reserva.destObj.name : '') + '\n'
+    + '🗓️ ' + (reserva.fecha||'') + ' · ' + (reserva.horario||'') + '\n'
+    + '👤 ' + reserva.nombre + '\n'
+    + '🎟️ ' + reserva.ticketId;
+  if (navigator.share) {
+    navigator.share({ title: 'Mi Tour — CryptoChange Flores', text: texto });
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(texto);
+    showToast('✅ Ticket copiado al portapapeles', 'success');
+  }
+}
+
+// ─── Registrar en Google Sheets ────────────────────────────────
+function registrarReservaSheets(estadoPago) {
+  var t = reserva.tour, d = reserva.destObj;
+  var p = calcTourPrice(reserva.precioBase, reserva.fp);
+  var payload = {
+    action: 'registerTour',
+    txId:       reserva.ticketId,
+    nombre:     reserva.nombre,
+    email:      reserva.email,
+    telefono:   reserva.tel,
+    pais:       reserva.pais,
+    pasaporte:  reserva.pasaporte,
+    pax:        reserva.pax,
+    destino:    d ? d.name : reserva.destino,
+    tour:       t ? t.nombre : '',
+    horario:    reserva.horario,
+    fecha:      reserva.fecha,
+    formaPago:  reserva.fp,
+    estado:     estadoPago,
+    precioGTQpp: p.gtq ? p.gtq.toFixed(2) : '',
+    precioUSDpp: p.usd ? p.usd.toFixed(2) : '',
+    precioUSDP:  p.usdt ? p.usdt.toFixed(2) : '',
+    precioLiq:   t ? (t.precioLiq || 0) : 0,
+    totalGTQ:    reserva.totalGTQ.toFixed(2),
+    totalUSD:    reserva.totalUSD.toFixed(2),
+    totalUSDT:   reserva.totalUSDT.toFixed(2),
+    conGuia:     reserva.conGuia ? 'SI' : 'NO',
+    fechaRegistro: new Date().toISOString()
+  };
+  try {
+    var nm = 'tr_'+Date.now();
+    var ifr = document.createElement('iframe'); ifr.name=nm; ifr.style.display='none'; document.body.appendChild(ifr);
+    var frm = document.createElement('form');   frm.method='POST'; frm.action=CONFIG.TOURS_SCRIPT_URL||CONFIG.APPS_SCRIPT_URL; frm.target=nm; frm.style.display='none';
+    var inp = document.createElement('input');  inp.type='hidden'; inp.name='payload'; inp.value=JSON.stringify(payload);
+    frm.appendChild(inp); document.body.appendChild(frm); frm.submit();
+    setTimeout(function(){ try{frm.remove();ifr.remove();}catch(e){} }, 8000);
+  } catch(e) { console.warn('registrarReservaSheets:', e); }
+}
+
+// ─── Compatibilidad funciones antiguas ─────────────────────────
+function actualizarTotalPax() { actualizarLabelPax(); }
+function submitTourReserva()  { irAConfirmar(); }
 
 function guardarConfigTours() {
   var gv = function(id){ var e=document.getElementById(id); return e?parseFloat(e.value):null; };
@@ -3966,5 +4935,382 @@ setInterval(loadRates, 60000); // refresh rates every 60s (respetar rate limits 
   })();
 </script>
 
+<!-- ===================== SCREEN ADMIN TOURS ===================== -->
+<div class="screen" id="screen-tours-admin" style="padding-top:0; align-items:stretch; background:var(--bg); overflow-y:auto;">
+  <div style="max-width:900px; width:100%; margin:0 auto; padding:20px 16px 60px;">
+
+    <!-- Header admin -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;margin-bottom:20px;border-bottom:1px solid var(--border);">
+      <div>
+        <div style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--gold);">⚙️ PANEL ADMIN</div>
+        <div style="font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;">CryptoChange Tours · Flores</div>
+      </div>
+      <button onclick="goTo('screen-guia')" style="background:none;border:1px solid var(--border);color:var(--text2);padding:8px 16px;border-radius:6px;cursor:pointer;font-size:12px;">← Volver</button>
+    </div>
+
+    <!-- Dashboard KPIs -->
+    <div id="adminKPIs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:24px;"></div>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);">
+      <button class="admin-tab active" id="tab-reservas"   onclick="adminTab('reservas')"   style="padding:10px 16px;font-size:12px;font-family:Rajdhani,sans-serif;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid var(--gold);color:var(--gold);transition:all 0.2s;">📋 Reservas</button>
+      <button class="admin-tab"        id="tab-pendientes" onclick="adminTab('pendientes')" style="padding:10px 16px;font-size:12px;font-family:Rajdhani,sans-serif;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);transition:all 0.2s;">⏳ Pendientes</button>
+      <button class="admin-tab"        id="tab-scanner"    onclick="adminTab('scanner')"    style="padding:10px 16px;font-size:12px;font-family:Rajdhani,sans-serif;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);transition:all 0.2s;">📷 Escanear QR</button>
+      <button class="admin-tab"        id="tab-config"     onclick="adminTab('config')"     style="padding:10px 16px;font-size:12px;font-family:Rajdhani,sans-serif;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);transition:all 0.2s;">🔧 Config</button>
+    </div>
+
+    <!-- Panel: RESERVAS -->
+    <div id="panel-reservas">
+      <!-- Filtros -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+        <select id="filtroEstado" class="form-input form-select" style="font-size:12px;padding:8px 12px;" onchange="cargarReservasAdmin()">
+          <option value="TODOS">Todos los estados</option>
+          <option value="PENDIENTE_CAJA">⏳ Pendiente caja</option>
+          <option value="PENDIENTE_CRYPTO">₿ Pendiente crypto</option>
+          <option value="PENDIENTE_VERIFICACION_CRYPTO">🔍 Verificando crypto</option>
+          <option value="PENDIENTE_TARJETA">💳 Pendiente tarjeta</option>
+          <option value="CONFIRMADO">✅ Confirmado</option>
+        </select>
+        <input id="filtroFecha" type="date" class="form-input" style="font-size:12px;padding:8px 12px;" onchange="cargarReservasAdmin()">
+        <button onclick="cargarReservasAdmin()" style="padding:8px 14px;background:var(--dark3);border:1px solid var(--border);color:var(--text);border-radius:6px;cursor:pointer;font-size:12px;">🔄 Actualizar</button>
+        <button onclick="exportarCSV()" style="padding:8px 14px;background:var(--dark3);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-size:12px;">⬇ CSV</button>
+      </div>
+      <div id="reservasContainer" style="font-size:13px;"></div>
+    </div>
+
+    <!-- Panel: PENDIENTES -->
+    <div id="panel-pendientes" style="display:none;">
+      <div style="margin-bottom:14px;font-size:12px;color:var(--text2);">Reservas que requieren acción del staff</div>
+      <div id="pendientesContainer"></div>
+    </div>
+
+    <!-- Panel: ESCANEAR QR -->
+    <div id="panel-scanner" style="display:none;">
+      <div class="card" style="max-width:400px;">
+        <div style="font-family:Orbitron,sans-serif;font-size:13px;color:var(--gold);margin-bottom:16px;">📷 VERIFICAR TICKET POR QR</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:16px;">Ingresa el ID del ticket para buscarlo y confirmar el pago.</div>
+        <div style="display:flex;gap:8px;margin-bottom:16px;">
+          <input id="scanInput" class="form-input" placeholder="TK-XXXXXXXX" style="text-transform:uppercase;font-family:Orbitron,sans-serif;letter-spacing:2px;" oninput="this.value=this.value.toUpperCase()">
+          <button onclick="buscarTicket()" class="btn-main" style="white-space:nowrap;padding:0 20px;">Buscar</button>
+        </div>
+        <div id="scanResult"></div>
+      </div>
+    </div>
+
+    <!-- Panel: CONFIG -->
+    <div id="panel-config" style="display:none;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+        <!-- Precios -->
+        <div class="card">
+          <div style="font-family:Orbitron,sans-serif;font-size:12px;color:var(--gold);margin-bottom:16px;">💱 TASAS Y PRECIOS</div>
+          <div class="form-group"><label class="form-label">Tipo de cambio (1 USD = Q)</label><input class="form-input" id="cfgGTQRate" type="number" step="0.01" placeholder="7.75"></div>
+          <div class="form-group"><label class="form-label">% Cargo tarjeta (incluido)</label><input class="form-input" id="cfgTarjeta" type="number" step="0.1" placeholder="5"></div>
+          <div class="form-group"><label class="form-label">% Comisión Binance</label><input class="form-input" id="cfgBinance" type="number" step="0.1" placeholder="2"></div>
+          <div class="form-group"><label class="form-label">% Comisión crypto propia</label><input class="form-input" id="cfgComCrypto" type="number" step="0.1" placeholder="2.5"></div>
+          <button class="btn-main" onclick="guardarConfigAdmin()" style="width:100%;">💾 Guardar tasas</button>
+        </div>
+        <!-- Pagos -->
+        <div class="card">
+          <div style="font-family:Orbitron,sans-serif;font-size:12px;color:var(--gold);margin-bottom:16px;">🔑 PAGOS Y WALLET</div>
+          <div class="form-group"><label class="form-label">Wallet USDT ERC-20</label><input class="form-input" id="cfgWallet" placeholder="0x..." style="font-size:11px;font-family:Orbitron,sans-serif;letter-spacing:1px;"></div>
+          <div class="form-group"><label class="form-label">Link Recurrente (tarjeta)</label><input class="form-input" id="cfgRecurrente" placeholder="https://app.recurrente.com/..." style="font-size:11px;"></div>
+          <button class="btn-main" onclick="guardarConfigAdmin()" style="width:100%;">💾 Guardar config</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  PANEL ADMIN TOURS
+// ═══════════════════════════════════════════════════════════════
+
+var adminReservas = [];
+
+function goToAdmin() {
+  var pwd = prompt('Contraseña admin:');
+  if (pwd !== CONFIG.ADMIN_PASSWORD && pwd !== 'Admin2024!') {
+    showToast('Contraseña incorrecta', 'error'); return;
+  }
+  cargarKPIs();
+  cargarReservasAdmin();
+  cargarPendientes();
+  goTo('screen-tours-admin');
+}
+
+// ── Tabs ──────────────────────────────────────────────────────
+function adminTab(tab) {
+  ['reservas','pendientes','scanner','config'].forEach(function(t){
+    var panel = document.getElementById('panel-'+t);
+    var btn   = document.getElementById('tab-'+t);
+    if (panel) panel.style.display = t === tab ? 'block' : 'none';
+    if (btn) {
+      btn.style.borderBottomColor = t === tab ? 'var(--gold)' : 'transparent';
+      btn.style.color = t === tab ? 'var(--gold)' : 'var(--text2)';
+    }
+  });
+  if (tab === 'config') cargarConfigAdmin();
+}
+
+// ── KPIs Dashboard ────────────────────────────────────────────
+function cargarKPIs() {
+  var url = (CONFIG.TOURS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL) + '?action=getResumen';
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    if (!d.ok || !d.resumen) return;
+    var s = d.resumen;
+    var kpis = [
+      { label:'Tours hoy',    val: s.toursHoy,           color:'var(--accent)',  icon:'🗓️' },
+      { label:'Pend. caja',   val: s.pendientesCaja,     color:'var(--gold)',    icon:'💵' },
+      { label:'Pend. crypto', val: s.pendientesCrypto,   color:'var(--accent)',  icon:'₿' },
+      { label:'Confirmadas',  val: s.confirmadas,        color:'var(--green)',   icon:'✅' },
+      { label:'Ventas GTQ',   val:'Q'+parseFloat(s.ventasGTQ).toFixed(0), color:'var(--gold)', icon:'💰' },
+      { label:'Liq. pend.',   val:'Q'+parseFloat(s.pendienteLiq).toFixed(0), color:'var(--danger)', icon:'🏦' },
+    ];
+    var html = kpis.map(function(k){
+      return '<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;">'
+        +'<div style="font-size:20px;margin-bottom:4px;">'+k.icon+'</div>'
+        +'<div style="font-family:Orbitron,sans-serif;font-size:18px;color:'+k.color+';font-weight:700;">'+k.val+'</div>'
+        +'<div style="font-size:10px;color:var(--text2);margin-top:2px;text-transform:uppercase;letter-spacing:1px;">'+k.label+'</div>'
+        +'</div>';
+    }).join('');
+    document.getElementById('adminKPIs').innerHTML = html;
+  }).catch(function(){});
+}
+
+// ── Cargar reservas ───────────────────────────────────────────
+function cargarReservasAdmin() {
+  var cont = document.getElementById('reservasContainer');
+  if (!cont) return;
+  cont.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">Cargando...</div>';
+  var estado = (document.getElementById('filtroEstado')||{}).value || 'TODOS';
+  var fecha  = (document.getElementById('filtroFecha')||{}).value || '';
+  var fechaFmt = fecha ? fecha.split('-').reverse().join('/') : '';
+  var url = (CONFIG.TOURS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL)
+    + '?action=getReservas&estado=' + estado + (fechaFmt ? '&fecha='+fechaFmt : '');
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    if (!d.ok) { cont.innerHTML = '<div style="color:var(--danger);padding:20px;">Error cargando reservas</div>'; return; }
+    adminReservas = d.reservas || [];
+    renderTablaReservas(adminReservas, cont);
+  }).catch(function(e){
+    cont.innerHTML = '<div style="color:var(--text2);padding:20px;">Error de conexión — verifica el script de Google Sheets</div>';
+  });
+}
+
+function renderTablaReservas(reservas, cont) {
+  if (!reservas.length) {
+    cont.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2);">Sin reservas con estos filtros</div>';
+    return;
+  }
+  var estadoColors = {
+    PENDIENTE_CAJA:                 'background:rgba(245,200,66,0.12);color:#F5C842;',
+    PENDIENTE_TARJETA:              'background:rgba(63,81,181,0.15);color:#9fa8da;',
+    PENDIENTE_CRYPTO:               'background:rgba(0,229,255,0.1);color:#00E5FF;',
+    PENDIENTE_VERIFICACION_CRYPTO:  'background:rgba(0,229,255,0.1);color:#00E5FF;',
+    CONFIRMADO:                     'background:rgba(123,219,108,0.12);color:#7BDB6C;',
+  };
+  var estadoLabels = {
+    PENDIENTE_CAJA:'⏳ Caja', PENDIENTE_TARJETA:'💳 Tarjeta',
+    PENDIENTE_CRYPTO:'₿ Crypto', PENDIENTE_VERIFICACION_CRYPTO:'🔍 Verificando',
+    CONFIRMADO:'✅ OK',
+  };
+
+  // Mobile: cards. Desktop: tabla
+  var html = '<div style="display:flex;flex-direction:column;gap:8px;">';
+  reservas.forEach(function(r) {
+    var ec = estadoColors[r.estadoPago] || '';
+    var el = estadoLabels[r.estadoPago] || r.estadoPago;
+    var fp = {efectivo:'💵',tarjeta:'💳',cripto:'₿'}[r.formaPago]||'';
+    var total = r.formaPago==='cripto' ? '$'+parseFloat(r.totalUSDT).toFixed(2)+' USDT' : 'Q'+parseFloat(r.totalGTQ).toFixed(0);
+    html += '<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;">'
+      // Fila 1: ID + estado + fecha
+      + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:8px;flex-wrap:wrap;">'
+      +   '<span style="font-family:Orbitron,sans-serif;font-size:11px;color:var(--accent);">'+r.txId+'</span>'
+      +   '<span style="padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;'+ec+'">'+el+'</span>'
+      +   '<span style="font-size:11px;color:var(--text2);">📅 '+r.fechaTour+'</span>'
+      + '</div>'
+      // Fila 2: turista + tour
+      + '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px;">'
+      +   '<div><div style="font-size:12px;font-weight:bold;color:var(--text);">'+r.nombre+'</div>'
+      +        '<div style="font-size:11px;color:var(--text2);">'+r.pais+' · 🛂 '+r.pasaporte+'</div></div>'
+      +   '<div><div style="font-size:12px;color:var(--gold);">'+fp+' '+r.tour+'</div>'
+      +        '<div style="font-size:11px;color:var(--text2);">⏰ '+r.horario+' · '+r.pax+' pax</div></div>'
+      +   '<div style="margin-left:auto;text-align:right;"><div style="font-family:Orbitron,sans-serif;font-size:14px;color:var(--gold);">'+total+'</div></div>'
+      + '</div>'
+      // Fila 3: contacto + acciones
+      + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;border-top:1px solid var(--border);padding-top:8px;">'
+      +   '<div style="font-size:11px;color:var(--text2);">📱 '+r.telefono+' · ✉️ '+r.email+'</div>'
+      +   '<div style="display:flex;gap:6px;">';
+    // Botón confirmar pago (solo si está pendiente)
+    if (r.estadoPago !== 'CONFIRMADO') {
+      html += '<button onclick="confirmarPagoAdmin(\''+r.txId+'\')" style="padding:6px 12px;background:rgba(123,219,108,0.15);border:1px solid rgba(123,219,108,0.3);color:#7BDB6C;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;">✅ Confirmar pago</button>';
+    }
+    // Botón liquidar
+    if (r.estadoPago === 'CONFIRMADO' && r.estadoLiq !== 'LIQUIDADO') {
+      html += '<button onclick="liquidarReserva(\''+r.txId+'\')" style="padding:6px 12px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.25);color:var(--gold);border-radius:6px;cursor:pointer;font-size:11px;">🏦 Liquidar</button>';
+    }
+    html += '</div></div></div>';
+  });
+  html += '</div>';
+  cont.innerHTML = html;
+}
+
+// ── Pendientes ────────────────────────────────────────────────
+function cargarPendientes() {
+  var cont = document.getElementById('pendientesContainer');
+  if (!cont) return;
+  cont.innerHTML = '<div style="color:var(--text2);padding:20px;text-align:center;">Cargando...</div>';
+  var url = (CONFIG.TOURS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL) + '?action=getReservas';
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    if (!d.ok) return;
+    var pendientes = (d.reservas||[]).filter(function(r){
+      return r.estadoPago !== 'CONFIRMADO';
+    });
+    if (!pendientes.length) {
+      cont.innerHTML = '<div style="text-align:center;padding:40px;color:var(--green);">✅ Sin reservas pendientes</div>';
+      return;
+    }
+    renderTablaReservas(pendientes, cont);
+  }).catch(function(){});
+}
+
+// ── Confirmar pago desde admin ────────────────────────────────
+function confirmarPagoAdmin(txId) {
+  if (!confirm('¿Confirmar pago para ticket ' + txId + '?\nSe enviará email de confirmación al turista.')) return;
+  showToast('Confirmando...', 'info');
+  var payload = { action: 'confirmarPago', txId: txId, nota: 'Confirmado por staff — ' + new Date().toLocaleString() };
+  var url = CONFIG.TOURS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL;
+  // Usar iframe para evitar CORS
+  var nm = 'cp_' + Date.now();
+  var ifr = document.createElement('iframe'); ifr.name = nm; ifr.style.display = 'none'; document.body.appendChild(ifr);
+  var frm = document.createElement('form');   frm.method = 'POST'; frm.action = url; frm.target = nm; frm.style.display = 'none';
+  var inp = document.createElement('input'); inp.type = 'hidden'; inp.name = 'payload'; inp.value = JSON.stringify(payload);
+  frm.appendChild(inp); document.body.appendChild(frm); frm.submit();
+  setTimeout(function(){
+    try{ frm.remove(); ifr.remove(); } catch(e){}
+    showToast('✅ Pago confirmado · Email enviado', 'success');
+    setTimeout(function(){ cargarReservasAdmin(); cargarPendientes(); cargarKPIs(); }, 1500);
+  }, 2000);
+}
+
+// ── Liquidar agencia ──────────────────────────────────────────
+function liquidarReserva(txId) {
+  if (!confirm('¿Marcar como liquidada la reserva ' + txId + '?')) return;
+  var payload = { action: 'updateEstadoLiq', txId: txId, estado: 'LIQUIDADO' };
+  var url = CONFIG.TOURS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL;
+  var nm = 'lq_' + Date.now();
+  var ifr = document.createElement('iframe'); ifr.name = nm; ifr.style.display = 'none'; document.body.appendChild(ifr);
+  var frm = document.createElement('form');   frm.method = 'POST'; frm.action = url; frm.target = nm; frm.style.display = 'none';
+  var inp = document.createElement('input'); inp.type = 'hidden'; inp.name = 'payload'; inp.value = JSON.stringify(payload);
+  frm.appendChild(inp); document.body.appendChild(frm); frm.submit();
+  setTimeout(function(){
+    try{ frm.remove(); ifr.remove(); } catch(e){}
+    showToast('✅ Marcado como liquidado', 'success');
+    setTimeout(cargarReservasAdmin, 1200);
+  }, 1500);
+}
+
+// ── Buscar ticket por ID (escáner QR) ─────────────────────────
+function buscarTicket() {
+  var id  = (document.getElementById('scanInput')||{}).value || '';
+  var res = document.getElementById('scanResult');
+  if (!id || id.length < 6) { showToast('Ingresa un ID válido', 'error'); return; }
+  if (!res) return;
+  res.innerHTML = '<div style="color:var(--text2);padding:10px;">Buscando...</div>';
+  var url = (CONFIG.TOURS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL) + '?action=getReservaById&txId=' + encodeURIComponent(id);
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    if (!d.ok || !d.reserva) {
+      res.innerHTML = '<div style="background:rgba(255,0,80,0.1);border:1px solid rgba(255,0,80,0.3);border-radius:8px;padding:14px;color:var(--danger);">❌ Ticket no encontrado: '+id+'</div>';
+      return;
+    }
+    var r = d.reserva;
+    var confirmado = r.estadoPago === 'CONFIRMADO';
+    var total = r.formaPago==='cripto' ? '$'+parseFloat(r.totalUSDT).toFixed(2)+' USDT' : 'Q'+parseFloat(r.totalGTQ).toFixed(0);
+    res.innerHTML = '<div style="background:'+(confirmado?'rgba(123,219,108,0.1)':'rgba(245,200,66,0.1)')
+      +';border:1px solid '+(confirmado?'rgba(123,219,108,0.3)':'rgba(245,200,66,0.3)')
+      +';border-radius:10px;padding:16px;">'
+      +'<div style="font-family:Orbitron,sans-serif;font-size:13px;color:'+(confirmado?'#7BDB6C':'#F5C842')+';margin-bottom:12px;">'
+      +(confirmado?'✅ TICKET VÁLIDO — CONFIRMADO':'⏳ PENDIENTE DE PAGO')+'</div>'
+      +'<table style="width:100%;font-size:12px;border-collapse:collapse;">'
+      +'<tr><td style="color:var(--text2);padding:4px 0;">Turista</td><td style="color:var(--text);font-weight:bold;">'+r.nombre+'</td></tr>'
+      +'<tr><td style="color:var(--text2);padding:4px 0;">Tour</td><td style="color:var(--gold);">'+r.tour+'</td></tr>'
+      +'<tr><td style="color:var(--text2);padding:4px 0;">Fecha</td><td>'+r.fechaTour+'</td></tr>'
+      +'<tr><td style="color:var(--text2);padding:4px 0;">Horario</td><td>'+r.horario+'</td></tr>'
+      +'<tr><td style="color:var(--text2);padding:4px 0;">PAX</td><td>'+r.pax+'</td></tr>'
+      +'<tr><td style="color:var(--text2);padding:4px 0;">Total</td><td style="font-family:Orbitron,sans-serif;color:var(--gold);">'+total+'</td></tr>'
+      +'<tr><td style="color:var(--text2);padding:4px 0;">Pasaporte</td><td style="font-family:monospace;">'+r.pasaporte+'</td></tr>'
+      +'</table>'
+      +(!confirmado ? '<button onclick="confirmarPagoAdmin(\''+r.txId+'\')" style="width:100%;margin-top:12px;padding:12px;background:rgba(123,219,108,0.15);border:1px solid rgba(123,219,108,0.35);color:#7BDB6C;border-radius:8px;cursor:pointer;font-family:Orbitron,sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;">✅ CONFIRMAR PAGO</button>' : '')
+      +'</div>';
+  }).catch(function(){
+    res.innerHTML = '<div style="color:var(--danger);padding:10px;">Error de conexión</div>';
+  });
+}
+
+// ── Cargar config en formulario ───────────────────────────────
+function cargarConfigAdmin() {
+  var url = (CONFIG.TOURS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL) + '?action=getConfig';
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    if (!d.ok) return;
+    var c = d.config;
+    var sv = function(id, key, mult){ var el=document.getElementById(id); if(el&&c[key]!==undefined) el.value = mult ? (c[key]*mult).toFixed(2) : c[key]; };
+    sv('cfgGTQRate',     'TOUR_GTQ_RATE',         1);
+    sv('cfgTarjeta',     'TOUR_CARGO_TARJETA',    100);
+    sv('cfgBinance',     'TOUR_BINANCE_FEE',      100);
+    sv('cfgComCrypto',   'TOUR_COMISION_CRYPTO',  100);
+    var wallet = document.getElementById('cfgWallet');     if(wallet&&c['WALLET_USDT_ERC20']) { wallet.value = c['WALLET_USDT_ERC20']; CONFIG.WALLETS.USDT_ERC20 = c['WALLET_USDT_ERC20']; }
+    var recu   = document.getElementById('cfgRecurrente'); if(recu&&c['RECURRENTE_LINK'])    recu.value = c['RECURRENTE_LINK'];
+  }).catch(function(){});
+}
+
+// ── Guardar config ────────────────────────────────────────────
+function guardarConfigAdmin() {
+  var gv = function(id){ var e=document.getElementById(id); return e?parseFloat(e.value):null; };
+  var gs = function(id){ var e=document.getElementById(id); return e?e.value.trim():''; };
+  var rate = gv('cfgGTQRate')    || CONFIG.TOUR_GTQ_RATE;
+  var tarj = gv('cfgTarjeta');
+  var bin  = gv('cfgBinance');
+  var com  = gv('cfgComCrypto');
+  var wall = gs('cfgWallet');
+  var recu = gs('cfgRecurrente');
+  if (tarj) CONFIG.TOUR_CARGO_TARJETA   = tarj/100;
+  if (bin)  CONFIG.TOUR_BINANCE_FEE     = bin/100;
+  if (com)  CONFIG.TOUR_COMISION_CRYPTO = com/100;
+  CONFIG.TOUR_GTQ_RATE = rate;
+  if (wall) CONFIG.WALLETS.USDT_ERC20 = wall;
+  var payload = {
+    action: 'saveToursConfig',
+    TOUR_GTQ_RATE:         rate,
+    TOUR_CARGO_TARJETA:    tarj ? tarj/100 : CONFIG.TOUR_CARGO_TARJETA,
+    TOUR_BINANCE_FEE:      bin  ? bin/100  : CONFIG.TOUR_BINANCE_FEE,
+    TOUR_COMISION_CRYPTO:  com  ? com/100  : CONFIG.TOUR_COMISION_CRYPTO,
+    WALLET_USDT_ERC20:     wall || '',
+    RECURRENTE_LINK:       recu || '',
+  };
+  var url = CONFIG.TOURS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL;
+  var nm = 'cfg_'+Date.now();
+  var ifr=document.createElement('iframe'); ifr.name=nm; ifr.style.display='none'; document.body.appendChild(ifr);
+  var frm=document.createElement('form');   frm.method='POST'; frm.action=url; frm.target=nm; frm.style.display='none';
+  var inp=document.createElement('input'); inp.type='hidden'; inp.name='payload'; inp.value=JSON.stringify(payload);
+  frm.appendChild(inp); document.body.appendChild(frm); frm.submit();
+  setTimeout(function(){ try{frm.remove();ifr.remove();}catch(e){} showToast('✅ Configuración guardada', 'success'); }, 1500);
+}
+
+// ── Exportar CSV ──────────────────────────────────────────────
+function exportarCSV() {
+  if (!adminReservas.length) { showToast('Carga las reservas primero', 'error'); return; }
+  var cols = ['txId','fechaTour','nombre','email','telefono','pais','pasaporte','pax','destino','tour','horario','formaPago','totalGTQ','totalUSD','totalUSDT','precioLiq','estadoPago','estadoLiq'];
+  var csv = cols.join(',') + '\n';
+  adminReservas.forEach(function(r){
+    csv += cols.map(function(c){ return '"'+(r[c]||'')+'"'; }).join(',') + '\n';
+  });
+  var blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'reservas_tours_' + new Date().toISOString().split('T')[0] + '.csv';
+  link.click();
+}
+</script>
 </body>
 </html>
