@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>🎫 Tu Ticket de Tour</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root {
+  --jungle:   #0B1F0E;
+  --leaf:     #1A3D1F;
+  --lime:     #7BDB6C;
+  --gold:     #F5C842;
+  --sky:      #00E5FF;
+  --white:    #F0F4F0;
+  --muted:    rgba(240,244,240,0.45);
+  --border:   rgba(123,219,108,0.18);
+  --glow:     0 0 40px rgba(123,219,108,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--jungle);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* Fondo animado — selva */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%,  rgba(123,219,108,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 100%, rgba(0,229,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,  rgba(245,200,66,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Grid sutil */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(123,219,108,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,219,108,0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+/* =========== TICKET WRAPPER =========== */
+.ticket-wrap {
+  position: relative; z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  animation: slideUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(40px) scale(0.97); }
+  to   { opacity:1; transform:translateY(0)    scale(1); }
+}
+
+/* =========== TICKET CARD =========== */
+.ticket {
+  background: linear-gradient(160deg, #0e2412 0%, #091508 50%, #0a1d0d 100%);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(123,219,108,0.08),
+    0 32px 80px rgba(0,0,0,0.7),
+    var(--glow);
+  position: relative;
+}
+
+/* Línea de luz superior */
+.ticket::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lime), var(--gold), var(--lime), transparent);
+  opacity: 0.5;
+}
+
+/* =========== HERO SECTION =========== */
+.ticket-hero {
+  position: relative;
+  padding: 36px 28px 28px;
+  background: linear-gradient(135deg, rgba(123,219,108,0.06) 0%, transparent 60%);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Decoración fondo hero */
+.ticket-hero::after {
+  content: '';
+  position: absolute; right: -20px; top: -20px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ticket-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(123,219,108,0.12);
+  border: 1px solid rgba(123,219,108,0.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--lime);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.ticket-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--lime);
+  border-radius: 50%;
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity:1; box-shadow:0 0 6px var(--lime); }
+  50%      { opacity:0.3; box-shadow:none; }
+}
+
+.ticket-destino {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 8vw, 38px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -1px;
+}
+
+.ticket-subtitulo {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.ticket-tipo {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--gold), #E8A020);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: 0.5px;
+}
+
+/* =========== INFO BLOCKS =========== */
+.ticket-body {
+  padding: 24px 28px;
+}
+
+/* Grid de datos principales */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-bottom: 2px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.info-cell {
+  background: rgba(255,255,255,0.03);
+  padding: 16px 18px;
+  transition: background 0.2s;
+}
+
+.info-cell:hover { background: rgba(123,219,108,0.05); }
+
+.info-cell.full {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--border);
+}
+
+.info-cell.accent {
+  background: rgba(123,219,108,0.06);
+}
+
+.info-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 5px;
+}
+
+.info-label .icon { font-size: 11px; }
+
+.info-value {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+.info-value.mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sky);
+}
+
+.info-value.big {
+  font-size: 26px;
+  color: var(--gold);
+}
+
+.info-value.name {
+  font-size: 16px;
+  color: var(--lime);
+}
+
+.info-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+}
+
+/* =========== PUNTO DE ENCUENTRO =========== */
+.meeting-point {
+  margin-top: 2px;
+  background: linear-gradient(135deg, rgba(0,229,255,0.06) 0%, rgba(0,229,255,0.02) 100%);
+  border: 1px solid rgba(0,229,255,0.18);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+
+.meeting-icon {
+  width: 40px; height: 40px;
+  background: rgba(0,229,255,0.12);
+  border: 1px solid rgba(0,229,255,0.25);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.meeting-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  color: var(--sky);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.meeting-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 3px;
+}
+
+.meeting-desc {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* =========== DIVIDER PERFORADO =========== */
+.perforation {
+  position: relative;
+  margin: 24px 0;
+  display: flex; align-items: center;
+}
+
+.perforation::before,
+.perforation::after {
+  content: '';
+  width: 22px; height: 22px;
+  background: var(--jungle);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin: 0 -11px;
+  position: relative; z-index: 1;
+  border: 1px solid var(--border);
+}
+
+/* Línea punteada */
+.perf-line {
+  flex: 1;
+  border: none;
+  border-top: 2px dashed rgba(123,219,108,0.15);
+  margin: 0 8px;
+}
+
+/* =========== QR SECTION =========== */
+.qr-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 28px;
+}
+
+.qr-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.qr-box {
+  position: relative;
+  padding: 14px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(123,219,108,0.2),
+    0 8px 32px rgba(0,0,0,0.4),
+    0 0 40px rgba(123,219,108,0.1);
+}
+
+/* Esquinas decorativas del QR */
+.qr-corner {
+  position: absolute;
+  width: 18px; height: 18px;
+  border-color: var(--lime);
+  border-style: solid;
+  border-width: 0;
+}
+.qr-corner.tl { top: 5px;  left: 5px;  border-top-width: 3px; border-left-width: 3px;  border-radius: 4px 0 0 0; }
+.qr-corner.tr { top: 5px;  right: 5px; border-top-width: 3px; border-right-width: 3px; border-radius: 0 4px 0 0; }
+.qr-corner.bl { bottom: 5px; left: 5px;  border-bottom-width: 3px; border-left-width: 3px;  border-radius: 0 0 0 4px; }
+.qr-corner.br { bottom: 5px; right: 5px; border-bottom-width: 3px; border-right-width: 3px; border-radius: 0 0 4px 0; }
+
+#qrcode canvas, #qrcode img { display: block; border-radius: 4px; }
+
+.ticket-id {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lime);
+  letter-spacing: 3px;
+}
+
+.scan-hint {
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 1.6;
+}
+
+/* =========== FOOTER =========== */
+.ticket-footer {
+  border-top: 1px solid var(--border);
+  padding: 16px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--lime), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+}
+
+.footer-price {
+  text-align: right;
+}
+
+.footer-price-label {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.footer-price-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+/* =========== BOTONES DE ACCIÓN =========== */
+.actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-action {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+
+.btn-download {
+  background: linear-gradient(135deg, var(--lime), #5BC950);
+  color: #000;
+}
+.btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(123,219,108,0.3); }
+
+.btn-share {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  color: var(--white);
+}
+.btn-share:hover { background: rgba(255,255,255,0.1); }
+
+/* =========== STATUS VÁLIDO =========== */
+.valid-stamp {
+  position: absolute;
+  top: 28px; right: 28px;
+  width: 56px; height: 56px;
+  border: 2px solid rgba(123,219,108,0.4);
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transform: rotate(15deg);
+  opacity: 0.7;
+}
+
+.valid-stamp .v-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  font-weight: 600;
+  color: var(--lime);
+  letter-spacing: 1px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+/* =========== IDIOMA TAG =========== */
+.lang-tags {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-top: 16px;
+}
+.lang-tag {
+  padding: 3px 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  font-size: 10px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.lang-tag.active {
+  background: rgba(123,219,108,0.12);
+  border-color: rgba(123,219,108,0.3);
+  color: var(--lime);
+}
+.lang-tag:hover { border-color: rgba(123,219,108,0.3); color: var(--lime); }
+
+/* =========== RESPONSIVE =========== */
+@media (max-width: 440px) {
+  .ticket-body { padding: 18px 18px; }
+  .ticket-hero { padding: 28px 18px 22px; }
+  .ticket-footer { padding: 14px 18px; }
+  .info-value.big { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div class="ticket-wrap">
+
+  <!-- SELECTOR DE IDIOMA (demo) -->
+  <div class="lang-tags" style="justify-content:center; margin-bottom:16px;">
+    <span class="lang-tag active" onclick="setLang('es')">🇪🇸 ES</span>
+    <span class="lang-tag" onclick="setLang('en')">🇺🇸 EN</span>
+    <span class="lang-tag" onclick="setLang('fr')">🇫🇷 FR</span>
+    <span class="lang-tag" onclick="setLang('de')">🇩🇪 DE</span>
+    <span class="lang-tag" onclick="setLang('pt')">🇧🇷 PT</span>
+  </div>
+
+  <!-- TICKET -->
+  <div class="ticket">
+
+    <!-- SELLO VÁLIDO -->
+    <div class="valid-stamp">
+      <div class="v-text" id="stampText">VÁLIDO<br>✓</div>
+    </div>
+
+    <!-- HERO -->
+    <div class="ticket-hero">
+      <div class="ticket-badge" id="badgeText">TICKET CONFIRMADO</div>
+      <div class="ticket-destino" id="destinoText">🏛️ TIKAL</div>
+      <div class="ticket-subtitulo" id="subTituloText">PETÉN · GUATEMALA · PATRIMONIO MUNDIAL UNESCO</div>
+      <div class="ticket-tipo" id="tourTipoText">🌅 TIKAL AMANECER — PERMISO ESPECIAL</div>
+    </div>
+
+    <!-- CUERPO -->
+    <div class="ticket-body">
+
+      <!-- Grid de datos -->
+      <div class="info-grid">
+
+        <!-- Fecha -->
+        <div class="info-cell accent">
+          <div class="info-label"><span class="icon">📅</span> <span id="l_fecha">FECHA</span></div>
+          <div class="info-value big">15 MAR</div>
+          <div class="info-sub">2026 · Sábado</div>
+        </div>
+
+        <!-- Hora -->
+        <div class="info-cell accent">
+          <div class="info-label"><span class="icon">⏰</span> <span id="l_hora">SALIDA</span></div>
+          <div class="info-value big">3:00</div>
+          <div class="info-sub" id="l_hora_sub">AM — No llegar tarde</div>
+        </div>
+
+        <!-- Nombre -->
+        <div class="info-cell full">
+          <div class="info-label"><span class="icon">👤</span> <span id="l_nombre">TURISTA</span></div>
+          <div class="info-value name">SOPHIE MARTIN</div>
+          <div class="info-sub" id="l_nombre_sub">1 persona · Tour privado</div>
+        </div>
+
+        <!-- Ticket ID -->
+        <div class="info-cell full">
+          <div class="info-label"><span class="icon">🎫</span> <span id="l_ticket">TICKET ID</span></div>
+          <div class="info-value mono">TK-2026-0315-0042</div>
+        </div>
+
+      </div>
+
+      <!-- Punto de encuentro -->
+      <div class="meeting-point" style="margin-top:12px;">
+        <div class="meeting-icon">📍</div>
+        <div>
+          <div class="meeting-label" id="l_punto">PUNTO DE ENCUENTRO</div>
+          <div class="meeting-name" id="puntoNombre">Lobby — CryptoChange Flores</div>
+          <div class="meeting-desc" id="puntoDesc">
+            Calle Centro América, frente al Parque Central<br>
+            🕒 <strong style="color:var(--white);" id="puntoHora">Presentarse a las 2:45 AM</strong> · 15 min antes
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /ticket-body -->
+
+    <!-- PERFORACIÓN -->
+    <div class="perforation" style="margin:0 28px;">
+      <div class="perf-line"></div>
+    </div>
+
+    <!-- QR -->
+    <div class="ticket-body" style="padding-top:0;">
+      <div class="qr-section">
+        <div class="qr-label" id="l_qr">ESCANEAR PARA VERIFICAR</div>
+        <div class="qr-box">
+          <div class="qr-corner tl"></div>
+          <div class="qr-corner tr"></div>
+          <div class="qr-corner bl"></div>
+          <div class="qr-corner br"></div>
+          <div id="qrcode"></div>
+        </div>
+        <div class="ticket-id">TK-2026-0315-0042</div>
+        <div class="scan-hint" id="scanHint">
+          Muestra este código al guía al abordar<br>
+          Show this code to the guide when boarding
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="ticket-footer">
+      <div class="footer-brand">CryptoChange<br>Flores</div>
+      <div class="footer-price">
+        <div class="footer-price-label" id="l_precio">PRECIO PAGADO</div>
+        <div class="footer-price-value">$248 USD</div>
+      </div>
+    </div>
+
+  </div><!-- /ticket -->
+
+  <!-- BOTONES -->
+  <div class="actions">
+    <button class="btn-action btn-download" onclick="downloadTicket()">
+      ⬇ <span id="l_descargar">Descargar</span>
+    </button>
+    <button class="btn-action btn-share" onclick="shareTicket()">
+      ↗ <span id="l_compartir">Compartir</span>
+    </button>
+  </div>
+
+</div><!-- /ticket-wrap -->
+
+<script>
+// =========== DATOS DEL TICKET ===========
+const TICKET = {
+  id:         'TK-2026-0315-0042',
+  destino:    '🏛️ TIKAL',
+  subtitulo:  'PETÉN · GUATEMALA · PATRIMONIO MUNDIAL UNESCO',
+  tour:       '🌅 TIKAL AMANECER — PERMISO ESPECIAL',
+  fecha:      '15 MAR',
+  diaSemana:  { es:'Sábado', en:'Saturday', fr:'Samedi', de:'Samstag', pt:'Sábado' },
+  hora:       '3:00',
+  nombre:     'SOPHIE MARTIN',
+  pax:        '1',
+  punto:      { es:'Lobby — CryptoChange Flores', en:'Lobby — CryptoChange Flores', fr:'Lobby — CryptoChange Flores', de:'Lobby — CryptoChange Flores', pt:'Lobby — CryptoChange Flores' },
+  puntoDir:   'Calle Centro América, frente al Parque Central',
+  horaLlegada:'2:45 AM',
+  precio:     '$248 USD',
+  qrData:     'https://cryptochangeflores.com/ticket/TK-2026-0315-0042'
+};
+
+// =========== TRADUCCIONES ===========
+const T = {
+  es: {
+    badge:'TICKET CONFIRMADO', fecha:'FECHA', hora:'SALIDA', hora_sub:'AM — No llegar tarde',
+    nombre:'TURISTA', nombre_sub:'persona · Tour', ticket:'TICKET ID',
+    punto:'PUNTO DE ENCUENTRO', qr:'ESCANEAR PARA VERIFICAR',
+    scan:'Muestra este código al guía al abordar\nShow this code to the guide when boarding',
+    precio:'PRECIO PAGADO', descargar:'Descargar', compartir:'Compartir',
+    stamp:'VÁLIDO\n✓', presentarse:'Presentarse a las',
+    pax_label: 'persona · Tour'
+  },
+  en: {
+    badge:'CONFIRMED TICKET', fecha:'DATE', hora:'DEPARTURE', hora_sub:'AM — Please be on time',
+    nombre:'PASSENGER', nombre_sub:'person · Tour', ticket:'TICKET ID',
+    punto:'MEETING POINT', qr:'SCAN TO VERIFY',
+    scan:'Show this code to your guide when boarding\nMostrá este código al guía al abordar',
+    precio:'PRICE PAID', descargar:'Download', compartir:'Share',
+    stamp:'VALID\n✓', presentarse:'Be there at',
+    pax_label: 'person · Tour'
+  },
+  fr: {
+    badge:'BILLET CONFIRMÉ', fecha:'DATE', hora:'DÉPART', hora_sub:'AM — Ne pas être en retard',
+    nombre:'VOYAGEUR', nombre_sub:'personne · Tour', ticket:'N° BILLET',
+    punto:'POINT DE RENCONTRE', qr:'SCANNER POUR VÉRIFIER',
+    scan:'Montrez ce code au guide à l\'embarquement\nShow this code to the guide',
+    precio:'PRIX PAYÉ', descargar:'Télécharger', compartir:'Partager',
+    stamp:'VALIDE\n✓', presentarse:'Se présenter à',
+    pax_label: 'personne · Tour'
+  },
+  de: {
+    badge:'BESTÄTIGTES TICKET', fecha:'DATUM', hora:'ABFAHRT', hora_sub:'Uhr — Bitte pünktlich sein',
+    nombre:'REISENDER', nombre_sub:'Person · Tour', ticket:'TICKET-NR.',
+    punto:'TREFFPUNKT', qr:'QR-CODE SCANNEN',
+    scan:'Zeigen Sie diesen Code dem Guide beim Einsteigen\nShow this code to the guide',
+    precio:'BEZAHLTER PREIS', descargar:'Herunterladen', compartir:'Teilen',
+    stamp:'GÜLTIG\n✓', presentarse:'Bitte um',
+    pax_label: 'Person · Tour'
+  },
+  pt: {
+    badge:'INGRESSO CONFIRMADO', fecha:'DATA', hora:'SAÍDA', hora_sub:'AM — Não se atrase',
+    nombre:'PASSAGEIRO', nombre_sub:'pessoa · Tour', ticket:'N° DO INGRESSO',
+    punto:'PONTO DE ENCONTRO', qr:'ESCANEAR PARA VERIFICAR',
+    scan:'Mostre este código ao guia ao embarcar\nShow this code to the guide',
+    precio:'PREÇO PAGO', descargar:'Baixar', compartir:'Compartilhar',
+    stamp:'VÁLIDO\n✓', presentarse:'Chegar às',
+    pax_label: 'pessoa · Tour'
+  }
+};
+
+let currentLang = 'es';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-tag').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.lang-tag[onclick="setLang('${lang}')"]`).classList.add('active');
+  applyLang(lang);
+}
+
+function applyLang(lang) {
+  const t = T[lang];
+  document.getElementById('badgeText').textContent    = t.badge;
+  document.getElementById('stampText').innerHTML      = t.stamp.replace('\n','<br>');
+  document.getElementById('l_fecha').textContent      = t.fecha;
+  document.getElementById('l_hora').textContent       = t.hora;
+  document.getElementById('l_hora_sub').textContent   = t.hora_sub;
+  document.getElementById('l_nombre').textContent     = t.nombre;
+  document.getElementById('l_nombre_sub').textContent = TICKET.pax + ' ' + t.pax_label;
+  document.getElementById('l_ticket').textContent     = t.ticket;
+  document.getElementById('l_punto').textContent      = t.punto;
+  document.getElementById('l_qr').textContent         = t.qr;
+  document.getElementById('scanHint').innerText       = t.scan;
+  document.getElementById('l_precio').textContent     = t.precio;
+  document.getElementById('l_descargar').textContent  = t.descargar;
+  document.getElementById('l_compartir').textContent  = t.compartir;
+
+  // Punto de encuentro
+  document.getElementById('puntoNombre').textContent  = TICKET.punto[lang];
+  document.getElementById('puntoDesc').innerHTML =
+    TICKET.puntoDir + '<br>🕒 <strong style="color:var(--white);">' +
+    t.presentarse + ' ' + TICKET.horaLlegada + '</strong> · 15 min ' + (lang==='en'?'before':lang==='fr'?'avant':lang==='de'?'vorher':lang==='pt'?'antes':'antes');
+
+  // Día de la semana
+  document.querySelector('.info-cell.accent .info-sub').textContent = '2026 · ' + TICKET.diaSemana[lang];
+}
+
+// =========== GENERAR QR ===========
+window.addEventListener('DOMContentLoaded', function() {
+  new QRCode(document.getElementById('qrcode'), {
+    text: TICKET.qrData,
+    width: 160,
+    height: 160,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+});
+
+// =========== DESCARGAR ===========
+function downloadTicket() {
+  window.print();
+}
+
+// =========== COMPARTIR ===========
+function shareTicket() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'Mi ticket — ' + TICKET.destino,
+      text: 'Ticket ' + TICKET.id + ' · ' + TICKET.tour,
+      url: TICKET.qrData
+    });
+  } else {
+    navigator.clipboard.writeText(TICKET.qrData).then(function() {
+      alert('✓ Link copiado al portapapeles');
+    });
+  }
+}
+
+// =========== PRINT STYLES ===========
+const printStyle = document.createElement('style');
+printStyle.textContent = `
+  @media print {
+    body { background:#fff !important; }
+    body::before, body::after { display:none; }
+    .lang-tags, .actions { display:none !important; }
+    .ticket { box-shadow:none !important; border:1px solid #ccc !important; }
+    .ticket-destino, .info-value { color:#000 !important; -webkit-text-fill-color:#000 !important; }
+    .ticket-badge, .meeting-point, .qr-box { background:#f5f5f5 !important; }
+  }
+`;
+document.head.appendChild(printStyle);
+</script>
+</body>
+</html>
