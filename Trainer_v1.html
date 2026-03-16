@@ -395,15 +395,13 @@ button{font-family:'Rajdhani',sans-serif;cursor:pointer;}
       "In Lak'ech — Yo soy otro tú.<br>El cuerpo es el templo del espíritu."
     </div>
 
-    <!-- Form registro / login -->
-    <div id="registerForm">
-      <input id="inputNombre" class="tracker-input" placeholder="Tu nombre" style="margin-bottom:10px;" autocomplete="off"/>
-      <input id="inputEmail"  class="tracker-input" type="email" placeholder="Tu email" style="margin-bottom:18px;" autocomplete="off"/>
-      <button class="btn-main" onclick="registrarUsuario()" style="margin-bottom:10px;">
-        🔥 COMENZAR MI TRANSFORMACIÓN
+    <!-- Botones principales -->
+    <div style="width:100%;">
+      <button class="btn-main" onclick="goTo('screen-registro')" style="margin-bottom:10px;font-size:15px;padding:18px;">
+        🔥 CREAR MI PERFIL
       </button>
-      <button class="btn-ghost" onclick="loginUsuario()" style="font-size:12px;">
-        Ya tengo cuenta — continuar
+      <button class="btn-ghost" onclick="goTo('screen-login')" style="font-size:13px;">
+        Ya tengo cuenta — Iniciar sesión
       </button>
     </div>
 
@@ -416,6 +414,128 @@ button{font-family:'Rajdhani',sans-serif;cursor:pointer;}
 <!-- ═══════════════════════════════════════════════════════
      SCREEN 2 — DASHBOARD
 ═══════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN REGISTRO
+═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-registro" style="justify-content:center;background:radial-gradient(ellipse 80% 70% at 50% 40%,#061a08 0%,#030a04 60%,#000 100%);">
+  <div style="width:100%;max-width:400px;padding:20px;z-index:1;">
+
+    <button class="nav-back" onclick="goTo('screen-welcome')" style="margin-bottom:24px;">← Volver</button>
+
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--green);letter-spacing:4px;margin-bottom:8px;">NUEVO GUERRERO</div>
+      <div style="font-family:Orbitron,sans-serif;font-size:22px;font-weight:900;color:var(--gold);">CREA TU PERFIL</div>
+      <div style="font-size:12px;color:var(--text2);margin-top:6px;">Tu progreso queda guardado para siempre</div>
+    </div>
+
+    <!-- Campos -->
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+
+      <div>
+        <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">👤 NOMBRE COMPLETO</div>
+        <input id="regNombre" class="tracker-input" placeholder="Tu nombre" autocomplete="name"/>
+      </div>
+
+      <div>
+        <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">📧 CORREO ELECTRÓNICO</div>
+        <input id="regEmail" class="tracker-input" type="email" placeholder="tu@correo.com" autocomplete="email"/>
+      </div>
+
+      <div>
+        <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">🔒 CONTRASEÑA</div>
+        <div style="position:relative;">
+          <input id="regPass" class="tracker-input" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" style="padding-right:48px;"/>
+          <button onclick="togglePass('regPass','eyeReg')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text2);font-size:18px;" id="eyeReg">👁</button>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">🔒 CONFIRMAR CONTRASEÑA</div>
+        <div style="position:relative;">
+          <input id="regPass2" class="tracker-input" type="password" placeholder="Repite tu contraseña" autocomplete="new-password" style="padding-right:48px;"/>
+          <button onclick="togglePass('regPass2','eyeReg2')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text2);font-size:18px;" id="eyeReg2">👁</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Indicador de fuerza de contraseña -->
+    <div style="margin-bottom:20px;">
+      <div style="display:flex;gap:4px;margin-bottom:4px;">
+        <div id="passStr1" style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.08);transition:background 0.3s;"></div>
+        <div id="passStr2" style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.08);transition:background 0.3s;"></div>
+        <div id="passStr3" style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.08);transition:background 0.3s;"></div>
+        <div id="passStr4" style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.08);transition:background 0.3s;"></div>
+      </div>
+      <div id="passStrLabel" style="font-size:10px;color:var(--text2);"></div>
+    </div>
+
+    <button class="btn-main" onclick="registrarUsuario()" id="btnRegistrar" style="margin-bottom:12px;font-size:15px;padding:18px;">
+      ⚡ CREAR PERFIL
+    </button>
+
+    <div style="text-align:center;font-size:12px;color:var(--text2);">
+      ¿Ya tienes cuenta?
+      <button onclick="goTo('screen-login')" style="background:none;border:none;color:var(--green);font-size:12px;text-decoration:underline;cursor:pointer;">Iniciar sesión</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN LOGIN
+═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-login" style="justify-content:center;background:radial-gradient(ellipse 80% 70% at 50% 40%,#061a08 0%,#030a04 60%,#000 100%);">
+  <div style="width:100%;max-width:400px;padding:20px;z-index:1;">
+
+    <button class="nav-back" onclick="goTo('screen-welcome')" style="margin-bottom:24px;">← Volver</button>
+
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="font-size:36px;margin-bottom:8px;animation:floatY 3s ease-in-out infinite;">🏛️</div>
+      <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--green);letter-spacing:4px;margin-bottom:8px;">BIENVENIDO DE VUELTA</div>
+      <div style="font-family:Orbitron,sans-serif;font-size:22px;font-weight:900;color:var(--gold);">INICIAR SESIÓN</div>
+      <div style="font-size:12px;color:var(--text2);margin-top:6px;">Continúa tu transformación</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+
+      <div>
+        <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">📧 CORREO ELECTRÓNICO</div>
+        <input id="loginEmail" class="tracker-input" type="email" placeholder="tu@correo.com" autocomplete="email"/>
+      </div>
+
+      <div>
+        <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">🔒 CONTRASEÑA</div>
+        <div style="position:relative;">
+          <input id="loginPass" class="tracker-input" type="password" placeholder="Tu contraseña" autocomplete="current-password" style="padding-right:48px;"/>
+          <button onclick="togglePass('loginPass','eyeLogin')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text2);font-size:18px;" id="eyeLogin">👁</button>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn-main" onclick="loginUsuario()" id="btnLogin" style="margin-bottom:12px;font-size:15px;padding:18px;">
+      🔥 ENTRAR
+    </button>
+
+    <!-- Sesión recordada -->
+    <div id="sessionGuardada" style="display:none;background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.2);border-radius:12px;padding:14px;margin-bottom:12px;text-align:center;">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Sesión guardada:</div>
+      <div id="sessionNombre" style="font-family:Orbitron,sans-serif;font-size:14px;color:var(--green);margin-bottom:10px;"></div>
+      <button class="btn-main" onclick="continuarSesion()" style="padding:12px;">
+        ⚡ Continuar como <span id="sessionNombreBtn"></span>
+      </button>
+    </div>
+
+    <div style="text-align:center;font-size:12px;color:var(--text2);margin-top:8px;">
+      ¿No tienes cuenta?
+      <button onclick="goTo('screen-registro')" style="background:none;border:none;color:var(--green);font-size:12px;text-decoration:underline;cursor:pointer;">Crear perfil</button>
+    </div>
+
+  </div>
+</div>
+
 <div class="screen" id="screen-dashboard" style="padding-top:24px;">
   <div style="width:100%;max-width:480px;z-index:1;">
 
@@ -424,8 +544,12 @@ button{font-family:'Rajdhani',sans-serif;cursor:pointer;}
       <div>
         <div style="font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;">Bienvenido de vuelta</div>
         <div id="dashNombre" style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--gold);font-weight:700;"></div>
+        <div id="dashEmail" style="font-size:10px;color:var(--text2);margin-top:1px;"></div>
       </div>
-      <button onclick="irAProgreso()" style="background:none;border:1px solid var(--border);padding:8px 12px;border-radius:10px;color:var(--text2);font-size:12px;">📊 Stats</button>
+      <div style="display:flex;gap:8px;">
+        <button onclick="irAProgreso()" style="background:none;border:1px solid var(--border);padding:8px 12px;border-radius:10px;color:var(--text2);font-size:12px;">📊 Stats</button>
+        <button onclick="cerrarSesion()" style="background:none;border:1px solid rgba(255,23,68,0.2);padding:8px 10px;border-radius:10px;color:rgba(255,100,100,0.6);font-size:12px;" title="Cerrar sesión">⏏</button>
+      </div>
     </div>
 
     <!-- Life Score ring + stats -->
@@ -693,11 +817,33 @@ var state = {
 // ═══════════════════════════════════════════════════════
 (function init() {
   crearParticulas();
-  if (state.userId) {
+
+  // Si ya hay sesión guardada, ir directo al dashboard
+  if (state.userId && state.nombre) {
     cargarDashboard();
-  } else {
-    goTo('screen-welcome');
+    return;
   }
+
+  // Si hay email guardado, mostrarlo en el login como sesión recordada
+  var emailGuardado  = localStorage.getItem('trainer_email');
+  var nombreGuardado = localStorage.getItem('trainer_nombre');
+  var userIdGuardado = localStorage.getItem('trainer_userId');
+
+  if (emailGuardado && nombreGuardado && userIdGuardado) {
+    var sg = document.getElementById('sessionGuardada');
+    if (sg) {
+      sg.style.display = 'block';
+      var sn = document.getElementById('sessionNombre');
+      var sb = document.getElementById('sessionNombreBtn');
+      if (sn) sn.textContent = nombreGuardado.split(' ')[0];
+      if (sb) sb.textContent = nombreGuardado.split(' ')[0];
+    }
+    if (document.getElementById('loginEmail')) {
+      document.getElementById('loginEmail').value = emailGuardado;
+    }
+  }
+
+  goTo('screen-welcome');
 })();
 
 function goTo(id) {
@@ -850,37 +996,154 @@ function generarRecsDemo(pct, diasEj, prom) {
 // ═══════════════════════════════════════════════════════
 //  REGISTRO / LOGIN
 // ═══════════════════════════════════════════════════════
-function registrarUsuario() {
-  var nombre = document.getElementById('inputNombre').value.trim();
-  var email  = document.getElementById('inputEmail').value.trim();
-  if (!nombre) { toast('Escribe tu nombre', 'warning'); return; }
+// ═══════════════════════════════════════════════════════
+//  AUTENTICACIÓN — Registro y Login
+// ═══════════════════════════════════════════════════════
 
-  loading('Creando tu perfil...');
-  apiCall({ action:'registerUser', nombre:nombre, email:email }, function(err, res) {
+// Mostrar/ocultar contraseña
+function togglePass(inputId, btnId) {
+  var inp = g(inputId);
+  var btn = g(btnId);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+// Indicador de fuerza de contraseña
+function medirFuerzaPass(pass) {
+  var score = 0;
+  if (pass.length >= 6)  score++;
+  if (pass.length >= 10) score++;
+  if (/[A-Z]/.test(pass)) score++;
+  if (/[0-9!@#$%]/.test(pass)) score++;
+  return score;
+}
+
+// Actualizar barra de fuerza al escribir
+if (document.getElementById('regPass')) {
+  document.getElementById('regPass').addEventListener('input', function() {
+    var score  = medirFuerzaPass(this.value);
+    var colores = ['','var(--red)','var(--orange)','var(--gold)','var(--green)'];
+    var labels  = ['','Débil','Regular','Buena','Fuerte 🔥'];
+    for (var i = 1; i <= 4; i++) {
+      var seg = g('passStr'+i);
+      if (seg) seg.style.background = i <= score ? colores[score] : 'rgba(255,255,255,0.08)';
+    }
+    var lbl = g('passStrLabel');
+    if (lbl) { lbl.textContent = this.value ? labels[score] : ''; lbl.style.color = colores[score]; }
+  });
+}
+
+// Hash simple de contraseña (lado cliente — para seguridad básica)
+function hashPass(pass, salt) {
+  // XOR + base64 simple — no es criptografía real pero oculta la clave en texto plano
+  var salted = pass + '_' + salt + '_CFT';
+  var result = '';
+  for (var i = 0; i < salted.length; i++) {
+    result += salted.charCodeAt(i).toString(16);
+  }
+  return btoa(result).substring(0, 32);
+}
+
+// ── REGISTRO ─────────────────────────────────────────
+function registrarUsuario() {
+  var nombre = (g('regNombre').value || '').trim();
+  var email  = (g('regEmail').value  || '').trim().toLowerCase();
+  var pass   = (g('regPass').value   || '');
+  var pass2  = (g('regPass2').value  || '');
+
+  // Validaciones
+  if (!nombre) { toast('Escribe tu nombre completo', 'warning'); g('regNombre').focus(); return; }
+  if (!email || !email.includes('@')) { toast('Correo inválido', 'warning'); g('regEmail').focus(); return; }
+  if (pass.length < 6) { toast('La contraseña debe tener al menos 6 caracteres', 'warning'); g('regPass').focus(); return; }
+  if (pass !== pass2) { toast('Las contraseñas no coinciden', 'error'); g('regPass2').focus(); return; }
+
+  var btn = g('btnRegistrar');
+  btn.textContent = '⏳ Creando perfil...';
+  btn.disabled = true;
+
+  var passHash = hashPass(pass, email);
+
+  apiCall({ action:'registerUser', nombre:nombre, email:email, passHash:passHash }, function(err, res) {
+    btn.textContent = '⚡ CREAR PERFIL';
+    btn.disabled = false;
+
     if (res && res.ok) {
+      if (res.existe) {
+        toast('Este correo ya tiene cuenta. Inicia sesión.', 'warning');
+        g('loginEmail').value = email;
+        goTo('screen-login'); return;
+      }
+      // Guardar sesión
       state.userId = res.userId;
       state.nombre = nombre;
-      localStorage.setItem('trainer_userId', res.userId);
-      localStorage.setItem('trainer_nombre', nombre);
-      toast('¡Bienvenido '+nombre+'! 🔥', 'success');
+      state.email  = email;
+      localStorage.setItem('trainer_userId',   res.userId);
+      localStorage.setItem('trainer_nombre',   nombre);
+      localStorage.setItem('trainer_email',    email);
+      localStorage.setItem('trainer_passHash', passHash);
+      toast('¡Bienvenido ' + nombre.split(' ')[0] + '! 🔥', 'success');
       cargarDashboard();
     } else {
-      goTo('screen-welcome');
-      toast('Error al registrar. Intenta de nuevo.', 'error');
+      toast('Error al crear perfil. Intenta de nuevo.', 'error');
     }
   });
 }
 
+// ── LOGIN ─────────────────────────────────────────────
 function loginUsuario() {
-  var nombre = document.getElementById('inputNombre').value.trim();
+  var email  = (g('loginEmail').value || '').trim().toLowerCase();
+  var pass   = (g('loginPass').value  || '');
+
+  if (!email || !email.includes('@')) { toast('Escribe tu correo', 'warning'); g('loginEmail').focus(); return; }
+  if (!pass) { toast('Escribe tu contraseña', 'warning'); g('loginPass').focus(); return; }
+
+  var btn = g('btnLogin');
+  btn.textContent = '⏳ Verificando...';
+  btn.disabled = true;
+
+  var passHash = hashPass(pass, email);
+
+  apiCall({ action:'loginUser', email:email, passHash:passHash }, function(err, res) {
+    btn.textContent = '🔥 ENTRAR';
+    btn.disabled = false;
+
+    if (res && res.ok) {
+      state.userId = res.userId;
+      state.nombre = res.nombre;
+      state.email  = email;
+      localStorage.setItem('trainer_userId',   res.userId);
+      localStorage.setItem('trainer_nombre',   res.nombre);
+      localStorage.setItem('trainer_email',    email);
+      localStorage.setItem('trainer_passHash', passHash);
+      toast('¡Bienvenido de vuelta, ' + res.nombre.split(' ')[0] + '! 💪', 'success');
+      cargarDashboard();
+    } else {
+      toast(res && res.error ? res.error : 'Correo o contraseña incorrectos', 'error');
+    }
+  });
+}
+
+// Continuar con sesión guardada (si ya hay datos locales)
+function continuarSesion() {
   var userId = localStorage.getItem('trainer_userId');
-  if (userId) {
+  var nombre = localStorage.getItem('trainer_nombre');
+  if (userId && nombre) {
     state.userId = userId;
-    state.nombre = localStorage.getItem('trainer_nombre') || (nombre || 'Guerrero');
+    state.nombre = nombre;
+    state.email  = localStorage.getItem('trainer_email') || '';
     cargarDashboard();
-  } else {
-    toast('No encontré tu cuenta. Regístrate primero.', 'warning');
   }
+}
+
+// Cerrar sesión
+function cerrarSesion() {
+  localStorage.removeItem('trainer_userId');
+  localStorage.removeItem('trainer_nombre');
+  localStorage.removeItem('trainer_email');
+  localStorage.removeItem('trainer_passHash');
+  state.userId = null; state.nombre = ''; state.email = '';
+  toast('Sesión cerrada', 'info');
+  goTo('screen-welcome');
 }
 
 // ═══════════════════════════════════════════════════════
@@ -904,6 +1167,7 @@ function cargarDashboard() {
 function renderDashboard(d) {
   // Nombre
   g('dashNombre').textContent = (d.nombre || state.nombre).split(' ')[0].toUpperCase();
+  if (g('dashEmail')) g('dashEmail').textContent = state.email || localStorage.getItem('trainer_email') || '';
 
   // Life Score ring
   var ls = d.lifeScore || 0;
