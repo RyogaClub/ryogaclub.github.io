@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Entrenador Físico & Espiritual — CryptoChange Flores</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════════
+   VARIABLES Y RESET
+═══════════════════════════════════════════════════════ */
+:root {
+  --bg:       #050a06;
+  --dark2:    #0a120b;
+  --dark3:    #0f1c10;
+  --border:   rgba(0,230,118,0.12);
+  --green:    #00E676;
+  --green2:   #00C853;
+  --gold:     #F5C842;
+  --accent:   #00E5FF;
+  --purple:   #CE93D8;
+  --orange:   #FF6B35;
+  --red:      #FF1744;
+  --text:     #e8f5e9;
+  --text2:    rgba(232,245,233,0.45);
+  --chakra1:  #F44336;
+  --chakra2:  #FF6B35;
+  --chakra3:  #F5C842;
+  --chakra4:  #00E676;
+  --chakra5:  #29B6F6;
+  --chakra6:  #5C6BC0;
+  --chakra7:  #CE93D8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;}
+button{font-family:'Rajdhani',sans-serif;cursor:pointer;}
+
+/* ═══════════════════════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════════════════════ */
+.screen {
+  display:none;
+  position:fixed;inset:0;
+  flex-direction:column;
+  align-items:center;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:20px 16px 80px;
+}
+.screen.active{display:flex;}
+
+/* ═══════════════════════════════════════════════════════
+   PARTICLES / FONDO ANIMADO
+═══════════════════════════════════════════════════════ */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{
+  position:absolute;border-radius:50%;
+  animation:floatParticle linear infinite;
+  opacity:0;
+}
+@keyframes floatParticle{
+  0%{transform:translateY(100vh) scale(0);opacity:0;}
+  10%{opacity:1;}
+  90%{opacity:0.6;}
+  100%{transform:translateY(-20px) scale(1);opacity:0;}
+}
+
+/* ═══════════════════════════════════════════════════════
+   WELCOME SCREEN
+═══════════════════════════════════════════════════════ */
+#screen-welcome{
+  justify-content:center;
+  background:radial-gradient(ellipse 80% 70% at 50% 40%,#061a08 0%,#030a04 60%,#000 100%);
+}
+
+/* ═══════════════════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════════════════ */
+.card{
+  background:linear-gradient(160deg,rgba(15,28,16,0.95),rgba(5,10,6,0.98));
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px;
+  width:100%;max-width:480px;
+  position:relative;z-index:1;
+}
+.card-wide{max-width:600px;}
+
+/* ═══════════════════════════════════════════════════════
+   SCORE RING
+═══════════════════════════════════════════════════════ */
+.score-ring{position:relative;display:inline-flex;align-items:center;justify-content:center;}
+.score-ring svg{transform:rotate(-90deg);}
+.score-ring .ring-value{
+  position:absolute;text-align:center;
+  font-family:'Orbitron',sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HABIT ITEMS
+═══════════════════════════════════════════════════════ */
+.habit-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:rgba(0,230,118,0.03);
+  cursor:pointer;
+  transition:all 0.3s ease;
+  position:relative;overflow:hidden;
+  user-select:none;
+}
+.habit-item::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(0,230,118,0.06),transparent);
+  transform:translateX(-100%);transition:transform 0.4s ease;
+}
+.habit-item:hover::before{transform:translateX(100%);}
+.habit-item.done{
+  border-color:rgba(0,230,118,0.4);
+  background:rgba(0,230,118,0.08);
+}
+.habit-item.done .habit-check{
+  background:var(--green);
+  border-color:var(--green);
+  color:#000;
+}
+.habit-check{
+  width:26px;height:26px;border-radius:8px;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+  transition:all 0.25s ease;
+  background:transparent;
+}
+.habit-icon{font-size:22px;flex-shrink:0;}
+.habit-name{font-size:15px;font-weight:600;color:var(--text);}
+.habit-pts{
+  margin-left:auto;font-size:11px;
+  color:var(--green);font-family:'Share Tech Mono',monospace;
+  opacity:0.7;
+}
+.habit-category{
+  font-size:10px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-top:1px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CHAKRA BAR
+═══════════════════════════════════════════════════════ */
+.chakra-bar{
+  display:flex;gap:4px;height:8px;border-radius:4px;overflow:hidden;
+  background:rgba(255,255,255,0.05);
+}
+.chakra-segment{flex:1;border-radius:2px;transition:opacity 0.4s;}
+
+/* ═══════════════════════════════════════════════════════
+   STAT CARDS
+═══════════════════════════════════════════════════════ */
+.stat-box{
+  background:var(--dark3);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.stat-box::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,rgba(0,230,118,0.06),transparent 70%);
+}
+.stat-value{
+  font-family:'Orbitron',sans-serif;
+  font-size:28px;font-weight:900;
+  line-height:1;margin-bottom:4px;
+}
+.stat-label{font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;}
+
+/* ═══════════════════════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════════════════════ */
+.pbar-wrap{background:rgba(255,255,255,0.06);border-radius:100px;height:10px;overflow:hidden;}
+.pbar-fill{
+  height:100%;border-radius:100px;
+  background:linear-gradient(90deg,var(--green2),var(--green));
+  transition:width 0.8s cubic-bezier(0.34,1.56,0.64,1);
+  position:relative;
+}
+.pbar-fill::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);
+  animation:shimmer 2s infinite;
+}
+@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(200%);}}
+
+/* ═══════════════════════════════════════════════════════
+   BOTONES
+═══════════════════════════════════════════════════════ */
+.btn-main{
+  background:linear-gradient(135deg,var(--green2),var(--green));
+  color:#000;border:none;
+  padding:16px 28px;border-radius:14px;
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:1px;
+  width:100%;transition:all 0.2s;
+}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,230,118,0.35);}
+.btn-main:active{transform:translateY(0);}
+.btn-ghost{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:12px 20px;border-radius:12px;
+  font-size:13px;width:100%;
+  transition:all 0.2s;
+}
+.btn-ghost:hover{border-color:var(--green);color:var(--green);}
+.btn-gold{
+  background:linear-gradient(135deg,#E8A020,var(--gold));
+  color:#000;border:none;
+  padding:14px 20px;border-radius:12px;
+  font-family:'Orbitron',sans-serif;
+  font-size:12px;font-weight:700;
+  transition:all 0.2s;
+}
+
+/* ═══════════════════════════════════════════════════════
+   WEEK GRID
+═══════════════════════════════════════════════════════ */
+.week-day{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  flex:1;
+}
+.week-day .day-bar{
+  width:100%;border-radius:4px;
+  min-height:4px;
+  transition:height 0.5s ease,background 0.3s;
+}
+.week-day .day-label{font-size:9px;color:var(--text2);font-family:'Share Tech Mono',monospace;}
+
+/* ═══════════════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════════════ */
+#toastWrap{
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);
+  z-index:9999;pointer-events:none;display:flex;flex-direction:column;gap:8px;
+  min-width:260px;max-width:90vw;
+}
+.toast{
+  padding:12px 20px;border-radius:12px;
+  font-size:13px;font-weight:600;
+  animation:toastIn 0.3s ease;text-align:center;
+  backdrop-filter:blur(10px);
+}
+.toast.success{background:rgba(0,200,83,0.15);border:1px solid rgba(0,230,118,0.4);color:var(--green);}
+.toast.info   {background:rgba(0,229,255,0.12);border:1px solid rgba(0,229,255,0.3);color:var(--accent);}
+.toast.warning{background:rgba(245,200,66,0.12);border:1px solid rgba(245,200,66,0.3);color:var(--gold);}
+.toast.error  {background:rgba(255,23,68,0.12);border:1px solid rgba(255,23,68,0.3);color:var(--red);}
+@keyframes toastIn{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══════════════════════════════════════════════════════
+   PROGRESS TRACKER INPUTS
+═══════════════════════════════════════════════════════ */
+.tracker-input{
+  background:var(--dark3);border:1px solid var(--border);
+  border-radius:12px;padding:14px 16px;
+  color:var(--text);font-family:'Rajdhani',sans-serif;
+  font-size:15px;width:100%;
+  transition:border-color 0.2s;outline:none;
+}
+.tracker-input:focus{border-color:var(--green);}
+
+/* ═══════════════════════════════════════════════════════
+   NAV BACK
+═══════════════════════════════════════════════════════ */
+.nav-back{
+  align-self:flex-start;
+  background:none;border:1px solid var(--border);
+  color:var(--text2);padding:8px 16px;
+  border-radius:8px;font-size:12px;margin-bottom:16px;
+  transition:all 0.2s;z-index:1;
+}
+.nav-back:hover{border-color:var(--green);color:var(--green);}
+
+/* ═══════════════════════════════════════════════════════
+   RECOMENDACIONES
+═══════════════════════════════════════════════════════ */
+.rec-item{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:12px 14px;border-radius:10px;
+  font-size:13px;line-height:1.5;
+  margin-bottom:8px;
+}
+.rec-item.success{background:rgba(0,230,118,0.08);border-left:3px solid var(--green);}
+.rec-item.warning{background:rgba(245,200,66,0.08);border-left:3px solid var(--gold);}
+.rec-item.danger {background:rgba(255,23,68,0.08);border-left:3px solid var(--red);}
+.rec-item.info   {background:rgba(0,229,255,0.08);border-left:3px solid var(--accent);}
+
+/* ═══════════════════════════════════════════════════════
+   LIFE SCORE DISPLAY
+═══════════════════════════════════════════════════════ */
+.life-score-wrap{
+  background:linear-gradient(135deg,rgba(245,200,66,0.08),rgba(0,230,118,0.05));
+  border:1px solid rgba(245,200,66,0.25);
+  border-radius:16px;padding:20px;text-align:center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ANIMACIONES
+═══════════════════════════════════════════════════════ */
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+@keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.fade-in{animation:fadeIn 0.5s ease forwards;}
+
+.loader{
+  width:36px;height:36px;border-radius:50%;
+  border:3px solid rgba(0,230,118,0.15);
+  border-top-color:var(--green);
+  animation:spin 0.8s linear infinite;
+  margin:0 auto;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Partículas de fondo -->
+<div id="particles"></div>
+<div id="toastWrap"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 1 — BIENVENIDA
+═══════════════════════════════════════════════════════ -->
+<div class="screen active" id="screen-welcome">
+  <div style="text-align:center;max-width:420px;width:100%;padding:20px;z-index:1;">
+
+    <!-- Príncipe Maya NFT -->
+    <div style="position:relative;display:inline-block;margin-bottom:20px;animation:floatY 3s ease-in-out infinite;">
+      <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" width="160" height="224" style="filter:drop-shadow(0 0 25px rgba(0,230,118,0.7)) drop-shadow(0 0 50px rgba(245,200,66,0.3));">
+        <radialGradient id="auraW" cx="50%" cy="55%" r="55%"><stop offset="0%" stop-color="#00E676" stop-opacity="0.2"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient>
+        <ellipse cx="100" cy="165" rx="95" ry="130" fill="url(#auraW)"/>
+        <path d="M100 -18 L100 -30" stroke="#F5C842" stroke-width="2" opacity="0.7"/>
+        <path d="M60 38 Q45 5 55 -5 Q65 15 62 38" fill="#00C853" opacity="0.9"/>
+        <path d="M68 32 Q55 0 66 -8 Q74 12 70 32" fill="#69F0AE"/>
+        <path d="M76 27 Q68 -5 80 -10 Q84 10 78 27" fill="#00E676"/>
+        <path d="M84 25 Q80 -3 93 -6 Q93 14 86 25" fill="#B9F6CA" opacity="0.8"/>
+        <path d="M140 38 Q155 5 145 -5 Q135 15 138 38" fill="#00C853" opacity="0.9"/>
+        <path d="M132 32 Q145 0 134 -8 Q126 12 130 32" fill="#69F0AE"/>
+        <path d="M124 27 Q132 -5 120 -10 Q116 10 122 27" fill="#00E676"/>
+        <path d="M116 25 Q120 -3 107 -6 Q107 14 114 25" fill="#B9F6CA" opacity="0.8"/>
+        <path d="M96 22 Q92 -8 100 -14 Q108 -8 104 22" fill="#F5C842"/>
+        <rect x="55" y="36" width="90" height="12" rx="6" fill="#1a3a20"/>
+        <circle cx="72" cy="42" r="4" fill="#F5C842"/><circle cx="72" cy="42" r="2" fill="#E8A020"/>
+        <circle cx="100" cy="42" r="5" fill="#00E5FF"/><circle cx="100" cy="42" r="2.5" fill="#0097A7"/>
+        <circle cx="128" cy="42" r="4" fill="#F5C842"/><circle cx="128" cy="42" r="2" fill="#E8A020"/>
+        <path d="M62 44 Q57 82 64 104 Q80 116 100 116 Q120 116 136 104 Q143 82 138 44 Q120 32 100 32 Q80 32 62 44Z" fill="#8B6418"/>
+        <path d="M64 46 Q59 82 66 102 Q82 114 100 114 Q118 114 134 102 Q141 82 136 46 Q119 34 100 34 Q81 34 64 46Z" fill="#A07820"/>
+        <path d="M72 62 Q82 58 90 61" stroke="#3a1800" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M110 61 Q120 58 132 56" stroke="#3a1800" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <ellipse cx="80" cy="68" rx="9" ry="7" fill="#1a0800"/>
+        <ellipse cx="120" cy="68" rx="9" ry="7" fill="#1a0800"/>
+        <circle cx="81" cy="67" r="1.5" fill="#fff" opacity="0.95"/>
+        <circle cx="121" cy="67" r="1.5" fill="#fff" opacity="0.95"/>
+        <path d="M86 107 Q100 115 114 107" stroke="#5a3000" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="56" cy="78" r="8" fill="#0a2a10" stroke="#00E676" stroke-width="2"/>
+        <circle cx="56" cy="78" r="5" fill="#00C853" opacity="0.75"/>
+        <circle cx="144" cy="78" r="8" fill="#0a2a10" stroke="#00E676" stroke-width="2"/>
+        <circle cx="144" cy="78" r="5" fill="#00C853" opacity="0.75"/>
+        <rect x="86" y="113" width="28" height="18" rx="7" fill="#8B6418"/>
+        <path d="M50 135 Q38 140 35 175 Q36 200 50 210 Q72 220 100 220 Q128 220 150 210 Q164 200 165 175 Q162 140 150 135 Q130 126 100 126 Q70 126 50 135Z" fill="#956E18"/>
+        <circle cx="100" cy="155" r="10" fill="none" stroke="#00E676" stroke-width="2" opacity="0.9"/>
+        <circle cx="100" cy="155" r="5" fill="#00C853" opacity="0.5"/>
+        <path d="M62 148 Q78 142 94 150 Q90 165 78 168 Q64 164 62 148Z" fill="#B08428" opacity="0.4"/>
+        <path d="M138 148 Q122 142 106 150 Q110 165 122 168 Q136 164 138 148Z" fill="#B08428" opacity="0.4"/>
+        <path d="M48 138 Q30 142 22 162 Q18 182 28 200 Q38 214 52 212 Q65 210 68 195 Q70 178 66 160 Q62 145 48 138Z" fill="#956E18"/>
+        <path d="M152 138 Q170 142 178 162 Q182 182 172 200 Q162 214 148 212 Q135 210 132 195 Q130 178 134 160 Q138 145 152 138Z" fill="#956E18"/>
+        <ellipse cx="28" cy="172" rx="16" ry="22" fill="#A07820" opacity="0.55"/>
+        <ellipse cx="172" cy="172" rx="16" ry="22" fill="#A07820" opacity="0.55"/>
+        <rect x="16" y="198" width="28" height="9" rx="4.5" fill="#F5C842"/>
+        <rect x="156" y="198" width="28" height="9" rx="4.5" fill="#F5C842"/>
+        <path d="M60 218 Q48 224 44 268 L156 268 Q152 224 140 218 Q122 226 100 226 Q78 226 60 218Z" fill="#0d2215"/>
+        <path d="M44 268 L156 268" stroke="#00E676" stroke-width="2" opacity="0.6"/>
+      </svg>
+      <div style="position:absolute;top:-6px;right:-12px;background:linear-gradient(135deg,#F5C842,#E8A020);color:#000;font-family:Orbitron,sans-serif;font-size:8px;padding:3px 10px;border-radius:10px;font-weight:900;">NFT</div>
+    </div>
+
+    <!-- Título -->
+    <div style="font-family:Orbitron,sans-serif;font-size:11px;color:var(--green);letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;">CryptoChange Flores</div>
+    <div style="font-family:Orbitron,sans-serif;font-size:24px;font-weight:900;color:var(--gold);letter-spacing:2px;line-height:1.1;margin-bottom:6px;">ENTRENADOR<br>FÍSICO & ESPIRITUAL</div>
+    <div style="font-size:13px;color:var(--text2);letter-spacing:2px;margin-bottom:28px;">Cuerpo · Mente · Chakras</div>
+
+    <!-- Frase motivacional -->
+    <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:12px;padding:14px;margin-bottom:28px;font-size:13px;font-style:italic;color:var(--text2);line-height:1.6;">
+      "In Lak'ech — Yo soy otro tú.<br>El cuerpo es el templo del espíritu."
+    </div>
+
+    <!-- Form registro / login -->
+    <div id="registerForm">
+      <input id="inputNombre" class="tracker-input" placeholder="Tu nombre" style="margin-bottom:10px;" autocomplete="off"/>
+      <input id="inputEmail"  class="tracker-input" type="email" placeholder="Tu email" style="margin-bottom:18px;" autocomplete="off"/>
+      <button class="btn-main" onclick="registrarUsuario()" style="margin-bottom:10px;">
+        🔥 COMENZAR MI TRANSFORMACIÓN
+      </button>
+      <button class="btn-ghost" onclick="loginUsuario()" style="font-size:12px;">
+        Ya tengo cuenta — continuar
+      </button>
+    </div>
+
+    <div style="margin-top:16px;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:1px;">
+      Isla de Flores, Petén · Guatemala
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 2 — DASHBOARD
+═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-dashboard" style="padding-top:24px;">
+  <div style="width:100%;max-width:480px;z-index:1;">
+
+    <!-- Header -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div>
+        <div style="font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;">Bienvenido de vuelta</div>
+        <div id="dashNombre" style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--gold);font-weight:700;"></div>
+      </div>
+      <button onclick="irAProgreso()" style="background:none;border:1px solid var(--border);padding:8px 12px;border-radius:10px;color:var(--text2);font-size:12px;">📊 Stats</button>
+    </div>
+
+    <!-- Life Score ring + stats -->
+    <div style="background:linear-gradient(135deg,rgba(10,26,11,0.9),rgba(5,10,6,0.95));border:1px solid rgba(245,200,66,0.2);border-radius:20px;padding:20px;margin-bottom:16px;display:flex;align-items:center;gap:20px;">
+      <div style="flex-shrink:0;">
+        <div class="score-ring">
+          <svg width="90" height="90" viewBox="0 0 90 90">
+            <circle cx="45" cy="45" r="38" fill="none" stroke="rgba(245,200,66,0.1)" stroke-width="7"/>
+            <circle id="lifeScoreRing" cx="45" cy="45" r="38" fill="none" stroke="var(--gold)" stroke-width="7"
+              stroke-dasharray="239" stroke-dashoffset="239" stroke-linecap="round"
+              style="transition:stroke-dashoffset 1.2s cubic-bezier(0.34,1.56,0.64,1);"/>
+          </svg>
+          <div class="ring-value">
+            <div id="lifeScoreVal" style="font-family:Orbitron,sans-serif;font-size:20px;font-weight:900;color:var(--gold);">0</div>
+            <div style="font-size:8px;color:var(--text2);letter-spacing:1px;">LIFE<br>SCORE</div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;">
+        <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:10px;">DISCIPLINA HOY</div>
+        <div id="dashDisciplinaVal" style="font-family:Orbitron,sans-serif;font-size:32px;font-weight:900;color:var(--green);line-height:1;">0%</div>
+        <div style="margin-top:8px;">
+          <div class="pbar-wrap">
+            <div id="dashDisciplinaBar" class="pbar-fill" style="width:0%;"></div>
+          </div>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:12px;">
+          <div style="font-size:12px;color:var(--text2);">🔥 Racha: <span id="dashStreak" style="color:var(--gold);font-weight:700;">0</span> días</div>
+          <div style="font-size:12px;color:var(--text2);">✅ <span id="dashHabitos" style="color:var(--green);font-weight:700;">0/8</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chakra bar del día -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Energía de chakras activa</div>
+      <div class="chakra-bar" id="chakraBar">
+        <div class="chakra-segment" style="background:var(--chakra1);opacity:0.3;" data-chakra="0"></div>
+        <div class="chakra-segment" style="background:var(--chakra2);opacity:0.3;" data-chakra="1"></div>
+        <div class="chakra-segment" style="background:var(--chakra3);opacity:0.3;" data-chakra="2"></div>
+        <div class="chakra-segment" style="background:var(--chakra4);opacity:0.3;" data-chakra="3"></div>
+        <div class="chakra-segment" style="background:var(--chakra5);opacity:0.3;" data-chakra="4"></div>
+        <div class="chakra-segment" style="background:var(--chakra6);opacity:0.3;" data-chakra="5"></div>
+        <div class="chakra-segment" style="background:var(--chakra7);opacity:0.3;" data-chakra="6"></div>
+      </div>
+    </div>
+
+    <!-- Stats rápidos -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;">
+      <div class="stat-box">
+        <div id="statStreak" class="stat-value" style="color:var(--gold);">0</div>
+        <div class="stat-label">🔥 Racha</div>
+      </div>
+      <div class="stat-box">
+        <div id="statDisciplina" class="stat-value" style="color:var(--green);">0%</div>
+        <div class="stat-label">📊 Semana</div>
+      </div>
+      <div class="stat-box">
+        <div id="statEjercicio" class="stat-value" style="color:var(--accent);">0</div>
+        <div class="stat-label">💪 Ejercicio</div>
+      </div>
+    </div>
+
+    <!-- Semana visual -->
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Weekly Discipline</div>
+      <div id="weekGrid" style="display:flex;gap:6px;align-items:flex-end;height:60px;"></div>
+    </div>
+
+    <!-- Recomendaciones -->
+    <div id="recsWrap" style="margin-bottom:16px;"></div>
+
+    <!-- Botón principal -->
+    <button class="btn-main" onclick="irAChecklist()" style="margin-bottom:10px;font-size:15px;padding:18px;">
+      ⚡ START TODAY — Daily Checklist
+    </button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <button class="btn-ghost" onclick="irAProgreso()">📈 Registrar progreso</button>
+      <button class="btn-ghost" onclick="irAStats()">📊 Ver estadísticas</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 3 — DAILY CHECKLIST
+═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-checklist">
+  <div style="width:100%;max-width:480px;z-index:1;">
+    <button class="nav-back" onclick="irADashboard()">← Dashboard</button>
+
+    <!-- Header del día -->
+    <div style="margin-bottom:20px;">
+      <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--green);letter-spacing:3px;text-transform:uppercase;">Daily Upgrade</div>
+      <div style="font-family:Orbitron,sans-serif;font-size:20px;color:var(--gold);font-weight:700;margin-top:4px;">CHECKLIST HOY</div>
+      <div id="checkFecha" style="font-size:12px;color:var(--text2);margin-top:3px;"></div>
+    </div>
+
+    <!-- Progress del checklist -->
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="font-size:13px;color:var(--text2);">Hábitos completados</div>
+        <div id="checkProgress" style="font-family:Orbitron,sans-serif;font-size:16px;font-weight:700;color:var(--green);">0/8</div>
+      </div>
+      <div class="pbar-wrap" style="height:12px;">
+        <div id="checkProgressBar" class="pbar-fill" style="width:0%;"></div>
+      </div>
+      <div id="checkPct" style="text-align:right;font-family:Orbitron,sans-serif;font-size:11px;color:var(--green);margin-top:5px;">0%</div>
+    </div>
+
+    <!-- Lista de hábitos -->
+    <div id="habitsList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;"></div>
+
+    <!-- Guardar -->
+    <button class="btn-main" onclick="guardarHabitos()" id="btnGuardar" style="margin-bottom:10px;">
+      💾 Guardar progreso del día
+    </button>
+
+    <!-- Streak info -->
+    <div style="background:rgba(245,200,66,0.05);border:1px solid rgba(245,200,66,0.15);border-radius:12px;padding:12px;text-align:center;">
+      <div style="font-size:12px;color:var(--text2);">Necesitas <strong style="color:var(--gold);">80%</strong> para sumar a tu racha 🔥</div>
+      <div id="streakMsg" style="font-size:11px;color:var(--text2);margin-top:4px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 4 — PROGRESS TRACKER
+═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-progreso">
+  <div style="width:100%;max-width:480px;z-index:1;">
+    <button class="nav-back" onclick="irADashboard()">← Dashboard</button>
+
+    <div style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--gold);font-weight:700;margin-bottom:4px;">PROGRESS TRACKER</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:20px;">Registra tu evolución física</div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div>
+          <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">⚖️ PESO (kg)</div>
+          <input id="inputPeso" class="tracker-input" type="number" placeholder="70.5"/>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">⚡ ENERGÍA (1-10)</div>
+          <input id="inputEnergia" class="tracker-input" type="number" min="1" max="10" placeholder="8"/>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">🧍 POSTURA (1-10)</div>
+          <input id="inputPostura" class="tracker-input" type="number" min="1" max="10" placeholder="7"/>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">💪 MANDÍBULA (1-10)</div>
+          <input id="inputMandibula" class="tracker-input" type="number" min="1" max="10" placeholder="6"/>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;">📝 NOTAS LIBRES</div>
+        <textarea id="inputNotas" class="tracker-input" rows="3" placeholder="¿Cómo te sientes hoy?" style="resize:none;"></textarea>
+      </div>
+      <button class="btn-main" onclick="guardarProgreso()">💾 Guardar Progreso</button>
+    </div>
+
+    <!-- Historial de progreso -->
+    <div style="font-family:Orbitron,sans-serif;font-size:11px;color:var(--text2);letter-spacing:2px;margin-bottom:10px;">HISTORIAL RECIENTE</div>
+    <div id="progresoHistorial" style="display:flex;flex-direction:column;gap:8px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 5 — ESTADÍSTICAS
+═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-stats">
+  <div style="width:100%;max-width:480px;z-index:1;">
+    <button class="nav-back" onclick="irADashboard()">← Dashboard</button>
+
+    <div style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--gold);font-weight:700;margin-bottom:4px;">STATISTICS</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:20px;">Tu progreso de la semana</div>
+
+    <!-- Life Score grande -->
+    <div class="life-score-wrap" style="margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--text2);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">Life Discipline Score</div>
+      <div id="statsLifeScore" style="font-family:Orbitron,sans-serif;font-size:56px;font-weight:900;color:var(--gold);line-height:1;">--</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px;">/ 100</div>
+      <div id="statsLifeMsg" style="font-size:13px;margin-top:10px;color:var(--text2);"></div>
+    </div>
+
+    <!-- 4 métricas principales -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+      <div class="stat-box">
+        <div id="statsProm" class="stat-value" style="color:var(--green);font-size:24px;">--</div>
+        <div class="stat-label">📊 Disciplina semana</div>
+      </div>
+      <div class="stat-box">
+        <div id="statsEjercicio" class="stat-value" style="color:var(--accent);font-size:24px;">--</div>
+        <div class="stat-label">💪 Días ejercicio</div>
+      </div>
+      <div class="stat-box">
+        <div id="statsStreakMax" class="stat-value" style="color:var(--gold);font-size:24px;">--</div>
+        <div class="stat-label">🏆 Racha máxima</div>
+      </div>
+      <div class="stat-box">
+        <div id="statsDiasActivos" class="stat-value" style="color:var(--purple);font-size:24px;">--</div>
+        <div class="stat-label">📅 Días activos</div>
+      </div>
+    </div>
+
+    <!-- Gráfica semanal -->
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Weekly Discipline Chart</div>
+      <div id="statsWeekGrid" style="display:flex;gap:6px;align-items:flex-end;height:80px;"></div>
+    </div>
+
+    <!-- Recomendaciones del sistema -->
+    <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:10px;">RECOMENDACIONES DEL ENTRENADOR</div>
+    <div id="statsRecs"></div>
+
+    <button class="btn-main" onclick="irAChecklist()" style="margin-top:8px;">⚡ Ir al checklist de hoy</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN LOADING
+═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-loading" style="justify-content:center;background:var(--bg);">
+  <div style="text-align:center;z-index:1;">
+    <div class="loader" style="margin-bottom:20px;width:48px;height:48px;border-width:4px;"></div>
+    <div id="loadingMsg" style="font-family:Orbitron,sans-serif;font-size:12px;color:var(--green);letter-spacing:2px;animation:pulse 1.5s infinite;">Cargando...</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+// ── CONFIG ────────────────────────────────────────────
+var CONFIG = {
+  SCRIPT_URL: 'https://script.google.com/macros/s/AKfycby_sy0ZKaaHIis4jsDqUnU8JwqEHNrHouve5Ehu9dR1hS1ijvq_Zd9UX2EVSbiswumI8A/exec',
+  VERSION:    '1.0'
+};
+
+// ── HÁBITOS ───────────────────────────────────────────
+var HABITOS = [
+  { id:'mewing',      nombre:'Mewing',              icon:'👄', cat:'Mandíbula',   pts:10, chakra:3 },
+  { id:'respiracion', nombre:'Respiración nasal',   icon:'🌬️', cat:'Respiración', pts:10, chakra:4 },
+  { id:'chin_tucks',  nombre:'Chin Tucks',           icon:'🏋️', cat:'Mandíbula',   pts:10, chakra:3 },
+  { id:'chicle',      nombre:'Chicle mandíbula',     icon:'💪', cat:'Mandíbula',   pts:10, chakra:1 },
+  { id:'ejercicio',   nombre:'Ejercicio',            icon:'🔥', cat:'Fitness',     pts:20, chakra:1 },
+  { id:'postura',     nombre:'Postura correcta',     icon:'🧍', cat:'Cuerpo',      pts:15, chakra:2 },
+  { id:'meditacion',  nombre:'Meditación',           icon:'🧘', cat:'Espíritu',    pts:15, chakra:6 },
+  { id:'hidratacion', nombre:'Hidratación 2L',        icon:'💧', cat:'Salud',       pts:10, chakra:4 },
+];
+
+// ── ESTADO ────────────────────────────────────────────
+var state = {
+  userId:    localStorage.getItem('trainer_userId')    || null,
+  nombre:    localStorage.getItem('trainer_nombre')    || '',
+  habitos:   {},
+  dashboard: null,
+  stats:     null,
+};
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+(function init() {
+  crearParticulas();
+  if (state.userId) {
+    cargarDashboard();
+  } else {
+    goTo('screen-welcome');
+  }
+})();
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var el = document.getElementById(id);
+  if (el) { el.classList.add('active'); el.scrollTop = 0; }
+}
+
+// ═══════════════════════════════════════════════════════
+//  PARTÍCULAS
+// ═══════════════════════════════════════════════════════
+function crearParticulas() {
+  var wrap = document.getElementById('particles');
+  var colors = ['#00E676','#F5C842','#00E5FF','#CE93D8','#FF6B35'];
+  for (var i = 0; i < 25; i++) {
+    var p = document.createElement('div');
+    p.className = 'particle';
+    var size = Math.random() * 4 + 1;
+    p.style.cssText = [
+      'width:'+size+'px', 'height:'+size+'px',
+      'background:'+colors[Math.floor(Math.random()*colors.length)],
+      'left:'+Math.random()*100+'%',
+      'animation-duration:'+(Math.random()*15+10)+'s',
+      'animation-delay:'+Math.random()*10+'s',
+      'opacity:0',
+      'box-shadow:0 0 '+(size*2)+'px currentColor'
+    ].join(';');
+    wrap.appendChild(p);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════════
+function toast(msg, tipo) {
+  var wrap = document.getElementById('toastWrap');
+  var t = document.createElement('div');
+  t.className = 'toast ' + (tipo||'info');
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(function(){ t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(function(){ t.remove(); },300); }, 2800);
+}
+
+// ═══════════════════════════════════════════════════════
+//  API CALL
+// ═══════════════════════════════════════════════════════
+function apiCall(payload, cb) {
+  // Modo demo si no hay URL configurada
+  if (!CONFIG.SCRIPT_URL || CONFIG.SCRIPT_URL.includes('REEMPLAZAR')) {
+    cb(null, generarDemoData(payload));
+    return;
+  }
+  // Apps Script acepta mejor GET con payload en query string
+  var url = CONFIG.SCRIPT_URL + '?payload=' + encodeURIComponent(JSON.stringify(payload));
+  fetch(url, { method: 'GET', redirect: 'follow' })
+    .then(function(r) { return r.json(); })
+    .then(function(d) { cb(null, d); })
+    .catch(function(e) {
+      console.warn('API error, usando modo local:', e);
+      cb(null, generarDemoData(payload));
+    });
+}
+
+// ── MODO DEMO — datos locales cuando no hay backend ──
+function generarDemoData(payload) {
+  var action = payload.action;
+  if (action === 'registerUser') {
+    return { ok:true, userId:'USR-DEMO-'+Date.now(), nombre: payload.nombre };
+  }
+  if (action === 'getDashboard') {
+    var habGuardados = JSON.parse(localStorage.getItem('trainer_habitos_hoy') || 'null');
+    var completados = habGuardados ? Object.values(habGuardados).filter(Boolean).length : 0;
+    var total = HABITOS.length;
+    var pct = Math.round(completados / total * 100);
+    var streak = parseInt(localStorage.getItem('trainer_streak')||'0');
+    var semana = generarSemanaDemo();
+    var promDisciplina = Math.round(semana.reduce(function(a,b){return a+b.pct;},0)/7);
+    var diasEj = semana.filter(function(d){return d.ejercicio>0;}).length;
+    var lifeScore = Math.round(promDisciplina * 0.6 + Math.min(diasEj/5*100,100)*0.25 + Math.min(streak/30*100,100)*0.15);
+    return { ok:true, dashboard:{
+      nombre: state.nombre, streakActual: streak, streakMaximo: streak,
+      disciplinaHoy: pct, diasActivos: parseInt(localStorage.getItem('trainer_dias')||'0'),
+      lifeScore: lifeScore,
+      habitosHoy: habGuardados ? { completados: completados, total: total, porcentaje: pct } : null,
+      stats: { semana: semana, promDisciplina: promDisciplina, diasEjercicio: diasEj,
+               alertaEjercicio: diasEj < 3, excelenteDisciplina: promDisciplina >= 90 },
+      recomendaciones: generarRecsDemo(pct, diasEj, promDisciplina)
+    }};
+  }
+  if (action === 'saveHabitos') {
+    // Guardar localmente
+    var hab = {};
+    HABITOS.forEach(function(h){ hab[h.id] = !!payload[h.id]; });
+    var completados2 = Object.values(hab).filter(Boolean).length;
+    var pct2 = Math.round(completados2 / HABITOS.length * 100);
+    localStorage.setItem('trainer_habitos_hoy', JSON.stringify(hab));
+    // Actualizar streak
+    var streak2 = parseInt(localStorage.getItem('trainer_streak')||'0');
+    if (pct2 >= 80) streak2++; else streak2 = 0;
+    localStorage.setItem('trainer_streak', streak2);
+    var dias2 = parseInt(localStorage.getItem('trainer_dias')||'0') + 1;
+    localStorage.setItem('trainer_dias', dias2);
+    var lifeScore2 = Math.round(pct2 * 0.6 + Math.min(streak2/30*100,100)*0.25);
+    return { ok:true, completados: completados2, total: HABITOS.length, porcentaje: pct2, streak: streak2, lifeScore: lifeScore2 };
+  }
+  if (action === 'getDailyHabitos') {
+    var saved = JSON.parse(localStorage.getItem('trainer_habitos_hoy') || 'null');
+    return { ok:true, habitos: saved };
+  }
+  if (action === 'saveProgreso') {
+    var hist = JSON.parse(localStorage.getItem('trainer_progreso') || '[]');
+    hist.unshift({ fecha: new Date().toISOString().split('T')[0], peso: payload.peso, energia: payload.energia, postura: payload.postura, mandibula: payload.mandibula, notas: payload.notas });
+    localStorage.setItem('trainer_progreso', JSON.stringify(hist.slice(0,20)));
+    return { ok:true };
+  }
+  if (action === 'getProgreso') {
+    var hist2 = JSON.parse(localStorage.getItem('trainer_progreso') || '[]');
+    return { ok:true, registros: hist2 };
+  }
+  if (action === 'getStats') {
+    var semana2 = generarSemanaDemo();
+    var prom = Math.round(semana2.reduce(function(a,b){return a+b.pct;},0)/7);
+    var diasEj2 = semana2.filter(function(d){return d.ejercicio>0;}).length;
+    return { ok:true, stats:{ semana:semana2, promDisciplina:prom, diasEjercicio:diasEj2, alertaEjercicio:diasEj2<3, excelenteDisciplina:prom>=90 }};
+  }
+  return { ok:true };
+}
+
+function generarSemanaDemo() {
+  var dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  var semana = [];
+  for (var i = 6; i >= 0; i--) {
+    var d = new Date(); d.setDate(d.getDate()-i);
+    var pct = i === 0 ? (parseInt(localStorage.getItem('trainer_habitos_hoy_pct')||'0')) : Math.floor(Math.random()*60+30);
+    semana.push({ fecha: d.toISOString().split('T')[0], dia: dias[d.getDay()], pct: pct, ejercicio: pct > 50 ? 1 : 0 });
+  }
+  return semana;
+}
+
+function generarRecsDemo(pct, diasEj, prom) {
+  var recs = [];
+  if (diasEj < 3) recs.push({ tipo:'warning', msg:'Solo '+diasEj+' días de ejercicio esta semana. ¡Agrega al menos '+(3-diasEj)+' días más!' });
+  if (prom >= 90) recs.push({ tipo:'success', msg:'🔥 Disciplina '+prom+'% — ¡Rendimiento élite! El Príncipe Maya está orgulloso.' });
+  if (pct < 50)   recs.push({ tipo:'danger',  msg:'Disciplina '+pct+'% hoy. Comienza con solo 3 hábitos ahora mismo.' });
+  if (pct >= 80 && pct < 90) recs.push({ tipo:'info', msg:'¡Vas bien! '+pct+'% hoy. Un hábito más y estarás en zona élite.' });
+  if (recs.length === 0) recs.push({ tipo:'info', msg:'Registra tus hábitos de hoy para ver recomendaciones personalizadas.' });
+  return recs;
+}
+
+// ═══════════════════════════════════════════════════════
+//  REGISTRO / LOGIN
+// ═══════════════════════════════════════════════════════
+function registrarUsuario() {
+  var nombre = document.getElementById('inputNombre').value.trim();
+  var email  = document.getElementById('inputEmail').value.trim();
+  if (!nombre) { toast('Escribe tu nombre', 'warning'); return; }
+
+  loading('Creando tu perfil...');
+  apiCall({ action:'registerUser', nombre:nombre, email:email }, function(err, res) {
+    if (res && res.ok) {
+      state.userId = res.userId;
+      state.nombre = nombre;
+      localStorage.setItem('trainer_userId', res.userId);
+      localStorage.setItem('trainer_nombre', nombre);
+      toast('¡Bienvenido '+nombre+'! 🔥', 'success');
+      cargarDashboard();
+    } else {
+      goTo('screen-welcome');
+      toast('Error al registrar. Intenta de nuevo.', 'error');
+    }
+  });
+}
+
+function loginUsuario() {
+  var nombre = document.getElementById('inputNombre').value.trim();
+  var userId = localStorage.getItem('trainer_userId');
+  if (userId) {
+    state.userId = userId;
+    state.nombre = localStorage.getItem('trainer_nombre') || (nombre || 'Guerrero');
+    cargarDashboard();
+  } else {
+    toast('No encontré tu cuenta. Regístrate primero.', 'warning');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════════════
+function cargarDashboard() {
+  loading('Cargando tu dashboard...');
+  apiCall({ action:'getDashboard', userId: state.userId }, function(err, res) {
+    if (res && res.ok && res.dashboard) {
+      state.dashboard = res.dashboard;
+      renderDashboard(res.dashboard);
+      cargarHabitosHoy();
+    } else {
+      goTo('screen-dashboard');
+      toast('No se pudo conectar — modo offline', 'warning');
+      renderDashboard({ nombre:state.nombre, streakActual:0, disciplinaHoy:0, lifeScore:0, habitosHoy:null, stats:null, recomendaciones:[] });
+    }
+  });
+}
+
+function renderDashboard(d) {
+  // Nombre
+  g('dashNombre').textContent = (d.nombre || state.nombre).split(' ')[0].toUpperCase();
+
+  // Life Score ring
+  var ls = d.lifeScore || 0;
+  g('lifeScoreVal').textContent = ls;
+  var circum = 2 * Math.PI * 38;
+  var offset = circum - (ls / 100 * circum);
+  setTimeout(function(){
+    g('lifeScoreRing').style.strokeDashoffset = offset;
+    g('lifeScoreRing').style.stroke = ls >= 80 ? 'var(--green)' : ls >= 60 ? 'var(--gold)' : 'var(--orange)';
+  }, 100);
+
+  // Disciplina
+  var disc = d.disciplinaHoy || 0;
+  g('dashDisciplinaVal').textContent = disc + '%';
+  setTimeout(function(){ g('dashDisciplinaBar').style.width = disc + '%'; }, 150);
+  g('dashStreak').textContent  = d.streakActual || 0;
+  var hab = d.habitosHoy;
+  g('dashHabitos').textContent = hab ? (hab.completados+'/'+hab.total) : '0/'+HABITOS.length;
+
+  // Stats rápidos
+  if (d.stats) {
+    g('statStreak').textContent     = d.streakActual || 0;
+    g('statDisciplina').textContent = d.stats.promDisciplina + '%';
+    g('statEjercicio').textContent  = d.stats.diasEjercicio + '/7';
+    renderWeekGrid('weekGrid', d.stats.semana, 60);
+  }
+
+  // Chakra bar
+  var chakraActivos = hab ? Math.floor(hab.completados / HABITOS.length * 7) : 0;
+  document.querySelectorAll('#chakraBar .chakra-segment').forEach(function(seg, i){
+    seg.style.opacity = i < chakraActivos ? '1' : '0.2';
+  });
+
+  // Recomendaciones
+  renderRecs('recsWrap', d.recomendaciones);
+
+  goTo('screen-dashboard');
+}
+
+// ═══════════════════════════════════════════════════════
+//  CHECKLIST
+// ═══════════════════════════════════════════════════════
+function irAChecklist() {
+  var hoy = new Date();
+  var dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  g('checkFecha').textContent = dias[hoy.getDay()] + ' ' + hoy.getDate() + ' ' + meses[hoy.getMonth()] + ' · ' + hoy.getFullYear();
+
+  // Render hábitos
+  renderHabitos();
+  goTo('screen-checklist');
+}
+
+function cargarHabitosHoy() {
+  apiCall({ action:'getDailyHabitos', userId: state.userId, fecha: hoyStr() }, function(err, res) {
+    if (res && res.ok && res.habitos) {
+      HABITOS.forEach(function(h){
+        state.habitos[h.id] = !!(res.habitos[h.id] || res.habitos[h.id] === 1 || res.habitos[h.id] === true);
+      });
+      if (document.getElementById('screen-checklist').classList.contains('active')) {
+        renderHabitos();
+      }
+    }
+  });
+}
+
+function renderHabitos() {
+  var lista = g('habitsList');
+  lista.innerHTML = '';
+
+  HABITOS.forEach(function(h) {
+    var done = !!state.habitos[h.id];
+    var item = document.createElement('div');
+    item.className = 'habit-item' + (done ? ' done' : '');
+    item.id = 'habit-' + h.id;
+    item.innerHTML =
+      '<div class="habit-check" id="check-'+h.id+'">' + (done ? '✓' : '') + '</div>' +
+      '<span class="habit-icon">' + h.icon + '</span>' +
+      '<div style="flex:1;">' +
+        '<div class="habit-name">' + h.nombre + '</div>' +
+        '<div class="habit-category">' + h.cat + '</div>' +
+      '</div>' +
+      '<span class="habit-pts">+' + h.pts + 'pts</span>';
+    item.onclick = (function(id){ return function(){ toggleHabito(id); }; })(h.id);
+    lista.appendChild(item);
+  });
+
+  actualizarProgressChecklist();
+}
+
+function toggleHabito(id) {
+  state.habitos[id] = !state.habitos[id];
+  var item  = g('habit-' + id);
+  var check = g('check-' + id);
+  if (state.habitos[id]) {
+    item.classList.add('done');
+    check.textContent = '✓';
+    // Micro animación
+    item.style.transform = 'scale(1.02)';
+    setTimeout(function(){ item.style.transform = ''; }, 200);
+  } else {
+    item.classList.remove('done');
+    check.textContent = '';
+  }
+  actualizarProgressChecklist();
+}
+
+function actualizarProgressChecklist() {
+  var completados = HABITOS.filter(function(h){ return state.habitos[h.id]; }).length;
+  var total = HABITOS.length;
+  var pct = Math.round(completados / total * 100);
+
+  g('checkProgress').textContent = completados + '/' + total;
+  g('checkPct').textContent = pct + '%';
+  setTimeout(function(){ g('checkProgressBar').style.width = pct + '%'; }, 50);
+
+  // Color del bar según pct
+  var bar = g('checkProgressBar');
+  bar.style.background = pct >= 80
+    ? 'linear-gradient(90deg,var(--green2),var(--green))'
+    : pct >= 50
+    ? 'linear-gradient(90deg,#E8A020,var(--gold))'
+    : 'linear-gradient(90deg,#c62828,var(--red))';
+
+  // Mensaje streak
+  var streakMsg = g('streakMsg');
+  if (pct >= 80) streakMsg.textContent = '🔥 ¡Vas a sumar un día más a tu racha!';
+  else if (pct >= 50) streakMsg.textContent = 'Faltan ' + (Math.ceil(total*0.8) - completados) + ' hábitos para sumar a la racha';
+  else streakMsg.textContent = '';
+
+  // Guardar localmente como borrador
+  localStorage.setItem('trainer_habitos_hoy_pct', pct);
+}
+
+function guardarHabitos() {
+  var completados = HABITOS.filter(function(h){ return state.habitos[h.id]; }).length;
+  if (completados === 0) { toast('Marca al menos un hábito primero', 'warning'); return; }
+
+  var payload = { action:'saveHabitos', userId: state.userId, nombre: state.nombre, fecha: hoyStr() };
+  HABITOS.forEach(function(h){ payload[h.id] = state.habitos[h.id] ? 1 : 0; });
+
+  g('btnGuardar').textContent = '⏳ Guardando...';
+  g('btnGuardar').disabled = true;
+
+  apiCall(payload, function(err, res) {
+    g('btnGuardar').textContent = '💾 Guardar progreso del día';
+    g('btnGuardar').disabled = false;
+
+    if (res && res.ok) {
+      toast('¡Guardado! ' + res.completados + '/' + res.total + ' hábitos · ' + res.porcentaje + '%', 'success');
+      if (res.porcentaje >= 80) {
+        setTimeout(function(){ toast('🔥 ¡Racha ' + res.streak + ' días! ¡Sigue así!', 'success'); }, 1200);
+      }
+      // Actualizar dashboard
+      if (state.dashboard) {
+        state.dashboard.disciplinaHoy = res.porcentaje;
+        state.dashboard.streakActual  = res.streak;
+        state.dashboard.lifeScore     = res.lifeScore;
+      }
+      setTimeout(function(){ irADashboard(); }, 800);
+    } else {
+      toast('Error al guardar. Verifica conexión.', 'error');
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  PROGRESO
+// ═══════════════════════════════════════════════════════
+function irAProgreso() {
+  cargarHistorialProgreso();
+  goTo('screen-progreso');
+}
+
+function cargarHistorialProgreso() {
+  apiCall({ action:'getProgreso', userId: state.userId }, function(err, res) {
+    var wrap = g('progresoHistorial');
+    wrap.innerHTML = '';
+    if (res && res.ok && res.registros && res.registros.length > 0) {
+      res.registros.slice(0, 7).forEach(function(r) {
+        var row = document.createElement('div');
+        row.style.cssText = 'background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;';
+        row.innerHTML =
+          '<div>' +
+            '<div style="font-size:12px;color:var(--text2);">' + r.fecha + '</div>' +
+            (r.notas ? '<div style="font-size:12px;color:var(--text);margin-top:2px;">' + r.notas.substring(0,50) + '</div>' : '') +
+          '</div>' +
+          '<div style="display:flex;gap:10px;text-align:center;">' +
+            (r.peso     ? '<div><div style="font-family:Orbitron,sans-serif;font-size:13px;color:var(--gold);">'+r.peso+'kg</div><div style="font-size:9px;color:var(--text2);">Peso</div></div>' : '') +
+            (r.energia  ? '<div><div style="font-family:Orbitron,sans-serif;font-size:13px;color:var(--green);">'+r.energia+'/10</div><div style="font-size:9px;color:var(--text2);">Energía</div></div>' : '') +
+          '</div>';
+        wrap.appendChild(row);
+      });
+    } else {
+      wrap.innerHTML = '<div style="text-align:center;color:var(--text2);font-size:13px;padding:20px;">Sin registros aún</div>';
+    }
+  });
+}
+
+function guardarProgreso() {
+  var payload = {
+    action:    'saveProgreso',
+    userId:    state.userId,
+    nombre:    state.nombre,
+    peso:      g('inputPeso').value || '',
+    energia:   g('inputEnergia').value || '',
+    postura:   g('inputPostura').value || '',
+    mandibula: g('inputMandibula').value || '',
+    notas:     g('inputNotas').value || ''
+  };
+
+  if (!payload.peso && !payload.energia && !payload.postura) {
+    toast('Llena al menos un campo', 'warning'); return;
+  }
+
+  apiCall(payload, function(err, res) {
+    if (res && res.ok) {
+      toast('✅ Progreso guardado', 'success');
+      ['inputPeso','inputEnergia','inputPostura','inputMandibula','inputNotas'].forEach(function(id){ g(id).value=''; });
+      cargarHistorialProgreso();
+    } else {
+      toast('Error al guardar', 'error');
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  ESTADÍSTICAS
+// ═══════════════════════════════════════════════════════
+function irAStats() {
+  loading('Calculando tu progreso...');
+  apiCall({ action:'getStats', userId: state.userId }, function(err, res) {
+    if (res && res.ok && res.stats) {
+      renderStats(res.stats);
+    } else {
+      goTo('screen-stats');
+      toast('Sin datos suficientes aún', 'info');
+    }
+  });
+}
+
+function renderStats(stats) {
+  var d = state.dashboard || {};
+  var ls = d.lifeScore || 0;
+  g('statsLifeScore').textContent  = ls;
+  g('statsLifeScore').style.color  = ls >= 80 ? 'var(--green)' : ls >= 60 ? 'var(--gold)' : 'var(--orange)';
+  g('statsLifeMsg').textContent    = ls >= 80 ? '🏆 Zona élite — ¡Guerrero maya!' : ls >= 60 ? '💪 Buen camino — sigue subiendo' : '🌱 Apenas comenzando — cada día cuenta';
+  g('statsProm').textContent       = stats.promDisciplina + '%';
+  g('statsEjercicio').textContent  = stats.diasEjercicio + '/7';
+  g('statsStreakMax').textContent  = d.streakMaximo || 0;
+  g('statsDiasActivos').textContent = d.diasActivos || 0;
+
+  renderWeekGrid('statsWeekGrid', stats.semana, 80);
+  renderRecs('statsRecs', generarRecsDemo(d.disciplinaHoy||0, stats.diasEjercicio, stats.promDisciplina));
+
+  goTo('screen-stats');
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDERS COMPARTIDOS
+// ═══════════════════════════════════════════════════════
+function renderWeekGrid(containerId, semana, alturaMax) {
+  var wrap = g(containerId);
+  if (!wrap || !semana) return;
+  wrap.innerHTML = '';
+  semana.forEach(function(d) {
+    var pct = d.pct || 0;
+    var h = Math.max(4, Math.round(pct / 100 * alturaMax));
+    var color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--gold)' : pct > 0 ? 'var(--orange)' : 'rgba(255,255,255,0.08)';
+    var col = document.createElement('div');
+    col.className = 'week-day';
+    col.innerHTML =
+      '<div class="day-bar" style="height:'+h+'px;background:'+color+';box-shadow:0 0 6px '+color+'44;"></div>' +
+      '<div class="day-label">' + (d.dia || d.fecha.slice(-2)) + '</div>';
+    wrap.appendChild(col);
+  });
+}
+
+function renderRecs(containerId, recs) {
+  var wrap = g(containerId);
+  if (!wrap || !recs) return;
+  wrap.innerHTML = '';
+  recs.forEach(function(r) {
+    var icons = { success:'✅', warning:'⚠️', danger:'🚨', info:'💡' };
+    var item = document.createElement('div');
+    item.className = 'rec-item ' + r.tipo;
+    item.innerHTML = '<span>' + (icons[r.tipo]||'•') + '</span><span>' + r.msg + '</span>';
+    wrap.appendChild(item);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  NAVEGACIÓN
+// ═══════════════════════════════════════════════════════
+function irADashboard() {
+  cargarDashboard();
+}
+
+// ═══════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════
+function g(id){ return document.getElementById(id); }
+function hoyStr(){ return new Date().toISOString().split('T')[0]; }
+
+function loading(msg) {
+  g('loadingMsg').textContent = msg || 'Cargando...';
+  goTo('screen-loading');
+}
+</script>
+</body>
+</html>
