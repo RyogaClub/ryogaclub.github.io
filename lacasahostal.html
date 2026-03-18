@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta name="theme-color" content="#050a06"/>
+<link rel="manifest" href="manifest.json"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+
+<!-- ════════════════════════════════════════════════════════════
+     ⚠️  SOLO CAMBIAR ESTA SECCIÓN PARA CADA INFLUENCER
+════════════════════════════════════════════════════════════ -->
+<script>
+var INFLUENCER = {
+  id:       'hostal_flores_petén',
+  nombre:   'Hostal Flores Petén',
+  bio:      'Tu casa en la Isla de Flores 🏡 · Tours desde el hostal',
+  slug:     'hostalsflores.ryoga.club',
+  avatar:   '🏡',
+  split:    { influencer: 12, plataforma: 88 },
+
+  theme: {
+    primary:   '#1D9E75',
+    secondary: '#F5C842',
+    bg:        '#040a08',
+    dark2:     '#081410',
+    dark3:     '#0d1e18',
+  },
+
+  redes: {
+    instagram: 'https://instagram.com/hostalflores',
+    tiktok:    '',
+    youtube:   '',
+  },
+
+  utm: {
+    source:   'hostal_directo',
+    campaign: 'tours_petén',
+  },
+
+  backendUrl: 'PEGAR_URL_DEL_APPS_SCRIPT_AQUI',
+  walletUSDT: '0xTuWalletAqui',
+  recurrenteLink: '',
+};
+</script>
+<!-- ══════════════════════════════════════════════════════════ -->
+
+<title id="pageTitle">Tours — Hostal Flores Petén</title>
+<style>
+:root {
+  --primary:  #00E676;
+  --secondary:#F5C842;
+  --bg:       #050a06;
+  --dark2:    #0a120b;
+  --dark3:    #0f1c10;
+  --border:   rgba(0,230,118,0.12);
+  --text:     #e8f5e9;
+  --text2:    rgba(232,245,233,0.45);
+  --green:    #00E676;
+  --green2:   #00C853;
+  --gold:     #F5C842;
+  --accent:   #00E5FF;
+  --red:      #FF1744;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;}
+button{font-family:'Rajdhani',sans-serif;cursor:pointer;}
+
+
+/* FONDO INTERIOR — solo en screen-tours */
+#screen-tours {
+  background:
+    /* lámpara — halo cálido desde arriba centro */
+    radial-gradient(ellipse 60% 35% at 68% 0%, rgba(232,160,32,0.22) 0%, transparent 70%),
+    /* ventana — luz natural lateral izquierda */
+    radial-gradient(ellipse 30% 55% at 0% 30%, rgba(135,180,220,0.14) 0%, transparent 65%),
+    /* piso — calidez desde abajo */
+    radial-gradient(ellipse 100% 25% at 50% 100%, rgba(90,40,10,0.55) 0%, transparent 70%),
+    /* color base pared — beige viejo oscuro */
+    #1E1008;
+}
+
+/* Piso de madera — franja inferior */
+#screen-tours::after {
+  content: '';
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 28%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.012) 1px,
+      transparent 1px,
+      transparent 42px
+    ),
+    linear-gradient(to top, #2A1005 0%, #3D1A08 60%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+/* SCREENS */
+.screen{display:none;position:fixed;inset:0;flex-direction:column;align-items:center;overflow-y:auto;overflow-x:hidden;padding:20px 16px 80px;}
+.screen.active{display:flex;}
+
+/* PARTÍCULAS */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{position:absolute;border-radius:50%;animation:floatP linear infinite;opacity:0;}
+@keyframes floatP{0%{transform:translateY(100vh) scale(0);opacity:0;}10%{opacity:.7;}90%{opacity:.4;}100%{transform:translateY(-20px);opacity:0;}}
+
+/* CARDS */
+.card{background:linear-gradient(160deg,var(--dark2),var(--bg));border:1px solid var(--border);border-radius:20px;padding:22px;width:100%;max-width:480px;position:relative;z-index:1;}
+
+/* BOTONES */
+.btn{border:none;border-radius:14px;font-family:'Rajdhani',sans-serif;font-weight:700;padding:16px 20px;width:100%;font-size:15px;transition:all .2s;letter-spacing:.5px;}
+.btn-primary{background:linear-gradient(135deg,var(--primary),color-mix(in srgb,var(--primary) 70%,#fff));color:#000;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px color-mix(in srgb,var(--primary) 40%,transparent);}
+.btn-secondary{background:linear-gradient(135deg,#E8A020,var(--secondary));color:#000;border:none;border-radius:12px;padding:12px 20px;}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2);font-size:13px;border-radius:12px;padding:12px 20px;}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);}
+
+/* INPUTS */
+.inp{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;width:100%;outline:none;transition:border-color .2s;}
+.inp:focus{border-color:var(--primary);}
+.inp-label{font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;}
+
+/* BACK */
+.back{background:none;border:1px solid var(--border);color:var(--text2);padding:8px 16px;border-radius:8px;font-size:12px;align-self:flex-start;margin-bottom:16px;transition:all .2s;z-index:1;}
+.back:hover{border-color:var(--primary);color:var(--primary);}
+
+/* TOUR CARD */
+.tour-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:16px;cursor:pointer;transition:all .25s;margin-bottom:10px;}
+.tour-card:hover{border-color:rgba(0,230,118,.4);transform:translateY(-2px);}
+.tour-card.selected{border-color:var(--secondary);background:rgba(245,200,66,.05);box-shadow:0 0 20px rgba(245,200,66,.15);}
+.tour-tag{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.2);}
+
+/* PAGO SELECTOR */
+.pago-btn{flex:1;padding:10px 8px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;transition:all .2s;text-align:center;}
+.pago-btn.active{border-color:var(--primary);background:rgba(0,230,118,.1);color:var(--primary);}
+
+/* PBAR */
+.pbar-wrap{background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden;}
+.pbar-fill{height:100%;border-radius:100px;transition:width .8s cubic-bezier(.34,1.56,.64,1);}
+
+/* PASOS */
+.step-bar{display:flex;gap:4px;margin-bottom:20px;}
+.step-seg{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s;}
+.step-seg.done{background:var(--secondary);}
+
+/* CTA FIJO */
+#ctaWrap{position:fixed;bottom:0;left:0;right:0;z-index:100;padding:12px 16px;background:linear-gradient(to top,var(--bg) 60%,transparent);display:none;}
+
+/* TICKET */
+.ticket{background:linear-gradient(160deg,#0e2412,#091508);border:1px solid rgba(0,230,118,.25);border-radius:20px;overflow:hidden;width:100%;max-width:440px;}
+
+/* TOAST */
+#toastBox{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;pointer-events:none;display:flex;flex-direction:column;gap:8px;min-width:260px;max-width:90vw;}
+.toast{padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;animation:tIn .3s ease;text-align:center;}
+.toast.success{background:rgba(0,200,83,.15);border:1px solid rgba(0,230,118,.4);color:var(--green);}
+.toast.info{background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.3);color:var(--accent);}
+.toast.warning{background:rgba(245,200,66,.12);border:1px solid rgba(245,200,66,.3);color:var(--gold);}
+.toast.error{background:rgba(255,23,68,.12);border:1px solid rgba(255,23,68,.3);color:var(--red);}
+@keyframes tIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+
+/* LOADER */
+.loader{width:40px;height:40px;border-radius:50%;border:3px solid rgba(0,230,118,.15);border-top-color:var(--primary);animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* SELECTOR FORMA PAGO */
+.fp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+
+/* CHAKRA DOTS */
+.chakra-dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+<div id="toastBox"></div>
+
+<!-- ═══ BIENVENIDA ═══ -->
+<div class="screen active" id="screen-welcome" style="justify-content:center;background:radial-gradient(ellipse 80% 70% at 50% 40%,#061a08 0%,#030a04 60%,#000 100%);">
+  <div style="text-align:center;max-width:420px;width:100%;padding:20px;z-index:1;">
+
+    <!-- Avatar del influencer -->
+    <div id="avatarWrap" style="margin-bottom:16px;animation:floatY 3s ease-in-out infinite;"><svg viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg" width="110" height="100" style="filter:drop-shadow(0 0 14px var(--primary));">
+  <!-- sol raro arriba derecha -->
+  <circle cx="98" cy="16" r="9" fill="#F5C842" stroke="#F5C842" stroke-width="1.5"/>
+  <line x1="98" y1="3"  x2="97" y2="1"  stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+  <line x1="110" y1="8" x2="113" y2="6" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+  <line x1="113" y1="17" x2="116" y2="18" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+  <line x1="108" y1="27" x2="110" y2="30" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+  <line x1="86"  y1="26" x2="84"  y2="29" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+  <line x1="83"  y1="13" x2="80"  y2="11" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+  <!-- techo chueco — triángulo que no cierra perfecto -->
+  <polygon points="8,58  62,8  116,54" fill="#E8874A" stroke="#C65F20" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- chimenea torcida -->
+  <rect x="82" y="18" width="10" height="22" rx="1" fill="#C65F20" stroke="#A04010" stroke-width="1.5" transform="rotate(5 87 29)"/>
+  <!-- humo -->
+  <path d="M84 18 Q80 10 85 4 Q90 -2 86 -8" stroke="rgba(255,255,255,0.4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- paredes — rectángulo un poco inclinado -->
+  <rect x="10" y="56" width="100" height="52" rx="2" fill="#FFF8E7" stroke="#C65F20" stroke-width="2.5"/>
+  <!-- ventana izquierda — cuadrado chuequisimo -->
+  <rect x="18" y="66" width="24" height="20" rx="1" fill="#ADE8F4" stroke="#C65F20" stroke-width="2" transform="rotate(-2 30 76)"/>
+  <line x1="18" y1="76" x2="42" y2="76" stroke="#C65F20" stroke-width="1.5"/>
+  <line x1="30" y1="66" x2="30" y2="86" stroke="#C65F20" stroke-width="1.5"/>
+  <!-- ventana derecha — más grande que la izquierda -->
+  <rect x="74" y="63" width="30" height="22" rx="1" fill="#ADE8F4" stroke="#C65F20" stroke-width="2" transform="rotate(3 89 74)"/>
+  <line x1="74" y1="74" x2="104" y2="74" stroke="#C65F20" stroke-width="1.5"/>
+  <line x1="89" y1="63" x2="89" y2="85" stroke="#C65F20" stroke-width="1.5"/>
+  <!-- puerta — no está centrada, es muy alta -->
+  <rect x="46" y="74" width="22" height="34" rx="3" fill="#A0522D" stroke="#C65F20" stroke-width="2"/>
+  <!-- pomo torcido -->
+  <circle cx="64" cy="93" r="3" fill="#F5C842"/>
+  <!-- pasto irregular abajo -->
+  <path d="M5 108 Q15 102 25 107 Q35 103 45 108 Q55 104 65 108 Q75 103 85 107 Q95 103 115 108" stroke="#1D9E75" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- florcita izquierda -->
+  <circle cx="22" cy="100" r="4" fill="#E91E8C" opacity="0.8"/>
+  <line x1="22" y1="104" x2="22" y2="110" stroke="#1D9E75" stroke-width="1.5"/>
+  <!-- florcita derecha -->
+  <circle cx="96" cy="102" r="3.5" fill="#F5C842" opacity="0.9"/>
+  <line x1="96" y1="106" x2="96" y2="110" stroke="#1D9E75" stroke-width="1.5"/>
+</svg></div>
+
+    <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--primary);letter-spacing:4px;margin-bottom:6px;">HOSTAL FLORES PETÉN · GUATEMALA</div>
+    <div id="welcomeNombre" style="font-family:Orbitron,sans-serif;font-size:24px;font-weight:900;color:var(--secondary);letter-spacing:2px;margin-bottom:6px;">TOURS</div>
+    <div id="welcomeBio" style="font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.5;"></div>
+
+    <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:12px;padding:14px;margin-bottom:24px;font-size:13px;font-style:italic;color:var(--text2);line-height:1.6;">
+      "Flores te espera — La isla más bonita de Centroamérica.<br>Cada tour, una memoria que dura para siempre." 🌺
+    </div>
+
+    <!-- Info del hostal -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px;">
+      <div style="background:rgba(29,158,117,.08);border:1px solid rgba(29,158,117,.2);border-radius:10px;padding:10px;text-align:center;">
+        <div style="font-size:20px;margin-bottom:4px;">🛏️</div>
+        <div style="font-size:10px;color:var(--text2);letter-spacing:.5px;">Habitaciones<br>desde Q80</div>
+      </div>
+      <div style="background:rgba(29,158,117,.08);border:1px solid rgba(29,158,117,.2);border-radius:10px;padding:10px;text-align:center;">
+        <div style="font-size:20px;margin-bottom:4px;">🗺️</div>
+        <div style="font-size:10px;color:var(--text2);letter-spacing:.5px;">Tours<br>incluidos</div>
+      </div>
+      <div style="background:rgba(29,158,117,.08);border:1px solid rgba(29,158,117,.2);border-radius:10px;padding:10px;text-align:center;">
+        <div style="font-size:20px;margin-bottom:4px;">📍</div>
+        <div style="font-size:10px;color:var(--text2);letter-spacing:.5px;">Isla de<br>Flores</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="irATours()" style="margin-bottom:10px;font-size:16px;padding:18px;">
+      🗺️ VER TOURS DISPONIBLES
+    </button>
+    <div id="redesWrap" style="display:flex;justify-content:center;gap:12px;margin-top:14px;"></div>
+    <div style="margin-top:16px;font-size:10px;color:rgba(255,255,255,.2);">Isla de Flores · Petén · Guatemala</div>
+  </div>
+</div>
+
+<!-- ═══ SELECTOR DE TOURS ═══ -->
+<div class="screen" id="screen-tours" style="padding-top:16px;">
+  <!-- ═══ FONDO PANORÁMICO INTERIOR — La Casa en la Isla ═══ -->
+  <div aria-hidden="true" id="fondoInterior" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;">
+    <canvas id="casaCanvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+  </div>
+
+  <script>
+  (function() {
+    var canvas = document.getElementById('casaCanvas');
+    var ctx    = canvas.getContext('2d');
+    var W, H, t = 0;
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // ── Nubes del exterior ──
+    var nubes = [
+      { x: 0.18, y: 0.13, r: 38, vx: 0.00008 },
+      { x: 0.42, y: 0.10, r: 28, vx: 0.00006 },
+      { x: 0.65, y: 0.14, r: 34, vx: 0.00007 },
+      { x: 0.85, y: 0.11, r: 24, vx: 0.00009 },
+    ];
+
+    // ── Pájaros ──
+    var pajaros = [
+      { x: 0.25, y: 0.18, vx: 0.00018, vy: 0.000025, fase: 0   },
+      { x: 0.55, y: 0.15, vx: 0.00014, vy: 0.000018, fase: 1.2 },
+      { x: 0.70, y: 0.20, vx: 0.00020, vy: 0.000030, fase: 2.4 },
+    ];
+
+    // ── Hojas de planta ──
+    var hojas = [0, 1, 2, 3, 4];
+
+    // ── Partículas de polvo en el haz de luz ──
+    var polvo = [];
+    for (var i = 0; i < 18; i++) {
+      polvo.push({
+        x:    0.18 + Math.random() * 0.22,
+        y:    0.25 + Math.random() * 0.50,
+        vx:   (Math.random() - 0.5) * 0.00004,
+        vy:  -Math.random() * 0.00006,
+        r:    Math.random() * 2.2 + 0.8,
+        a:    Math.random() * 0.4 + 0.1,
+        fase: Math.random() * Math.PI * 2,
+      });
+    }
+
+    function dibujarNube(x, y, r, a) {
+      ctx.save();
+      ctx.globalAlpha = a;
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(x,      y,      r,        0, Math.PI*2);
+      ctx.arc(x+r*.8, y-r*.2, r*.7,     0, Math.PI*2);
+      ctx.arc(x-r*.7, y-r*.1, r*.65,    0, Math.PI*2);
+      ctx.arc(x+r*1.5,y+r*.1, r*.55,    0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function dibujarPajaro(x, y, alas) {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(30,10,0,0.55)';
+      ctx.lineWidth   = 1.8;
+      ctx.lineCap     = 'round';
+      var amp = 5 * Math.sin(alas);
+      ctx.beginPath();
+      ctx.moveTo(x - 10, y + amp);
+      ctx.quadraticCurveTo(x, y, x + 10, y + amp);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function draw() {
+      t++;
+      ctx.clearRect(0, 0, W, H);
+
+      // ── CIELO EXTERIOR — visible por la ventana ──
+      // (se pinta dentro del clip de la ventana más abajo)
+
+      // ── PARED PRINCIPAL — crema envejecida con textura ──
+      var gradPared = ctx.createLinearGradient(0, 0, W, H);
+      gradPared.addColorStop(0,   '#2A1608');
+      gradPared.addColorStop(0.4, '#221205');
+      gradPared.addColorStop(1,   '#1A0D04');
+      ctx.fillStyle = gradPared;
+      ctx.fillRect(0, 0, W, H);
+
+      // Textura sutil de pared — líneas horizontales muy finas
+      ctx.strokeStyle = 'rgba(255,180,80,0.022)';
+      ctx.lineWidth = 1;
+      for (var yy = 0; yy < H; yy += 18) {
+        ctx.beginPath();
+        ctx.moveTo(0, yy);
+        ctx.lineTo(W, yy);
+        ctx.stroke();
+      }
+
+      // ── VIGAS DEL TECHO ──
+      var vigaH = H * 0.07;
+      var gradViga = ctx.createLinearGradient(0, 0, 0, vigaH);
+      gradViga.addColorStop(0, '#0E0500');
+      gradViga.addColorStop(1, '#1E0C02');
+      ctx.fillStyle = gradViga;
+      ctx.fillRect(0, 0, W, vigaH);
+      // vigas horizontales
+      ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+      ctx.lineWidth = H * 0.012;
+      [0.15, 0.35, 0.60].forEach(function(fy) {
+        ctx.beginPath();
+        ctx.moveTo(0, vigaH * fy);
+        ctx.lineTo(W, vigaH * fy);
+        ctx.stroke();
+      });
+      // moldura techo-pared
+      ctx.fillStyle = '#3D1C08';
+      ctx.fillRect(0, vigaH, W, H * 0.008);
+
+      // ── LÁMPARA COLGANTE ──
+      var lx = W * 0.68, ly0 = 0, lyPantalla = vigaH + H * 0.005;
+      var balanceo = Math.sin(t * 0.008) * W * 0.004; // movimiento suave
+      lx += balanceo;
+
+      // cable
+      ctx.strokeStyle = '#1A0800';
+      ctx.lineWidth   = 3;
+      ctx.beginPath();
+      ctx.moveTo(lx, ly0);
+      ctx.lineTo(lx, lyPantalla);
+      ctx.stroke();
+
+      // halo de luz de la lámpara — dinámico
+      var haloR  = W * 0.55 + Math.sin(t * 0.015) * W * 0.02;
+      var haloA  = 0.13 + Math.sin(t * 0.02) * 0.015;
+      var gradHalo = ctx.createRadialGradient(lx, lyPantalla + H*0.08, 0, lx, lyPantalla + H*0.08, haloR);
+      gradHalo.addColorStop(0,   'rgba(220,140,20,' + haloA + ')');
+      gradHalo.addColorStop(0.5, 'rgba(200,110,10,' + (haloA*0.4) + ')');
+      gradHalo.addColorStop(1,   'rgba(200,110,10,0)');
+      ctx.fillStyle = gradHalo;
+      ctx.fillRect(0, 0, W, H);
+
+      // pantalla de la lámpara
+      var pw = W * 0.12, ph = H * 0.055;
+      ctx.fillStyle = '#B8680A';
+      ctx.beginPath();
+      ctx.moveTo(lx - pw/2,     lyPantalla);
+      ctx.lineTo(lx + pw/2,     lyPantalla);
+      ctx.lineTo(lx + pw/2*1.3, lyPantalla + ph);
+      ctx.lineTo(lx - pw/2*1.3, lyPantalla + ph);
+      ctx.closePath();
+      ctx.fill();
+      // brillo interior
+      ctx.fillStyle = 'rgba(255,220,120,0.25)';
+      ctx.beginPath();
+      ctx.moveTo(lx - pw/2*0.6,     lyPantalla + ph*0.1);
+      ctx.lineTo(lx + pw/2*0.6,     lyPantalla + ph*0.1);
+      ctx.lineTo(lx + pw/2*0.9,     lyPantalla + ph*0.9);
+      ctx.lineTo(lx - pw/2*0.9,     lyPantalla + ph*0.9);
+      ctx.closePath();
+      ctx.fill();
+      // flecos animados
+      ctx.strokeStyle = '#7A4010';
+      ctx.lineWidth = 1.8;
+      for (var fi = -3; fi <= 3; fi++) {
+        var fx  = lx + fi * (pw/2/3);
+        var flen= H * 0.018 + Math.sin(t * 0.04 + fi * 0.8) * H * 0.004;
+        ctx.beginPath();
+        ctx.moveTo(fx, lyPantalla + ph);
+        ctx.lineTo(fx + Math.sin(t*0.03+fi)*3, lyPantalla + ph + flen);
+        ctx.stroke();
+      }
+
+      // ── VENTANA GRANDE — panorámica de la isla ──
+      var wx = W * 0.05, wy = H * 0.12;
+      var ww = W * 0.38, wh = H * 0.44;
+      var marcW = W * 0.018;
+
+      // sombra profundidad ventana
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.beginPath();
+      ctx.roundRect(wx - marcW*0.5, wy - marcW*0.5, ww + marcW, wh + marcW, 6);
+      ctx.fill();
+
+      // CLIP de la ventana — pintar el exterior dentro
+      ctx.save();
+      ctx.beginPath();
+      ctx.roundRect(wx, wy, ww, wh, 3);
+      ctx.clip();
+
+      // Cielo — degradado de tarde cálida
+      var skyCy = wy + wh * 0.5;
+      var gradSky = ctx.createLinearGradient(wx, wy, wx, wy + wh);
+      var horaColor = 0.4 + 0.08 * Math.sin(t * 0.003); // ciclo de luz
+      gradSky.addColorStop(0,   'rgb(' + Math.round(80+horaColor*40) + ',' + Math.round(140+horaColor*30) + ',200)');
+      gradSky.addColorStop(0.6, 'rgb(' + Math.round(100+horaColor*50) + ',' + Math.round(160+horaColor*20) + ',180)');
+      gradSky.addColorStop(1,   'rgb(30,90,120)');
+      ctx.fillStyle = gradSky;
+      ctx.fillRect(wx, wy, ww, wh);
+
+      // nubes animadas dentro de la ventana
+      nubes.forEach(function(n) {
+        n.x += n.vx;
+        if (n.x > 1.2) n.x = -0.15;
+        var nx = wx + n.x * ww;
+        var ny = wy + n.y * wh;
+        dibujarNube(nx, ny, n.r * (W/400), 0.5 + 0.1*Math.sin(t*0.01));
+      });
+
+      // pájaros animados
+      pajaros.forEach(function(p) {
+        p.x += p.vx;
+        p.y += Math.sin(t * 0.02 + p.fase) * p.vy;
+        if (p.x > 1.1) { p.x = -0.05; p.y = 0.12 + Math.random()*0.12; }
+        var bx = wx + p.x * ww;
+        var by = wy + p.y * wh;
+        dibujarPajaro(bx, by, t * 0.12 + p.fase);
+      });
+
+      // lago — brillo ondulante
+      var lagoY = wy + wh * 0.68;
+      var gradLago = ctx.createLinearGradient(wx, lagoY, wx, wy + wh);
+      gradLago.addColorStop(0, 'rgba(25,90,140,0.95)');
+      gradLago.addColorStop(1, 'rgba(15,55,90,0.95)');
+      ctx.fillStyle = gradLago;
+      ctx.fillRect(wx, lagoY, ww, wy + wh - lagoY);
+
+      // destellos del lago — ondas animadas
+      ctx.strokeStyle = 'rgba(140,210,255,0.18)';
+      ctx.lineWidth   = 1;
+      for (var oi = 0; oi < 5; oi++) {
+        var ox = wx + (0.1 + oi * 0.18) * ww;
+        var oy = lagoY + H * 0.012 + oi * H * 0.008;
+        var olen = (0.05 + Math.sin(t * 0.05 + oi) * 0.02) * ww;
+        ctx.beginPath();
+        ctx.moveTo(ox, oy);
+        ctx.lineTo(ox + olen, oy + Math.sin(t * 0.08 + oi) * 3);
+        ctx.stroke();
+      }
+
+      // isla de Flores — silueta
+      var islaY = lagoY - H * 0.005;
+      ctx.fillStyle = '#2D5C1A';
+      ctx.beginPath();
+      ctx.ellipse(wx + ww*0.5, islaY, ww*0.42, H*0.04, 0, 0, Math.PI*2);
+      ctx.fill();
+
+      // casitas coloridas de Flores
+      var casas = [
+        { x:0.20, c:'#E8874A', h:0.055 },
+        { x:0.30, c:'#F5C842', h:0.065 },
+        { x:0.40, c:'#E8401A', h:0.060 },
+        { x:0.50, c:'#4A90D9', h:0.055 },
+        { x:0.60, c:'#E8874A', h:0.062 },
+        { x:0.70, c:'#1D9E75', h:0.058 },
+        { x:0.80, c:'#F5C842', h:0.050 },
+      ];
+      casas.forEach(function(c) {
+        var cx  = wx + c.x * ww;
+        var ch  = c.h * wh;
+        var cw  = ww * 0.055;
+        var cy  = islaY - ch;
+        ctx.fillStyle = c.c;
+        ctx.fillRect(cx - cw/2, cy, cw, ch);
+        ctx.fillStyle = '#8B2020';
+        ctx.beginPath();
+        ctx.moveTo(cx - cw/2 - 2, cy);
+        ctx.lineTo(cx,             cy - ch*0.45);
+        ctx.lineTo(cx + cw/2 + 2,  cy);
+        ctx.closePath();
+        ctx.fill();
+      });
+
+      ctx.restore(); // fin clip ventana
+
+      // Marco de madera de la ventana
+      ctx.strokeStyle = '#4A2808';
+      ctx.lineWidth   = marcW;
+      ctx.lineJoin    = 'round';
+      ctx.strokeRect(wx + marcW/2, wy + marcW/2, ww - marcW, wh - marcW);
+      // Cruz del marco
+      ctx.strokeStyle = '#3D1C08';
+      ctx.lineWidth   = marcW * 0.8;
+      ctx.beginPath();
+      ctx.moveTo(wx + ww/2, wy);
+      ctx.lineTo(wx + ww/2, wy + wh);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(wx, wy + wh * 0.5);
+      ctx.lineTo(wx + ww, wy + wh * 0.5);
+      ctx.stroke();
+      // brillo del vidrio
+      ctx.strokeStyle = 'rgba(255,240,200,0.06)';
+      ctx.lineWidth   = 1;
+      ctx.strokeRect(wx + 2, wy + 2, ww - 4, wh - 4);
+
+      // haz de luz que entra por la ventana al piso
+      var hxCx = wx + ww * 0.5;
+      var hxW  = ww * 1.0;
+      var hxAlpha = 0.04 + 0.01 * Math.sin(t * 0.02);
+      var gradHaz = ctx.createLinearGradient(hxCx, wy + wh, hxCx, H);
+      gradHaz.addColorStop(0,   'rgba(140,200,230,' + hxAlpha + ')');
+      gradHaz.addColorStop(1,   'rgba(140,200,230,0)');
+      ctx.fillStyle = gradHaz;
+      ctx.beginPath();
+      ctx.moveTo(wx,      wy + wh);
+      ctx.lineTo(wx + ww, wy + wh);
+      ctx.lineTo(hxCx + hxW, H);
+      ctx.lineTo(hxCx - hxW, H);
+      ctx.closePath();
+      ctx.fill();
+
+      // partículas de polvo flotando en el haz
+      polvo.forEach(function(p) {
+        p.x += p.vx + Math.sin(t * 0.01 + p.fase) * 0.00003;
+        p.y += p.vy;
+        if (p.y < 0.15) { p.y = 0.75; p.x = 0.08 + Math.random() * 0.28; }
+        var pulseA = p.a * (0.5 + 0.5 * Math.sin(t * 0.04 + p.fase));
+        ctx.save();
+        ctx.globalAlpha = pulseA;
+        ctx.fillStyle   = 'rgba(220,200,150,1)';
+        ctx.beginPath();
+        ctx.arc(p.x * W, p.y * H, p.r, 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      // ── CUADRO DE TIKAL en la pared ──
+      var qx = W*0.52, qy = H*0.10, qw = W*0.24, qh = H*0.12;
+      // marco dorado
+      ctx.fillStyle = '#0A0300';
+      ctx.strokeStyle = '#8B6914';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.roundRect(qx, qy, qw, qh, 3);
+      ctx.fill();
+      ctx.stroke();
+      ctx.strokeStyle = 'rgba(212,160,32,0.5)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(qx+2, qy+2, qw-4, qh-4);
+      // cielo del cuadro
+      ctx.fillStyle = '#4A8020';
+      ctx.fillRect(qx+3, qy+3, qw-6, qh-6);
+      // pirámide de Tikal
+      ctx.fillStyle = '#3D2A10';
+      ctx.beginPath();
+      ctx.moveTo(qx + qw*0.5,  qy + qh*0.12);
+      ctx.lineTo(qx + qw*0.72, qy + qh*0.85);
+      ctx.lineTo(qx + qw*0.28, qy + qh*0.85);
+      ctx.closePath();
+      ctx.fill();
+      // selva del cuadro
+      ctx.fillStyle = '#1A5010';
+      ctx.fillRect(qx+3, qy+qh*0.70, qw-6, qh*0.27);
+      // sol del cuadro — brilla con el t
+      var solA = 0.6 + 0.15 * Math.sin(t * 0.025);
+      ctx.save();
+      ctx.globalAlpha = solA;
+      ctx.fillStyle   = '#F5C842';
+      ctx.beginPath();
+      ctx.arc(qx + qw*0.8, qy + qh*0.28, qw*0.08, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+
+      // ── ESTANTE CON PLANTA (izquierda) ──
+      var sx = 0, sy = H*0.36, sw = W*0.14, sh = H*0.007;
+      ctx.fillStyle = '#5C3010';
+      ctx.fillRect(sx, sy, sw, sh);
+      // libros
+      var libroColores = ['#C62828','#1565C0','#2E7D32','#E65100','#6A1B9A'];
+      libroColores.forEach(function(lc, li) {
+        ctx.fillStyle = lc;
+        ctx.fillRect(W*0.02 + li*W*0.02, sy - H*0.07 + li*H*0.004, W*0.016, H*0.065);
+      });
+      // segunda repisa
+      sy = H * 0.52;
+      ctx.fillStyle = '#5C3010';
+      ctx.fillRect(sx, sy, sw, sh);
+      // planta con hojas que se mueven
+      var plantaX = W*0.05, plantaY = sy - H*0.01;
+      ctx.fillStyle = '#5C3010'; // tallo
+      ctx.fillRect(plantaX - W*0.008, plantaY - H*0.08, W*0.016, H*0.08);
+      // maceta
+      ctx.fillStyle = '#8B4513';
+      ctx.beginPath();
+      ctx.moveTo(plantaX - W*0.02, plantaY);
+      ctx.lineTo(plantaX + W*0.02, plantaY);
+      ctx.lineTo(plantaX + W*0.016, plantaY + H*0.03);
+      ctx.lineTo(plantaX - W*0.016, plantaY + H*0.03);
+      ctx.closePath();
+      ctx.fill();
+      // hojas que oscilan con la brisa
+      hojas.forEach(function(_, hi) {
+        var angBase = (hi / hojas.length) * Math.PI * 2;
+        var swing   = Math.sin(t * 0.025 + hi * 0.9) * 0.18;
+        var ang     = angBase + swing;
+        var hr      = W * 0.028 + hi * W * 0.005;
+        ctx.save();
+        ctx.translate(plantaX, plantaY - H*0.06);
+        ctx.rotate(ang);
+        ctx.fillStyle = hi % 2 === 0 ? '#2E7D32' : '#388E3C';
+        ctx.globalAlpha = 0.85;
+        ctx.beginPath();
+        ctx.ellipse(0, -hr*0.5, hr*0.28, hr*0.55, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+      });
+      // florecita rosada en la punta
+      var florPulse = 0.9 + 0.1 * Math.sin(t * 0.04);
+      ctx.save();
+      ctx.globalAlpha = florPulse;
+      ctx.fillStyle   = '#F48FB1';
+      ctx.beginPath();
+      ctx.arc(plantaX, plantaY - H*0.115, W*0.018, 0, Math.PI*2);
+      ctx.fill();
+      ctx.fillStyle = '#E91E63';
+      ctx.beginPath();
+      ctx.arc(plantaX, plantaY - H*0.115, W*0.008, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+
+      // ── PISO DE MADERA ──
+      var pisoY = H * 0.82;
+      var gradPiso = ctx.createLinearGradient(0, pisoY, 0, H);
+      gradPiso.addColorStop(0, '#3D1A08');
+      gradPiso.addColorStop(1, '#1A0800');
+      ctx.fillStyle = gradPiso;
+      ctx.fillRect(0, pisoY, W, H - pisoY);
+      // zócalo
+      ctx.fillStyle = '#3D1C08';
+      ctx.fillRect(0, pisoY - H*0.008, W, H*0.01);
+      // tablones
+      ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+      ctx.lineWidth   = 1.5;
+      [0, 0.2, 0.42, 0.64, 0.84].forEach(function(fy) {
+        ctx.beginPath();
+        ctx.moveTo(0,  pisoY + fy * (H - pisoY));
+        ctx.lineTo(W,  pisoY + fy * (H - pisoY));
+        ctx.stroke();
+      });
+      // juntas verticales
+      ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+      [0.17, 0.36, 0.54, 0.72, 0.89].forEach(function(fx) {
+        ctx.beginPath();
+        ctx.moveTo(fx * W, pisoY);
+        ctx.lineTo(fx * W + W*0.02, H);
+        ctx.stroke();
+      });
+      // barniz — destello animado
+      var barnizX  = (Math.sin(t * 0.006) * 0.5 + 0.5) * W;
+      var gradBarniz = ctx.createRadialGradient(barnizX, pisoY + (H-pisoY)*0.3, 0, barnizX, pisoY, W*0.4);
+      gradBarniz.addColorStop(0,   'rgba(255,200,100,0.06)');
+      gradBarniz.addColorStop(1,   'rgba(255,200,100,0)');
+      ctx.fillStyle = gradBarniz;
+      ctx.fillRect(0, pisoY, W, H - pisoY);
+
+      // ── PERRO DORMIDO — esquina inferior derecha ──
+      var dx = W*0.85, dy = H*0.90;
+      // zzz flotantes
+      var zOfs = Math.sin(t * 0.03) * H * 0.01;
+      ctx.fillStyle = 'rgba(255,255,255,0.15)';
+      ctx.font      = (W*0.032) + 'px Georgia';
+      ctx.fillText('z', dx - W*0.04, dy - H*0.08 + zOfs);
+      ctx.font      = (W*0.024) + 'px Georgia';
+      ctx.fillStyle = 'rgba(255,255,255,0.10)';
+      ctx.fillText('z', dx - W*0.065, dy - H*0.115 + zOfs*0.7);
+      ctx.font      = (W*0.018) + 'px Georgia';
+      ctx.fillStyle = 'rgba(255,255,255,0.07)';
+      ctx.fillText('z', dx - W*0.088, dy - H*0.145 + zOfs*0.4);
+      // cuerpo — respiración animada
+      var respiro = Math.sin(t * 0.035) * H * 0.005;
+      ctx.fillStyle = '#4A2808';
+      ctx.beginPath();
+      ctx.ellipse(dx, dy - respiro*0.3, W*0.095, H*0.028 + respiro*0.5, 0, 0, Math.PI*2);
+      ctx.fill();
+      // cabeza
+      ctx.beginPath();
+      ctx.ellipse(dx - W*0.06, dy - H*0.038, W*0.042, H*0.018, -0.2, 0, Math.PI*2);
+      ctx.fill();
+      // orejas
+      ctx.beginPath();
+      ctx.ellipse(dx - W*0.09, dy - H*0.055, W*0.02, H*0.01, -0.6, 0, Math.PI*2);
+      ctx.fill();
+      // ojos cerrados
+      ctx.strokeStyle = '#2A1005';
+      ctx.lineWidth   = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(dx - W*0.072, dy - H*0.036);
+      ctx.quadraticCurveTo(dx - W*0.062, dy - H*0.042, dx - W*0.052, dy - H*0.036);
+      ctx.stroke();
+      // cola enroscada
+      ctx.strokeStyle = '#4A2808';
+      ctx.lineWidth   = W * 0.016;
+      ctx.lineCap     = 'round';
+      ctx.beginPath();
+      ctx.arc(dx + W*0.07, dy - H*0.015, W*0.03, Math.PI*0.5, Math.PI*2.2);
+      ctx.stroke();
+
+      // ── CALIDEZ GENERAL — overlay cálido ──
+      var gradAmb = ctx.createRadialGradient(W*0.68, H*0.08, 0, W*0.5, H*0.5, W*0.7);
+      gradAmb.addColorStop(0,   'rgba(200,120,20,0.06)');
+      gradAmb.addColorStop(0.6, 'rgba(150,80,10,0.03)');
+      gradAmb.addColorStop(1,   'rgba(0,0,0,0.18)');
+      ctx.fillStyle = gradAmb;
+      ctx.fillRect(0, 0, W, H);
+
+      requestAnimationFrame(draw);
+    }
+
+    // Iniciar solo cuando screen-tours esté activo
+    var started = false;
+    var observer = new MutationObserver(function() {
+      var el = document.getElementById('screen-tours');
+      if (el && el.classList.contains('active') && !started) {
+        started = true;
+        resize();
+        draw();
+      }
+    });
+    observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    // también iniciar si ya está activo
+    setTimeout(function() {
+      var el = document.getElementById('screen-tours');
+      if (el && el.classList.contains('active') && !started) {
+        started = true; resize(); draw();
+      }
+    }, 200);
+  })();
+  </script>
+
+  <div style="width:100%;max-width:480px;z-index:1;">
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div>
+        <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--primary);letter-spacing:3px;">TOURS DESDE EL HOSTAL</div>
+        <div id="toursSubtitle" style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--secondary);font-weight:700;margin-top:2px;"></div>
+      </div>
+      <div id="headerAvatar" style="font-size:28px;filter:drop-shadow(0 0 8px var(--primary));">🦅</div>
+    </div>
+
+    <!-- Selector forma de pago -->
+    <div style="margin-bottom:14px;">
+      <div style="font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Forma de pago</div>
+      <div style="display:flex;gap:6px;">
+        <button class="pago-btn active" id="fp-efectivo"  onclick="setFormaPago('efectivo')">💵 Efectivo</button>
+        <button class="pago-btn"        id="fp-tarjeta"   onclick="setFormaPago('tarjeta')">💳 Tarjeta</button>
+        <button class="pago-btn"        id="fp-crypto"    onclick="setFormaPago('crypto')">₿ Crypto</button>
+        <button class="pago-btn"        id="fp-paypal"    onclick="setFormaPago('paypal')">🅿️ PayPal</button>
+      </div>
+    </div>
+
+    <!-- Lista de tours -->
+    <div id="toursList" style="margin-bottom:80px;"></div>
+  </div>
+
+  <!-- CTA fijo -->
+  <div id="ctaWrap">
+    <div style="background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:14px 16px;">
+      <div id="ctaTourInfo" style="font-size:12px;color:var(--text2);margin-bottom:8px;"></div>
+      <button class="btn btn-primary" onclick="irADatos()" style="font-size:14px;padding:14px;">
+        🎟️ Reservar este tour →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PASO 1: DATOS DEL TURISTA ═══ -->
+<div class="screen" id="screen-datos">
+  <div style="width:100%;max-width:480px;z-index:1;">
+    <button class="back" onclick="ir('screen-tours')">← Volver</button>
+    <div class="step-bar"><div class="step-seg done" id="s1"></div><div class="step-seg" id="s2"></div><div class="step-seg" id="s3"></div></div>
+    <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--primary);letter-spacing:3px;margin-bottom:4px;">PASO 1 DE 3</div>
+    <div style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--secondary);font-weight:700;margin-bottom:20px;">TUS DATOS</div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+      <div><div class="inp-label">👤 Nombre completo</div><input id="dNombre"    class="inp" placeholder="Tu nombre"/></div>
+      <div><div class="inp-label">📧 Email</div><input id="dEmail"      class="inp" type="email" placeholder="tu@correo.com"/></div>
+      <div><div class="inp-label">📱 WhatsApp</div><input id="dTel"       class="inp" placeholder="+502 0000 0000"/></div>
+      <div class="fp-grid">
+        <div><div class="inp-label">🌍 País</div><input id="dPais"      class="inp" placeholder="Guatemala"/></div>
+        <div><div class="inp-label">🛂 Pasaporte</div><input id="dPasaporte" class="inp" placeholder="Número"/></div>
+      </div>
+      <div>
+        <div class="inp-label">👥 Personas</div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:10px 16px;">
+          <button onclick="cambiarPax(-1)" style="background:none;border:1px solid var(--border);color:var(--text2);width:32px;height:32px;border-radius:8px;font-size:16px;">−</button>
+          <span id="paxVal" style="font-family:Orbitron,sans-serif;font-size:20px;font-weight:700;color:var(--secondary);flex:1;text-align:center;">1</span>
+          <button onclick="cambiarPax(1)"  style="background:none;border:1px solid var(--border);color:var(--text2);width:32px;height:32px;border-radius:8px;font-size:16px;">+</button>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="irAFecha()">Continuar →</button>
+  </div>
+</div>
+
+<!-- ═══ PASO 2: FECHA Y HORARIO ═══ -->
+<div class="screen" id="screen-fecha">
+  <div style="width:100%;max-width:480px;z-index:1;">
+    <button class="back" onclick="ir('screen-datos')">← Volver</button>
+    <div class="step-bar"><div class="step-seg done" id="s1b"></div><div class="step-seg done" id="s2b"></div><div class="step-seg" id="s3b"></div></div>
+    <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--primary);letter-spacing:3px;margin-bottom:4px;">PASO 2 DE 3</div>
+    <div style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--secondary);font-weight:700;margin-bottom:16px;">FECHA Y HORARIO</div>
+
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">📅 Elige el día</div>
+      <div id="calDays" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;"></div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">⏰ Elige el horario</div>
+      <div id="horariosGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+    </div>
+    <div id="resumenFecha" style="background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;display:none;"></div>
+    <button class="btn btn-primary" id="btnConfirmar" onclick="irAConfirmar()" style="display:none;">Confirmar y pagar →</button>
+  </div>
+</div>
+
+<!-- ═══ PASO 3: PAGO ═══ -->
+<div class="screen" id="screen-pago">
+  <div style="width:100%;max-width:480px;z-index:1;">
+    <button class="back" onclick="ir('screen-fecha')">← Volver</button>
+    <div class="step-bar"><div class="step-seg done"></div><div class="step-seg done"></div><div class="step-seg done"></div></div>
+    <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--primary);letter-spacing:3px;margin-bottom:4px;">PASO 3 DE 3</div>
+    <div style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--secondary);font-weight:700;margin-bottom:16px;">CONFIRMAR Y PAGAR</div>
+
+    <!-- Resumen -->
+    <div style="background:var(--dark2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Resumen de tu reserva</div>
+      <div id="pagoResumen" style="display:flex;flex-direction:column;gap:8px;font-size:13px;"></div>
+    </div>
+
+    <!-- Botones de pago -->
+    <div id="botonesPago" style="display:flex;flex-direction:column;gap:10px;"></div>
+  </div>
+</div>
+
+<!-- ═══ PANTALLA CRYPTO ═══ -->
+<div class="screen" id="screen-crypto">
+  <div style="width:100%;max-width:440px;z-index:1;">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--primary);letter-spacing:3px;margin-bottom:6px;">PAGO CRYPTO</div>
+      <div style="font-family:Orbitron,sans-serif;font-size:20px;color:var(--secondary);">ENVÍA USDT ERC-20</div>
+      <div id="cryptoTimer" style="font-family:Orbitron,sans-serif;font-size:32px;color:var(--primary);margin-top:10px;">30:00</div>
+      <div style="font-size:11px;color:var(--text2);">Tiempo para completar el pago</div>
+    </div>
+    <div style="background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center;margin-bottom:14px;">
+      <div id="cryptoQR" style="margin:0 auto 12px;width:180px;height:180px;background:var(--dark3);border-radius:8px;display:flex;align-items:center;justify-content:center;"></div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Monto a enviar</div>
+      <div id="cryptoMonto" style="font-family:Orbitron,sans-serif;font-size:24px;color:var(--primary);font-weight:700;margin-bottom:10px;cursor:pointer;" onclick="copiar('cryptoMonto','Monto copiado')"></div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Dirección wallet</div>
+      <div id="cryptoAddr" style="font-family:monospace;font-size:10px;color:var(--text2);background:var(--dark3);padding:8px;border-radius:6px;cursor:pointer;word-break:break-all;" onclick="copiar('cryptoAddr','Wallet copiada')"></div>
+    </div>
+    <button class="btn btn-primary" onclick="yaEnvie()">✅ Ya envié el pago</button>
+  </div>
+</div>
+
+<!-- ═══ PANTALLA ESPERA ═══ -->
+<div class="screen" id="screen-espera" style="justify-content:center;">
+  <div style="text-align:center;z-index:1;max-width:380px;padding:20px;">
+    <div class="loader" style="margin:0 auto 24px;width:52px;height:52px;border-width:4px;"></div>
+    <div style="font-family:Orbitron,sans-serif;font-size:16px;color:var(--secondary);margin-bottom:8px;">VERIFICANDO PAGO</div>
+    <div style="font-size:13px;color:var(--text2);">Esto puede tomar unos minutos.<br>No cierres esta pantalla.</div>
+    <div id="esperaMsg" style="margin-top:20px;font-size:12px;color:var(--text2);"></div>
+  </div>
+</div>
+
+<!-- ═══ PANTALLA APROBADO ═══ -->
+<div class="screen" id="screen-aprobado" style="justify-content:center;background:radial-gradient(ellipse 80% 70% at 50% 40%,#061a08,#000);">
+  <div style="text-align:center;z-index:1;max-width:400px;padding:20px;">
+    <div style="font-size:72px;margin-bottom:16px;animation:floatY 2s ease-in-out infinite;">✅</div>
+    <div style="font-family:Orbitron,sans-serif;font-size:22px;color:var(--primary);font-weight:900;margin-bottom:8px;">¡PAGO APROBADO!</div>
+    <div id="aprobadoInfo" style="font-size:13px;color:var(--text2);margin-bottom:24px;line-height:1.6;"></div>
+    <button class="btn btn-secondary" onclick="descargarTicket()" style="margin-bottom:10px;">⬇️ Descargar boleto</button>
+    <button class="btn btn-ghost" onclick="ir('screen-tours')" style="font-size:12px;">Reservar otro tour</button>
+  </div>
+</div>
+
+<!-- ═══ TICKET ═══ -->
+<div class="screen" id="screen-ticket" style="overflow-y:auto;padding-top:16px;">
+  <div style="width:100%;max-width:440px;z-index:1;">
+    <div id="ticketCard" class="ticket" style="margin-bottom:14px;">
+      <div style="height:2px;background:linear-gradient(90deg,transparent,var(--primary),var(--secondary),var(--primary),transparent);opacity:.7;"></div>
+      <div style="padding:22px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+          <div>
+            <div style="font-family:Orbitron,sans-serif;font-size:9px;color:var(--text2);letter-spacing:2px;">RYOGA CLUB</div>
+            <div id="tkDestino" style="font-family:Orbitron,sans-serif;font-size:22px;color:var(--secondary);font-weight:900;margin-top:2px;"></div>
+          </div>
+          <div style="border:1px solid var(--primary);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--primary);text-align:center;font-family:Orbitron,sans-serif;font-size:8px;">VÁLIDO</div>
+        </div>
+        <div id="tkTour" style="font-size:14px;font-weight:600;margin-bottom:14px;color:var(--primary);"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+          <div style="background:rgba(0,230,118,.05);border:1px solid var(--border);border-radius:8px;padding:10px;">
+            <div style="font-size:9px;color:var(--text2);margin-bottom:4px;letter-spacing:1px;">FECHA</div>
+            <div id="tkFecha" style="font-family:Orbitron,sans-serif;font-size:14px;color:var(--secondary);"></div>
+          </div>
+          <div style="background:rgba(0,230,118,.05);border:1px solid var(--border);border-radius:8px;padding:10px;">
+            <div style="font-size:9px;color:var(--text2);margin-bottom:4px;letter-spacing:1px;">SALIDA</div>
+            <div id="tkHora" style="font-family:Orbitron,sans-serif;font-size:13px;color:var(--primary);"></div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px;">
+          <div style="font-size:9px;color:var(--text2);letter-spacing:1px;margin-bottom:4px;">TURISTA</div>
+          <div id="tkNombre" style="font-size:15px;font-weight:600;color:var(--primary);"></div>
+          <div id="tkPaxPago" style="font-size:11px;color:var(--text2);margin-top:2px;"></div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px;">
+          <div style="font-size:9px;color:var(--text2);letter-spacing:1px;margin-bottom:4px;">TICKET ID</div>
+          <div id="tkId" style="font-family:Orbitron,sans-serif;font-size:15px;color:var(--accent);"></div>
+        </div>
+        <div style="text-align:center;margin:16px 0 8px;font-size:9px;color:var(--text2);letter-spacing:2px;">ESCANEAR PARA VERIFICAR</div>
+        <div id="tkQR" style="display:flex;justify-content:center;margin-bottom:12px;"></div>
+        <div id="tkTotal" style="text-align:right;font-family:Orbitron,sans-serif;font-size:22px;color:var(--secondary);font-weight:900;"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;" id="ticketBtns">
+      <button class="btn btn-primary" onclick="window.print()" style="flex:2;padding:14px;">⬇️ Descargar</button>
+      <button class="btn btn-ghost" onclick="compartir()" style="flex:1;padding:14px;">📤</button>
+      <button class="btn btn-ghost" onclick="ir('screen-welcome')" style="flex:1;padding:14px;">🏠</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LOADING ═══ -->
+<div class="screen" id="screen-loading" style="justify-content:center;">
+  <div style="text-align:center;z-index:1;">
+    <div class="loader" style="margin-bottom:20px;"></div>
+    <div id="loadMsg" style="font-family:Orbitron,sans-serif;font-size:11px;color:var(--primary);letter-spacing:2px;"></div>
+  </div>
+</div>
+
+<!-- CSS IMPRESIÓN -->
+<style>
+@media print {
+  body>*{display:none!important;}
+  #screen-ticket{display:flex!important;position:static!important;width:100%!important;height:auto!important;overflow:visible!important;padding:0!important;background:#fff!important;}
+  #screen-ticket>div{display:block!important;width:100%!important;max-width:480px!important;margin:0 auto!important;padding:10px!important;}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  #ticketBtns{display:none!important;}
+  @page{size:A4 portrait;margin:8mm;}
+}
+</style>
+
+<script>
+'use strict';
+
+// ── APLICAR TEMA DEL INFLUENCER ──────────────────────────────────────
+(function aplicarTema() {
+  var r = document.documentElement.style;
+  r.setProperty('--primary',   INFLUENCER.theme.primary);
+  r.setProperty('--secondary', INFLUENCER.theme.secondary);
+  r.setProperty('--bg',        INFLUENCER.theme.bg);
+  r.setProperty('--dark2',     INFLUENCER.theme.dark2);
+  r.setProperty('--dark3',     INFLUENCER.theme.dark3);
+  r.setProperty('--border',    'rgba(' + hexToRgb(INFLUENCER.theme.primary) + ',0.15)');
+
+  document.getElementById('pageTitle').textContent   = 'Tours · ' + INFLUENCER.nombre;
+  // avatarWrap usa SVG casita — no sobreescribir con emoji
+  document.getElementById('headerAvatar').textContent= INFLUENCER.avatar;
+  document.getElementById('welcomeNombre').textContent = INFLUENCER.nombre.toUpperCase();
+  document.getElementById('welcomeBio').textContent  = INFLUENCER.bio;
+  document.getElementById('toursSubtitle').textContent = 'con ' + INFLUENCER.nombre.split(' ')[0];
+
+  // Redes sociales
+  var redesHtml = '';
+  if (INFLUENCER.redes.instagram) redesHtml += '<a href="'+INFLUENCER.redes.instagram+'" target="_blank" style="color:var(--text2);font-size:11px;text-decoration:none;">📸 Instagram</a>';
+  if (INFLUENCER.redes.tiktok)    redesHtml += '<a href="'+INFLUENCER.redes.tiktok+'"    target="_blank" style="color:var(--text2);font-size:11px;text-decoration:none;">🎵 TikTok</a>';
+  document.getElementById('redesWrap').innerHTML = redesHtml;
+})();
+
+function hexToRgb(hex) {
+  var r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return r ? parseInt(r[1],16)+','+parseInt(r[2],16)+','+parseInt(r[3],16) : '0,230,118';
+}
+
+// ── ESTADO ────────────────────────────────────────────────────────────
+var ST = {
+  tours:      [],
+  tourSel:    null,
+  formaPago:  'efectivo',
+  pax:        1,
+  fecha:      null,
+  horario:    null,
+  reservaId:  null,
+  pollingInt: null,
+  timerInt:   null,
+  // Datos turista
+  nombre:'', email:'', tel:'', pais:'', pasaporte:'',
+  // Totales calculados
+  totalGTQ:0, totalUSD:0, totalUSDT:0,
+};
+
+// UTM desde URL
+var urlParams = new URLSearchParams(window.location.search);
+INFLUENCER.utm.source   = urlParams.get('utm_source')   || INFLUENCER.utm.source;
+INFLUENCER.utm.campaign = urlParams.get('utm_campaign') || INFLUENCER.utm.campaign;
+
+// ── INIT ──────────────────────────────────────────────────────────────
+crearParticulas();
+ir('screen-welcome');
+
+// ── NAVEGACIÓN ────────────────────────────────────────────────────────
+function ir(id) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var el = document.getElementById(id);
+  if (el) { el.classList.add('active'); el.scrollTop = 0; }
+}
+function loading(msg) { document.getElementById('loadMsg').textContent = msg||'Cargando...'; ir('screen-loading'); }
+
+// ── API ───────────────────────────────────────────────────────────────
+function api(payload, cb) {
+  var url = INFLUENCER.backendUrl + '?payload=' + encodeURIComponent(JSON.stringify(payload));
+  fetch(url, { method:'GET', redirect:'follow' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){ cb(null, d); })
+    .catch(function(e){ cb(e, null); });
+}
+
+// ── TOURS ─────────────────────────────────────────────────────────────
+function irATours() {
+  loading('Cargando tours...');
+  api({ action:'getTours', influencerId: INFLUENCER.id }, function(err, res) {
+    if (res && res.ok && res.tours && res.tours.length > 0) {
+      ST.tours = res.tours;
+    } else {
+      ST.tours = getCatalogoLocal();
+      if (err) toast('Modo offline — mostrando catálogo local', 'info');
+    }
+    renderTours();
+    ir('screen-tours');
+  });
+}
+
+function getCatalogoLocal() {
+  return [
+    { tourId:'tikal_amanecer', nombre:'TIKAL AMANECER',    destino:'TIKAL',  emoji:'🌅', precioBase:248, precioLiq:150, horarios:['03:00 AM'], tags:['★ MÁS POPULAR'] },
+    { tourId:'tikal_dia',      nombre:'TIKAL DÍA',          destino:'TIKAL',  emoji:'☀️', precioBase:182, precioLiq:100, horarios:['04:30 AM','06:00 AM','08:00 AM','10:00 AM'], conGuia:true, precioSinGuia:142 },
+    { tourId:'tikal_atardecer',nombre:'TIKAL ATARDECER',    destino:'TIKAL',  emoji:'🌇', precioBase:221, precioLiq:130, horarios:['12:00 PM'] },
+    { tourId:'yaxha_sunset',   nombre:'YAXHÁ SUNSET',       destino:'YAXHÁ',  emoji:'🌅', precioBase:215, precioLiq:125, horarios:['12:00 PM'] },
+    { tourId:'crater_azul',    nombre:'CRÁTER AZUL',         destino:'PETÉN',  emoji:'🏊', precioBase:406, precioLiq:270, horarios:['08:00 AM'] },
+    { tourId:'caye_caulker',   nombre:'CAYE CAULKER I/V',   destino:'BELIZE', emoji:'🏝️', precioBase:485, precioLiq:330, horarios:['06:00 AM'] },
+    { tourId:'semuc',          nombre:'SEMUC CHAMPEY',       destino:'SEMUC',  emoji:'💧', precioBase:248, precioLiq:150, horarios:['08:00 AM'] },
+    { tourId:'acatenango',     nombre:'ACATENANGO CAMPING',  destino:'VOLCÁN', emoji:'⛺', precioBase:950, precioLiq:720, horarios:['08:00 AM'], tags:['★ ÉPICA'] },
+  ];
+}
+
+var GTQ_RATE = 7.75;
+function calcPrecio(base, fp) {
+  var ef = base * 0.95, usd = ef / GTQ_RATE;
+  if (fp === 'tarjeta') return { gtq: base,   usd: base / GTQ_RATE,  usdt: 0 };
+  if (fp === 'crypto')  return { gtq: ef,      usd: usd,              usdt: usd * 1.045 };
+  if (fp === 'paypal')  return { gtq: base,    usd: base / GTQ_RATE * 1.035, usdt: 0 };
+  return { gtq: ef, usd: usd, usdt: 0 }; // efectivo
+}
+
+function renderTours() {
+  var lista = document.getElementById('toursList');
+  lista.innerHTML = '';
+  ST.tours.forEach(function(t) {
+    var p = calcPrecio(t.precioBase, ST.formaPago);
+    var pActivo = ST.formaPago === 'crypto' ? '$' + p.usdt.toFixed(2) + ' USDT' : 'Q' + p.gtq.toFixed(0);
+    var labelFP = {efectivo:'💵 Efectivo', tarjeta:'💳 Tarjeta', crypto:'₿ Crypto', paypal:'🅿️ PayPal'}[ST.formaPago] || '';
+    var selected = ST.tourSel && ST.tourSel.tourId === t.tourId;
+
+    // Selector horario inline si tiene múltiples
+    var horariosHtml = '';
+    if (t.horarios && t.horarios.length > 1) {
+      var btns = t.horarios.map(function(h) {
+        return '<button onclick="event.stopPropagation();selHorarioCard(\''+t.tourId+'\',\''+h+'\')" id="hc-'+t.tourId+'-'+h.replace(/[: ]/g,'')+'" style="flex:1;padding:7px 4px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--text2);font-family:Orbitron,sans-serif;font-size:11px;cursor:pointer;transition:all .2s;">'+h+'</button>';
+      }).join('');
+      horariosHtml = '<div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px;" onclick="event.stopPropagation()">'
+        + '<div style="font-size:10px;color:var(--text2);letter-spacing:1px;margin-bottom:7px;">⏰ ELIGE TU HORARIO</div>'
+        + '<div style="display:flex;gap:5px;">' + btns + '</div></div>';
+    }
+
+    // Tags
+    var tagsHtml = '';
+    if (t.tags && t.tags.length) {
+      tagsHtml = '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;">'
+        + t.tags.map(function(tag) {
+            var pop = /POPULAR|ÉPICA|IMPERDIBLE/.test(tag);
+            return '<span class="tour-tag" style="'+(pop?'background:rgba(245,200,66,.15);color:var(--secondary);':'')+'">' + tag + '</span>';
+          }).join('') + '</div>';
+    }
+
+    var div = document.createElement('div');
+    div.className = 'tour-card' + (selected ? ' selected' : '');
+    div.id = 'tc-' + t.tourId;
+    div.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">'
+      + '<div style="display:flex;align-items:center;gap:10px;flex:1;">'
+      + '<span style="font-size:30px;flex-shrink:0;">' + t.emoji + '</span>'
+      + '<div><div style="font-family:Orbitron,sans-serif;font-size:12px;color:var(--primary);">' + t.nombre + '</div>'
+      + '<div style="font-size:11px;color:var(--text2);margin-top:2px;">' + (t.horarios && t.horarios.length > 1 ? t.horarios[0] + '...' : (t.horarios||[''])[0]) + '</div></div></div>'
+      + '<div style="text-align:right;flex-shrink:0;">'
+      + '<div style="font-family:Orbitron,sans-serif;font-size:20px;font-weight:900;color:var(--secondary);">' + pActivo + '</div>'
+      + '<div style="font-size:9px;color:var(--text2);">' + labelFP + ' / pax</div>'
+      + '</div></div>'
+      + tagsHtml + horariosHtml;
+
+    div.onclick = (function(tour){ return function(){ seleccionarTour(tour); }; })(t);
+    lista.appendChild(div);
+
+    // Marcar primer horario por defecto
+    if (t.horarios && t.horarios.length > 0 && selected) {
+      setTimeout(function(){ marcarHorarioCard(t.tourId, t.horarios[0]); }, 50);
+    }
+  });
+}
+
+function setFormaPago(fp) {
+  ST.formaPago = fp;
+  document.querySelectorAll('.pago-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('fp-'+fp).classList.add('active');
+  renderTours();
+  if (ST.tourSel) actualizarCTA();
+}
+
+function seleccionarTour(t) {
+  ST.tourSel = t;
+  ST.horario = t.horarios ? t.horarios[0] : (t.hora||'');
+  document.querySelectorAll('.tour-card').forEach(function(c){ c.classList.remove('selected'); });
+  var el = document.getElementById('tc-' + t.tourId);
+  if (el) { el.classList.add('selected'); marcarHorarioCard(t.tourId, ST.horario); }
+  actualizarCTA();
+  var cta = document.getElementById('ctaWrap');
+  if (cta) cta.style.display = 'block';
+}
+
+function selHorarioCard(tourId, h) {
+  ST.horario = h;
+  marcarHorarioCard(tourId, h);
+  if (!ST.tourSel || ST.tourSel.tourId !== tourId) {
+    var t = ST.tours.find(function(x){ return x.tourId === tourId; });
+    if (t) seleccionarTour(t);
+  }
+}
+
+function marcarHorarioCard(tourId, h) {
+  document.querySelectorAll('[id^="hc-'+tourId+'-"]').forEach(function(btn) {
+    var activo = btn.id === 'hc-'+tourId+'-'+h.replace(/[: ]/g,'');
+    btn.style.borderColor = activo ? 'var(--secondary)' : 'rgba(255,255,255,.12)';
+    btn.style.background  = activo ? 'rgba(245,200,66,.15)' : 'transparent';
+    btn.style.color       = activo ? 'var(--secondary)' : 'var(--text2)';
+  });
+}
+
+function actualizarCTA() {
+  if (!ST.tourSel) return;
+  var p = calcPrecio(ST.tourSel.precioBase, ST.formaPago);
+  var precio = ST.formaPago === 'crypto' ? '$' + p.usdt.toFixed(2) + ' USDT' : 'Q' + p.gtq.toFixed(0);
+  document.getElementById('ctaTourInfo').textContent =
+    ST.tourSel.emoji + ' ' + ST.tourSel.nombre + ' — ' + precio + '/pax';
+}
+
+// ── FLUJO DE RESERVA ──────────────────────────────────────────────────
+var pax = 1;
+function cambiarPax(d) {
+  pax = Math.max(1, Math.min(20, pax + d));
+  document.getElementById('paxVal').textContent = pax;
+  ST.pax = pax;
+}
+
+function irADatos() {
+  if (!ST.tourSel) { toast('Selecciona un tour primero', 'warning'); return; }
+  ir('screen-datos');
+}
+
+function irAFecha() {
+  ST.nombre    = document.getElementById('dNombre').value.trim();
+  ST.email     = document.getElementById('dEmail').value.trim();
+  ST.tel       = document.getElementById('dTel').value.trim();
+  ST.pais      = document.getElementById('dPais').value.trim();
+  ST.pasaporte = document.getElementById('dPasaporte').value.trim();
+  ST.pax       = pax;
+
+  if (!ST.nombre) { toast('Escribe tu nombre', 'warning'); return; }
+  if (!ST.email || !ST.email.includes('@')) { toast('Email inválido', 'warning'); return; }
+
+  renderCalendario();
+  renderHorarios();
+  ir('screen-fecha');
+}
+
+function renderCalendario() {
+  var cont = document.getElementById('calDays');
+  cont.innerHTML = '';
+  var dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  var meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  for (var i = 1; i <= 8; i++) {
+    var d = new Date(); d.setDate(d.getDate() + i);
+    var btn = document.createElement('button');
+    btn.style.cssText = 'min-width:60px;padding:10px 8px;border-radius:10px;border:1px solid var(--border);background:var(--dark3);cursor:pointer;text-align:center;transition:all .2s;flex-shrink:0;';
+    btn.innerHTML = '<div style="font-size:9px;color:var(--text2);">' + dias[d.getDay()] + '</div>'
+      + '<div style="font-family:Orbitron,sans-serif;font-size:16px;color:var(--secondary);font-weight:700;">' + d.getDate() + '</div>'
+      + '<div style="font-size:9px;color:var(--text2);">' + meses[d.getMonth()] + '</div>';
+    btn.onclick = (function(dt, el){ return function(){
+      cont.querySelectorAll('button').forEach(function(b){ b.style.borderColor='var(--border)'; b.style.background='var(--dark3)'; });
+      el.style.borderColor = 'var(--secondary)'; el.style.background = 'rgba(245,200,66,.1)';
+      ST.fecha = dt.toISOString().split('T')[0];
+      actualizarResumen();
+    };})(d, btn);
+    cont.appendChild(btn);
+  }
+}
+
+function renderHorarios() {
+  var cont = document.getElementById('horariosGrid');
+  if (!cont || !ST.tourSel) return;
+  cont.innerHTML = '';
+  var horarios = ST.tourSel.horarios || [ST.tourSel.hora || '08:00 AM'];
+  var DESCS = { '04:30 AM':'Amanecer temprano','06:00 AM':'Mañana fresca','08:00 AM':'Media mañana','10:00 AM':'Mañana tardía','03:00 AM':'Permiso especial','12:00 PM':'Permiso especial' };
+
+  // Preseleccionar el horario guardado desde la card
+  if (!ST.horario && horarios.length > 0) ST.horario = horarios[0];
+
+  horarios.forEach(function(h) {
+    var btn = document.createElement('button');
+    var activo = h === ST.horario;
+    btn.id = 'hbtn-' + h.replace(/[: ]/g,'');
+    btn.style.cssText = 'padding:12px;border-radius:12px;border:1px solid '+(activo?'var(--secondary)':'var(--border)')+';'
+      + 'background:'+(activo?'rgba(245,200,66,.12)':'var(--dark3)')+';'
+      + 'color:'+(activo?'var(--secondary)':'var(--text2)')+';font-family:Orbitron,sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;';
+    btn.innerHTML = h + '<div style="font-size:10px;margin-top:3px;opacity:.7;">' + (DESCS[h]||'Disponible') + '</div>';
+    btn.onclick = (function(hora, el){ return function(){
+      cont.querySelectorAll('button').forEach(function(b){ b.style.borderColor='var(--border)'; b.style.background='var(--dark3)'; b.style.color='var(--text2)'; });
+      el.style.borderColor='var(--secondary)'; el.style.background='rgba(245,200,66,.12)'; el.style.color='var(--secondary)';
+      ST.horario = hora;
+      actualizarResumen();
+    };})(h, btn);
+    cont.appendChild(btn);
+  });
+
+  // Marcar el preseleccionado visualmente
+  var presel = document.getElementById('hbtn-' + (ST.horario||'').replace(/[: ]/g,''));
+  if (presel) { presel.style.borderColor='var(--secondary)'; presel.style.background='rgba(245,200,66,.12)'; presel.style.color='var(--secondary)'; }
+}
+
+function actualizarResumen() {
+  if (!ST.fecha || !ST.horario) return;
+  var p    = calcPrecio(ST.tourSel.precioBase, ST.formaPago);
+  ST.totalGTQ  = p.gtq * ST.pax;
+  ST.totalUSD  = p.usd * ST.pax;
+  ST.totalUSDT = p.usdt * ST.pax;
+
+  var total = ST.formaPago === 'crypto' ? '$' + ST.totalUSDT.toFixed(2) + ' USDT' : 'Q' + ST.totalGTQ.toFixed(0) + ' GTQ';
+  document.getElementById('resumenFecha').style.display = 'block';
+  document.getElementById('resumenFecha').innerHTML =
+    '<div style="display:flex;flex-direction:column;gap:6px;font-size:13px;">'
+    + '<div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">Tour</span><span>' + ST.tourSel.emoji + ' ' + ST.tourSel.nombre + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">Fecha</span><span style="color:var(--accent);">' + ST.fecha + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">Horario</span><span>' + ST.horario + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">Personas</span><span>' + ST.pax + '</span></div>'
+    + '<div style="border-top:1px solid var(--border);padding-top:8px;display:flex;justify-content:space-between;"><span style="color:var(--text2);">Total</span><span style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--secondary);font-weight:700;">' + total + '</span></div>'
+    + '</div>';
+
+  document.getElementById('btnConfirmar').style.display = 'block';
+}
+
+function irAConfirmar() {
+  if (!ST.fecha)   { toast('Selecciona una fecha', 'warning'); return; }
+  if (!ST.horario) { toast('Selecciona un horario', 'warning'); return; }
+
+  var p   = calcPrecio(ST.tourSel.precioBase, ST.formaPago);
+  ST.totalGTQ  = p.gtq * ST.pax;
+  ST.totalUSD  = p.usd * ST.pax;
+  ST.totalUSDT = p.usdt * ST.pax;
+
+  // Render resumen pago
+  var total = ST.formaPago === 'crypto' ? '$' + ST.totalUSDT.toFixed(2) + ' USDT' : 'Q' + ST.totalGTQ.toFixed(0) + ' GTQ';
+  var fpLabel = {efectivo:'💵 Efectivo', tarjeta:'💳 Tarjeta', crypto:'₿ Crypto USDT', paypal:'🅿️ PayPal'}[ST.formaPago] || '';
+
+  document.getElementById('pagoResumen').innerHTML = [
+    row('Tour',      ST.tourSel.emoji + ' ' + ST.tourSel.nombre),
+    row('Fecha',     ST.fecha + ' · ' + ST.horario, 'var(--accent)'),
+    row('Turista',   ST.nombre),
+    row('Personas',  ST.pax),
+    row('Pago',      fpLabel, 'var(--primary)'),
+    '<div style="border-top:1px solid var(--border);padding-top:8px;display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--text2);">Total</span><span style="font-family:Orbitron,sans-serif;font-size:22px;color:var(--secondary);font-weight:700;">' + total + '</span></div>'
+  ].join('');
+
+  // Botones de pago según método
+  var bts = document.getElementById('botonesPago');
+  bts.innerHTML = '';
+  if (ST.formaPago === 'efectivo') {
+    addBtn(bts, '💵 Pagar en oficina → Generar ticket', 'btn-secondary', function(){ pagarEfectivo(); });
+  } else if (ST.formaPago === 'tarjeta') {
+    addBtn(bts, '💳 Ir a pagar con tarjeta', 'btn-primary', function(){ pagarTarjeta(); });
+  } else if (ST.formaPago === 'crypto') {
+    addBtn(bts, '₿ Ver wallet y pagar con USDT', 'btn-primary', function(){ pagarCrypto(); });
+  } else if (ST.formaPago === 'paypal') {
+    addBtn(bts, '🅿️ Pagar con PayPal', 'btn-primary', function(){ pagarPayPal(); });
+  }
+
+  ir('screen-pago');
+}
+
+function row(lbl, val, color) {
+  return '<div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">' + lbl + '</span><span style="color:' + (color||'var(--text)') + ';">' + val + '</span></div>';
+}
+function addBtn(wrap, txt, cls, fn) {
+  var b = document.createElement('button');
+  b.className = 'btn ' + cls;
+  b.textContent = txt;
+  b.onclick = fn;
+  wrap.appendChild(b);
+}
+
+// ── FLUJOS DE PAGO ────────────────────────────────────────────────────
+function generarReservaId() { return 'RES-' + Date.now(); }
+
+function registrarReserva(estado, cb) {
+  ST.reservaId = generarReservaId();
+  var payload = {
+    action:          'registerReserva',
+    influencerId:    INFLUENCER.id,
+    tourId:          ST.tourSel.tourId,
+    tourNombre:      ST.tourSel.nombre,
+    destino:         ST.tourSel.destino || '',
+    fechaTour:       ST.fecha,
+    horario:         ST.horario,
+    personas:        ST.pax,
+    clienteNombre:   ST.nombre,
+    clienteEmail:    ST.email,
+    clienteTel:      ST.tel,
+    clientePais:     ST.pais,
+    clientePasaporte:ST.pasaporte,
+    metodoPago:      ST.formaPago,
+    moneda:          ST.formaPago === 'crypto' ? 'USDT' : 'GTQ',
+    precioBase:      ST.tourSel.precioBase,
+    totalGTQ:        ST.totalGTQ.toFixed(2),
+    totalUSD:        ST.totalUSD.toFixed(2),
+    totalUSDT:       ST.totalUSDT.toFixed(2),
+    estadoPago:      estado,
+    utmSource:       INFLUENCER.utm.source,
+    utmCampaign:     INFLUENCER.utm.campaign,
+    urlOrigen:       window.location.href,
+  };
+  api(payload, function(err, res) {
+    if (res && res.ok) { ST.reservaId = res.reservaId || ST.reservaId; }
+    if (cb) cb(err, res);
+  });
+}
+
+function pagarEfectivo() {
+  registrarReserva('PENDIENTE_CAJA', function() {
+    mostrarTicket('PENDIENTE_CAJA');
+  });
+}
+
+function pagarTarjeta() {
+  registrarReserva('CONFIRMADO', function() {
+    var url = INFLUENCER.recurrenteLink || 'https://app.recurrente.com/s/ryoga-tours';
+    url += '?amount=' + ST.totalUSD.toFixed(2) + '&ref=' + ST.reservaId;
+    setTimeout(function(){ window.open(url, '_blank'); }, 400);
+    setTimeout(function(){ mostrarAprobado(); }, 800);
+  });
+}
+
+function pagarCrypto() {
+  registrarReserva('PENDIENTE_CRYPTO', function() {
+    var wallet = INFLUENCER.walletUSDT;
+    document.getElementById('cryptoMonto').textContent = ST.totalUSDT.toFixed(2) + ' USDT';
+    document.getElementById('cryptoAddr').textContent  = wallet;
+    var qrEl = document.getElementById('cryptoQR');
+    qrEl.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data='
+      + encodeURIComponent(wallet) + '" style="width:180px;height:180px;border-radius:4px;"/>';
+    iniciarTimerCrypto(30 * 60);
+    ir('screen-crypto');
+  });
+}
+
+function pagarPayPal() {
+  registrarReserva('PENDIENTE_PAYPAL', function() {
+    var url = 'https://paypal.me/ryogaclub/' + ST.totalUSD.toFixed(2);
+    setTimeout(function(){ window.open(url, '_blank'); }, 400);
+    iniciarPolling();
+    ir('screen-espera');
+  });
+}
+
+function yaEnvie() {
+  iniciarPolling();
+  ir('screen-espera');
+}
+
+// ── POLLING ───────────────────────────────────────────────────────────
+function iniciarPolling() {
+  var intentos = 0;
+  if (ST.pollingInt) clearInterval(ST.pollingInt);
+  ST.pollingInt = setInterval(function() {
+    intentos++;
+    document.getElementById('esperaMsg').textContent = 'Verificando... intento ' + intentos;
+    api({ action:'getReserva', reservaId: ST.reservaId }, function(err, res) {
+      if (res && res.ok && res.reserva && res.reserva.estadoPago === 'CONFIRMADO') {
+        clearInterval(ST.pollingInt);
+        mostrarAprobado();
+      }
+    });
+    if (intentos >= 60) { clearInterval(ST.pollingInt); toast('Tiempo agotado. Contacta a soporte.', 'warning'); }
+  }, 10000);
+}
+
+// ── TIMER CRYPTO ──────────────────────────────────────────────────────
+function iniciarTimerCrypto(seg) {
+  if (ST.timerInt) clearInterval(ST.timerInt);
+  var r = seg;
+  var el = document.getElementById('cryptoTimer');
+  function tick() {
+    if (r <= 0) { clearInterval(ST.timerInt); if (el) { el.textContent='00:00'; el.style.color='var(--red)'; } return; }
+    var m = Math.floor(r/60), s = r%60;
+    if (el) { el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s; if (r<=120) el.style.color='var(--red)'; }
+    r--;
+  }
+  tick();
+  ST.timerInt = setInterval(tick, 1000);
+}
+
+// ── PANTALLAS APROBADO Y TICKET ───────────────────────────────────────
+function mostrarAprobado() {
+  if (ST.pollingInt) clearInterval(ST.pollingInt);
+  document.getElementById('aprobadoInfo').innerHTML =
+    '<strong style="color:var(--primary);">' + ST.tourSel.nombre + '</strong><br>'
+    + ST.fecha + ' · ' + ST.horario + '<br>ID: ' + ST.reservaId;
+  ir('screen-aprobado');
+}
+
+function descargarTicket() { mostrarTicket('CONFIRMADO'); }
+
+function mostrarTicket(estado) {
+  var fechaObj = ST.fecha ? new Date(ST.fecha + 'T12:00:00') : new Date();
+  var dias  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  var fechaFmt = dias[fechaObj.getDay()] + ' ' + fechaObj.getDate() + ' ' + meses[fechaObj.getMonth()] + ' ' + fechaObj.getFullYear();
+
+  document.getElementById('tkDestino').textContent = ST.tourSel.destino || 'PETÉN';
+  document.getElementById('tkTour').textContent    = ST.tourSel.emoji + ' ' + ST.tourSel.nombre;
+  document.getElementById('tkFecha').textContent   = fechaFmt;
+  document.getElementById('tkHora').textContent    = ST.horario;
+  document.getElementById('tkNombre').textContent  = ST.nombre;
+  document.getElementById('tkPaxPago').textContent = ST.pax + ' personas · ' + ST.formaPago;
+  document.getElementById('tkId').textContent      = ST.reservaId;
+  document.getElementById('tkTotal').textContent   = (ST.formaPago==='crypto' ? '$'+ST.totalUSDT.toFixed(2)+' USDT' : 'Q'+ST.totalGTQ.toFixed(0)+' GTQ');
+
+  var qrEl = document.getElementById('tkQR');
+  var qrData = ST.reservaId + '|' + ST.nombre + '|' + ST.fecha + '|' + ST.horario;
+  qrEl.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data='
+    + encodeURIComponent(qrData) + '" style="width:160px;height:160px;border-radius:4px;"/>';
+
+  ir('screen-ticket');
+}
+
+function compartir() {
+  if (navigator.share) {
+    navigator.share({ title:'Mi tour en Petén', text:'Reservé ' + ST.tourSel.nombre + ' vía ' + INFLUENCER.nombre, url: window.location.href });
+  } else { copiarTexto(window.location.href); toast('Link copiado', 'success'); }
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────
+function copiar(id, msg) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var txt = el.textContent.replace(' USDT','').trim();
+  if (navigator.clipboard) navigator.clipboard.writeText(txt).then(function(){ toast(msg, 'success'); });
+}
+function copiarTexto(txt) {
+  if (navigator.clipboard) navigator.clipboard.writeText(txt);
+}
+
+function toast(msg, tipo) {
+  var wrap=document.getElementById('toastBox'), t=document.createElement('div');
+  t.className='toast '+(tipo||'info'); t.textContent=msg;
+  wrap.appendChild(t);
+  setTimeout(function(){ t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(function(){ t.remove(); },300); },2800);
+}
+
+function crearParticulas() {
+  var wrap=document.getElementById('particles');
+  var cols=[INFLUENCER.theme.primary, INFLUENCER.theme.secondary,'#00E5FF'];
+  for (var i=0;i<18;i++) {
+    var p=document.createElement('div'); p.className='particle';
+    var sz=Math.random()*3+1;
+    p.style.cssText='width:'+sz+'px;height:'+sz+'px;background:'+cols[Math.floor(Math.random()*cols.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*15+10)+'s;animation-delay:'+Math.random()*10+'s;';
+    wrap.appendChild(p);
+  }
+}
+</script>
+</body>
+</html>
