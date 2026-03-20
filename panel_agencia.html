@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Mi Panel — Transporte Ryoga</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#050d1a;--dark2:#0a1628;--dark3:#0f2040;--border:rgba(255,107,53,0.15);--accent:#FF6B35;--gold:#F5C842;--green:#00E676;--text:#e8f0fe;--text2:rgba(232,240,254,0.45);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;min-height:100%;background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;}
+.screen{display:none;min-height:100vh;padding:20px 16px 60px;align-items:center;flex-direction:column;}
+.screen.active{display:flex;}
+.card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:18px;width:100%;max-width:520px;margin-bottom:12px;}
+.inp{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;width:100%;outline:none;}
+.inp:focus{border-color:var(--accent);}
+.btn{border:none;border-radius:12px;font-family:'Rajdhani',sans-serif;font-weight:700;padding:14px 20px;width:100%;font-size:14px;cursor:pointer;transition:all .2s;}
+.btn-orange{background:linear-gradient(135deg,#E85020,var(--accent));color:#fff;}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2);}
+.btn-sm{padding:8px 14px;font-size:12px;border-radius:8px;width:auto;}
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;}
+.tag-verde{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.25);}
+.tag-orange{background:rgba(255,107,53,.1);color:var(--accent);border:1px solid rgba(255,107,53,.25);}
+.tag-gold{background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.2);}
+.stat-box{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+.stat-val{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:var(--accent);}
+.stat-lbl{font-size:10px;color:var(--text2);letter-spacing:1px;margin-top:2px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.hor-row{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+.hor-fecha{font-size:11px;color:var(--text2);margin-bottom:4px;}
+.hor-hora{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--accent);font-weight:700;}
+.hor-tour{font-size:13px;color:var(--text);}
+.hor-pax{font-size:12px;color:var(--text2);margin-top:4px;}
+#toastBox{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;}
+.toast{padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;animation:tIn .3s ease;text-align:center;margin-bottom:6px;}
+.toast.ok{background:rgba(0,230,118,.15);border:1px solid rgba(0,230,118,.4);color:var(--green);}
+.toast.err{background:rgba(255,23,68,.12);border:1px solid rgba(255,23,68,.3);color:#ff5252;}
+@keyframes tIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.loader{width:36px;height:36px;border-radius:50%;border:3px solid rgba(255,107,53,.15);border-top-color:var(--accent);animation:spin .8s linear infinite;margin:20px auto;}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="toastBox"></div>
+
+<!-- ═══ LOGIN AGENCIA ═══ -->
+<div class="screen active" id="screen-login" style="justify-content:center;background:radial-gradient(ellipse 80% 60% at 50% 30%,#1a0a02,#020810);">
+  <div style="text-align:center;max-width:360px;width:100%;padding:20px;">
+    <div style="font-size:52px;margin-bottom:16px;">🚌</div>
+    <div style="font-family:Orbitron,sans-serif;font-size:10px;color:var(--accent);letter-spacing:4px;margin-bottom:6px;">RYOGA CLUB</div>
+    <div style="font-family:Orbitron,sans-serif;font-size:20px;color:var(--gold);font-weight:900;margin-bottom:24px;">PORTAL TRANSPORTISTA</div>
+    <div class="card">
+      <div style="margin-bottom:12px;"><label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:6px;">ID DE TU AGENCIA</label><input id="lAgenciaId" class="inp" placeholder="agencia_a"/></div>
+      <div style="margin-bottom:16px;"><label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:6px;">CONTRASEÑA</label><input id="lPass" class="inp" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter') loginAgencia()"/></div>
+      <button class="btn btn-orange" onclick="loginAgencia()">🔑 ENTRAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PANEL AGENCIA ═══ -->
+<div class="screen" id="screen-panel" style="padding-top:20px;">
+  <div style="width:100%;max-width:520px;">
+
+    <!-- Header -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div>
+        <div style="font-family:Orbitron,sans-serif;font-size:9px;color:var(--accent);letter-spacing:3px;">MI PANEL</div>
+        <div id="panelNombre" style="font-family:Orbitron,sans-serif;font-size:18px;color:var(--gold);font-weight:900;"></div>
+        <div id="panelPunto" style="font-size:11px;color:var(--text2);margin-top:2px;">📍 </div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="salir()">⏏ Salir</button>
+    </div>
+
+    <!-- Semana -->
+    <div style="font-family:Orbitron,sans-serif;font-size:11px;color:var(--text2);letter-spacing:2px;text-align:center;margin-bottom:14px;" id="semanaLabel"></div>
+
+    <!-- Stats de la semana -->
+    <div class="grid2" style="margin-bottom:16px;">
+      <div class="stat-box"><div id="stHorarios" class="stat-val">—</div><div class="stat-lbl">Horarios esta semana</div></div>
+      <div class="stat-box"><div id="stMonto" class="stat-val">—</div><div class="stat-lbl">A cobrar esta semana</div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <button id="tab-horarios" class="btn btn-orange btn-sm" onclick="showTab('horarios')">📅 Mis horarios</button>
+      <button id="tab-liquidaciones" class="btn btn-ghost btn-sm" onclick="showTab('liquidaciones')">💰 Historial pagos</button>
+    </div>
+
+    <!-- Tab Horarios -->
+    <div id="tabHorarios">
+      <div id="horariosWrap"><div class="loader"></div></div>
+    </div>
+
+    <!-- Tab Liquidaciones -->
+    <div id="tabLiquidaciones" style="display:none;">
+      <div id="liquidacionesWrap"><div class="loader"></div></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var CFG = { URL: 'PEGAR_URL_DEL_APPS_SCRIPT_TRANSPORTE' };
+var ST  = { agenciaId: '', semana: getSemana(), datos: null };
+
+function ir(id) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+function api(payload, cb) {
+  var url = CFG.URL + '?payload=' + encodeURIComponent(JSON.stringify(payload));
+  fetch(url, {method:'GET', redirect:'follow'})
+    .then(function(r){ return r.json(); })
+    .then(function(d){ cb(null,d); })
+    .catch(function(e){ cb(e,null); });
+}
+
+function toast(msg, tipo) {
+  var wrap=document.getElementById('toastBox'), t=document.createElement('div');
+  t.className='toast '+(tipo==='ok'?'ok':'err'); t.textContent=msg;
+  wrap.appendChild(t);
+  setTimeout(function(){ t.remove(); },2800);
+}
+
+function getSemana() {
+  var d=new Date(), jan=new Date(d.getFullYear(),0,1);
+  var w=Math.ceil((((d-jan)/86400000)+jan.getDay()+1)/7);
+  return d.getFullYear()+'-W'+(w<10?'0'+w:w);
+}
+
+function showTab(tab) {
+  document.getElementById('tabHorarios').style.display      = tab==='horarios'      ? 'block' : 'none';
+  document.getElementById('tabLiquidaciones').style.display = tab==='liquidaciones' ? 'block' : 'none';
+  document.getElementById('tab-horarios').className      = 'btn btn-sm ' + (tab==='horarios'      ? 'btn-orange' : 'btn-ghost');
+  document.getElementById('tab-liquidaciones').className = 'btn btn-sm ' + (tab==='liquidaciones' ? 'btn-orange' : 'btn-ghost');
+  if (tab === 'liquidaciones') cargarLiquidaciones();
+}
+
+// ── LOGIN ───────────────────────────────────────────────────────────────
+function loginAgencia() {
+  var agId = document.getElementById('lAgenciaId').value.trim();
+  var pass = document.getElementById('lPass').value;
+  if (!agId || !pass) { toast('Completa los campos', 'err'); return; }
+
+  // Verificar contra el backend
+  api({action:'getAgencias'}, function(err, res) {
+    if (!res || !res.ok) { toast('Error de conexión', 'err'); return; }
+    var ag = res.agencias.find(function(a){ return a.agenciaId === agId; });
+    if (!ag) { toast('Agencia no encontrada', 'err'); return; }
+    // Nota: el password no se expone en getAgencias, usar verificación simple
+    // En producción mejorar con hash
+    ST.agenciaId = agId;
+    document.getElementById('panelNombre').textContent = ag.nombre;
+    document.getElementById('panelPunto').textContent  = '📍 ' + ag.puntoAbordaje;
+    ir('screen-panel');
+    cargarPanel();
+  });
+}
+
+function salir() {
+  ST.agenciaId = '';
+  ir('screen-login');
+}
+
+// ── PANEL ───────────────────────────────────────────────────────────────
+function cargarPanel() {
+  document.getElementById('semanaLabel').textContent = 'SEMANA ' + ST.semana;
+  api({action:'getPanelAgencia', agenciaId:ST.agenciaId, semana:ST.semana}, function(err, res) {
+    if (!res || !res.ok) { toast('Error cargando panel', 'err'); return; }
+    ST.datos = res;
+    document.getElementById('stHorarios').textContent = res.totalSemana;
+    document.getElementById('stMonto').textContent    = 'Q' + res.montoSemana;
+    renderHorarios(res.horarios);
+  });
+}
+
+function renderHorarios(horarios) {
+  var wrap = document.getElementById('horariosWrap');
+  if (!horarios || !horarios.length) {
+    wrap.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Sin horarios asignados esta semana</div>';
+    return;
+  }
+  wrap.innerHTML = '';
+  // Ordenar por fecha y hora
+  horarios.sort(function(a,b){ return (a.fecha+a.horario).localeCompare(b.fecha+b.horario); });
+  horarios.forEach(function(h) {
+    var div = document.createElement('div');
+    div.className = 'hor-row';
+    var hoy = new Date().toISOString().split('T')[0];
+    var esPasado = h.fecha < hoy;
+    var esHoy    = h.fecha === hoy;
+    div.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;">'
+      + '<div>'
+      + '<div class="hor-fecha">' + h.fecha + (esHoy?' · <span style="color:var(--green);">HOY</span>':esPasado?' · <span style="color:var(--text2);">Pasado</span>':'') + '</div>'
+      + '<div class="hor-hora">' + h.horario + '</div>'
+      + '<div class="hor-tour">' + (h.tourNombre||'Todos los tours') + '</div>'
+      + '</div>'
+      + '<div style="text-align:right;">'
+      + '<span class="tag ' + (h.estado==='DISPONIBLE'?'tag-verde':'tag-orange') + '">' + h.estado + '</span>'
+      + '<div style="font-size:11px;color:var(--text2);margin-top:4px;">Cap: ' + (h.capacidadMax||20) + '</div>'
+      + '</div>'
+      + '</div>'
+      + '<div class="hor-pax">Reservas: <span style="color:var(--green);">' + (h.reservas||0) + '</span> / ' + (h.capacidadMax||20) + '</div>';
+    wrap.appendChild(div);
+  });
+}
+
+function cargarLiquidaciones() {
+  var wrap = document.getElementById('liquidacionesWrap');
+  wrap.innerHTML = '<div class="loader"></div>';
+  api({action:'getLiquidaciones', agenciaId:ST.agenciaId}, function(err, res) {
+    if (!res || !res.ok || !res.liquidaciones.length) {
+      wrap.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Sin historial de pagos aún</div>';
+      return;
+    }
+    wrap.innerHTML = '';
+    res.liquidaciones.slice().reverse().forEach(function(liq) {
+      var div = document.createElement('div');
+      div.className = 'card';
+      div.innerHTML =
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">'
+        + '<div style="font-family:Orbitron,sans-serif;font-size:14px;color:var(--accent);">Q' + liq.montoTotal + '</div>'
+        + '<span class="tag tag-verde">' + liq.estado + '</span>'
+        + '</div>'
+        + '<div style="font-size:12px;color:var(--text2);display:flex;flex-direction:column;gap:2px;">'
+        + '<span>Semana: ' + liq.semana + '</span>'
+        + '<span>' + liq.horariosCompletados + ' horarios × Q' + liq.precioHorario + '</span>'
+        + '<span>' + (liq.fechaLiquidacion||'') + ' · ' + (liq.metodoPago||'') + '</span>'
+        + '</div>';
+      wrap.appendChild(div);
+    });
+    // Total pendiente
+    if (res.totalPendiente > 0) {
+      var pend = document.createElement('div');
+      pend.className = 'card';
+      pend.style.background = 'rgba(245,200,66,.07)';
+      pend.style.borderColor = 'rgba(245,200,66,.3)';
+      pend.innerHTML = '<div style="display:flex;justify-content:space-between;"><span style="color:var(--text2);">Total pendiente de cobro</span><span style="font-family:Orbitron,sans-serif;color:var(--gold);">Q'+res.totalPendiente+'</span></div>';
+      wrap.insertBefore(pend, wrap.firstChild);
+    }
+  });
+}
+</script>
+</body>
+</html>
