@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publicaciones NFT - Servicios Dev GT</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #020010;
+    font-family: 'Exo 2', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, #0d0050 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, #001a3d 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  h1.titulo-principal {
+    font-family: 'Orbitron', monospace;
+    color: #00f5ff;
+    text-align: center;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px #00f5ff88;
+    position: relative; z-index: 1;
+  }
+
+  .subtitulo {
+    color: #7b5ea7;
+    text-align: center;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+    position: relative; z-index: 1;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 380px));
+    gap: 32px;
+    justify-content: center;
+    position: relative; z-index: 1;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    aspect-ratio: 1 / 1.2;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card:hover {
+    transform: translateY(-10px) scale(1.02);
+  }
+
+  /* CARD 1 - Landing Pages - Cyan/Electric */
+  .card-1 {
+    background: linear-gradient(135deg, #000d1a 0%, #001433 40%, #000820 100%);
+    box-shadow: 0 0 40px #00f5ff33, inset 0 0 60px #00f5ff08;
+    border: 1px solid #00f5ff44;
+  }
+  .card-1:hover { box-shadow: 0 20px 80px #00f5ff55, inset 0 0 60px #00f5ff15; }
+
+  /* CARD 2 - ERP/Sistemas - Gold/Amber */
+  .card-2 {
+    background: linear-gradient(135deg, #0d0800 0%, #1a1000 40%, #0a0600 100%);
+    box-shadow: 0 0 40px #ffaa0033, inset 0 0 60px #ffaa0008;
+    border: 1px solid #ffaa0044;
+  }
+  .card-2:hover { box-shadow: 0 20px 80px #ffaa0055, inset 0 0 60px #ffaa0015; }
+
+  /* CARD 3 - E-commerce - Magenta/Pink */
+  .card-3 {
+    background: linear-gradient(135deg, #0d0011 0%, #1a0022 40%, #080010 100%);
+    box-shadow: 0 0 40px #ff00aa33, inset 0 0 60px #ff00aa08;
+    border: 1px solid #ff00aa44;
+  }
+  .card-3:hover { box-shadow: 0 20px 80px #ff00aa55, inset 0 0 60px #ff00aa15; }
+
+  /* CARD 4 - IA/Apps - Green neon */
+  .card-4 {
+    background: linear-gradient(135deg, #000d05 0%, #001408 40%, #000b03 100%);
+    box-shadow: 0 0 40px #00ff6633, inset 0 0 60px #00ff6608;
+    border: 1px solid #00ff6644;
+  }
+  .card-4:hover { box-shadow: 0 20px 80px #00ff6655, inset 0 0 60px #00ff6615; }
+
+  /* Card visual top section */
+  .card-visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+  }
+
+  .card-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,0.015) 30px,
+      rgba(255,255,255,0.015) 31px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,0.015) 30px,
+      rgba(255,255,255,0.015) 31px
+    );
+  }
+
+  .icon-wrapper {
+    width: 140px;
+    height: 140px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    animation: spin 8s linear infinite;
+  }
+
+  .icon-ring-2 {
+    inset: 12px;
+    animation: spin 5s linear infinite reverse;
+  }
+
+  .icon-ring-3 {
+    inset: 24px;
+    animation: spin 12s linear infinite;
+    border-style: dashed;
+    opacity: 0.5;
+  }
+
+  .card-1 .icon-ring { border-color: #00f5ff55; }
+  .card-1 .icon-ring-2 { border-color: #00f5ff33; }
+  .card-1 .icon-ring-3 { border-color: #00f5ff22; }
+
+  .card-2 .icon-ring { border-color: #ffaa0055; }
+  .card-2 .icon-ring-2 { border-color: #ffaa0033; }
+  .card-2 .icon-ring-3 { border-color: #ffaa0022; }
+
+  .card-3 .icon-ring { border-color: #ff00aa55; }
+  .card-3 .icon-ring-2 { border-color: #ff00aa33; }
+  .card-3 .icon-ring-3 { border-color: #ff00aa22; }
+
+  .card-4 .icon-ring { border-color: #00ff6655; }
+  .card-4 .icon-ring-2 { border-color: #00ff6633; }
+  .card-4 .icon-ring-3 { border-color: #00ff6622; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .icon-svg {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 20px currentColor);
+  }
+
+  .card-1 .icon-svg { color: #00f5ff; }
+  .card-2 .icon-svg { color: #ffaa00; }
+  .card-3 .icon-svg { color: #ff00aa; }
+  .card-4 .icon-svg { color: #00ff66; }
+
+  /* Glitch number top-right */
+  .nft-id {
+    position: absolute;
+    top: 16px; right: 16px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    opacity: 0.5;
+  }
+  .card-1 .nft-id { color: #00f5ff; }
+  .card-2 .nft-id { color: #ffaa00; }
+  .card-3 .nft-id { color: #ff00aa; }
+  .card-4 .nft-id { color: #00ff66; }
+
+  /* Guatemala badge */
+  .gt-badge {
+    position: absolute;
+    top: 16px; left: 16px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    text-transform: uppercase;
+  }
+
+  /* Bottom info */
+  .card-info {
+    padding: 20px 22px 22px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .service-tag {
+    font-size: 0.58rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+  .card-1 .service-tag { color: #00f5ff; }
+  .card-2 .service-tag { color: #ffaa00; }
+  .card-3 .service-tag { color: #ff00aa; }
+  .card-4 .service-tag { color: #00ff66; }
+
+  .service-name {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .service-desc {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .price-label { font-size: 0.6rem; color: rgba(255,255,255,0.35); letter-spacing: 2px; }
+  .price-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  .card-1 .price-value { color: #00f5ff; text-shadow: 0 0 15px #00f5ff88; }
+  .card-2 .price-value { color: #ffaa00; text-shadow: 0 0 15px #ffaa0088; }
+  .card-3 .price-value { color: #ff00aa; text-shadow: 0 0 15px #ff00aa88; }
+  .card-4 .price-value { color: #00ff66; text-shadow: 0 0 15px #00ff6688; }
+
+  .cta-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.65rem;
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 700;
+  }
+  .card-1 .cta-btn { background: #00f5ff22; color: #00f5ff; border: 1px solid #00f5ff55; }
+  .card-1 .cta-btn:hover { background: #00f5ff; color: #000; }
+  .card-2 .cta-btn { background: #ffaa0022; color: #ffaa00; border: 1px solid #ffaa0055; }
+  .card-2 .cta-btn:hover { background: #ffaa00; color: #000; }
+  .card-3 .cta-btn { background: #ff00aa22; color: #ff00aa; border: 1px solid #ff00aa55; }
+  .card-3 .cta-btn:hover { background: #ff00aa; color: #fff; }
+  .card-4 .cta-btn { background: #00ff6622; color: #00ff66; border: 1px solid #00ff6655; }
+  .card-4 .cta-btn:hover { background: #00ff66; color: #000; }
+
+  /* Scan line animation */
+  .card-visual::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0.15;
+    animation: scan 4s ease-in-out infinite;
+    top: 0;
+  }
+  .card-1 .card-visual::after { color: #00f5ff; animation-delay: 0s; }
+  .card-2 .card-visual::after { color: #ffaa00; animation-delay: 1s; }
+  .card-3 .card-visual::after { color: #ff00aa; animation-delay: 2s; }
+  .card-4 .card-visual::after { color: #00ff66; animation-delay: 3s; }
+
+  @keyframes scan {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 0.2; }
+    90% { opacity: 0.2; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  /* Floating particles */
+  .particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    animation: float-up 6s ease-in infinite;
+    opacity: 0;
+  }
+  @keyframes float-up {
+    0% { transform: translateY(0) scale(0); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 0.5; }
+    100% { transform: translateY(-120px) scale(0); opacity: 0; }
+  }
+
+  .note {
+    text-align: center;
+    color: rgba(255,255,255,0.2);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    margin-top: 50px;
+    position: relative; z-index: 1;
+  }
+
+  .canva-tip {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 24px 32px;
+    max-width: 800px;
+    margin: 40px auto 20px;
+    position: relative; z-index: 1;
+  }
+  .canva-tip h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: #00f5ff;
+    margin-bottom: 14px;
+  }
+  .canva-tip ul {
+    list-style: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.78rem;
+    line-height: 2;
+  }
+  .canva-tip ul li::before {
+    content: '▸ ';
+    color: #7b5ea7;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="titulo-principal">Dev Services GT</h1>
+<p class="subtitulo">MARKETPLACE · SERVICIOS DIGITALES · GUATEMALA</p>
+
+<div class="grid">
+
+  <!-- CARD 1: Landing Pages -->
+  <div class="card card-1">
+    <div class="card-visual">
+      <div class="gt-badge">🇬🇹 GT</div>
+      <div class="nft-id">#WEB-001</div>
+      <div class="icon-wrapper">
+        <div class="icon-ring"></div>
+        <div class="icon-ring icon-ring-2"></div>
+        <div class="icon-ring icon-ring-3"></div>
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M8 21h8M12 17v4"/>
+          <path d="M6 7h.01M9 7h6"/>
+          <path d="M6 11h12"/>
+        </svg>
+        <div class="particle" style="left:30%;bottom:10%;background:#00f5ff;animation-delay:0s;"></div>
+        <div class="particle" style="left:60%;bottom:20%;background:#00f5ff;animation-delay:2s;"></div>
+        <div class="particle" style="left:45%;bottom:5%;background:#00f5ff;animation-delay:4s;"></div>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="service-tag">◈ Desarrollo Web</div>
+      <div class="service-name">Landing Page Profesional</div>
+      <div class="service-desc">Sitio web moderno, rápido y optimizado para SEO. Diseño único que convierte visitas en clientes para tu negocio guatemalteco.</div>
+      <div class="card-footer">
+        <div>
+          <div class="price-label">DESDE</div>
+          <div class="price-value">Q 1,500</div>
+        </div>
+        <button class="cta-btn">Cotizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: ERP/Sistemas -->
+  <div class="card card-2">
+    <div class="card-visual">
+      <div class="gt-badge">🇬🇹 GT</div>
+      <div class="nft-id">#SYS-002</div>
+      <div class="icon-wrapper">
+        <div class="icon-ring"></div>
+        <div class="icon-ring icon-ring-2"></div>
+        <div class="icon-ring icon-ring-3"></div>
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <path d="M14 17.5h7M17.5 14v7"/>
+        </svg>
+        <div class="particle" style="left:25%;bottom:15%;background:#ffaa00;animation-delay:1s;"></div>
+        <div class="particle" style="left:65%;bottom:25%;background:#ffaa00;animation-delay:3s;"></div>
+        <div class="particle" style="left:50%;bottom:8%;background:#ffaa00;animation-delay:5s;"></div>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="service-tag">◈ Sistema de Gestión</div>
+      <div class="service-name">Sistema ERP / Admin Panel</div>
+      <div class="service-desc">Control total de tu negocio: inventario, ventas, reportes y usuarios. Solución a medida para empresas guatemaltecas.</div>
+      <div class="card-footer">
+        <div>
+          <div class="price-label">DESDE</div>
+          <div class="price-value">Q 4,500</div>
+        </div>
+        <button class="cta-btn">Cotizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: E-commerce -->
+  <div class="card card-3">
+    <div class="card-visual">
+      <div class="gt-badge">🇬🇹 GT</div>
+      <div class="nft-id">#SHOP-003</div>
+      <div class="icon-wrapper">
+        <div class="icon-ring"></div>
+        <div class="icon-ring icon-ring-2"></div>
+        <div class="icon-ring icon-ring-3"></div>
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <div class="particle" style="left:35%;bottom:12%;background:#ff00aa;animation-delay:0.5s;"></div>
+        <div class="particle" style="left:58%;bottom:22%;background:#ff00aa;animation-delay:2.5s;"></div>
+        <div class="particle" style="left:42%;bottom:6%;background:#ff00aa;animation-delay:4.5s;"></div>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="service-tag">◈ Tienda Digital</div>
+      <div class="service-name">Tienda Online / E-Commerce</div>
+      <div class="service-desc">Vende 24/7 con pagos en línea, catálogo de productos y gestión de pedidos. Integrado con métodos de pago locales en Guatemala.</div>
+      <div class="card-footer">
+        <div>
+          <div class="price-label">DESDE</div>
+          <div class="price-value">Q 3,200</div>
+        </div>
+        <button class="cta-btn">Cotizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: IA / Apps -->
+  <div class="card card-4">
+    <div class="card-visual">
+      <div class="gt-badge">🇬🇹 GT</div>
+      <div class="nft-id">#AI-004</div>
+      <div class="icon-wrapper">
+        <div class="icon-ring"></div>
+        <div class="icon-ring icon-ring-2"></div>
+        <div class="icon-ring icon-ring-3"></div>
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2a4 4 0 014 4v1h1a3 3 0 010 6h-1v1a4 4 0 01-8 0v-1H7a3 3 0 010-6h1V6a4 4 0 014-4z"/>
+          <path d="M9 12h.01M12 12h.01M15 12h.01"/>
+        </svg>
+        <div class="particle" style="left:30%;bottom:18%;background:#00ff66;animation-delay:1.5s;"></div>
+        <div class="particle" style="left:62%;bottom:10%;background:#00ff66;animation-delay:3.5s;"></div>
+        <div class="particle" style="left:48%;bottom:25%;background:#00ff66;animation-delay:5.5s;"></div>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="service-tag">◈ Inteligencia Artificial</div>
+      <div class="service-name">Chatbot IA & Apps Inteligentes</div>
+      <div class="service-desc">Automatiza la atención al cliente con IA. Chatbots entrenados para tu negocio, respuestas 24/7 en español guatemalteco.</div>
+      <div class="card-footer">
+        <div>
+          <div class="price-label">DESDE</div>
+          <div class="price-value">Q 2,800</div>
+        </div>
+        <button class="cta-btn">Cotizar</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="canva-tip">
+  <h3>◈ Guía para Canva</h3>
+  <ul>
+    <li>Tamaño recomendado: <strong>1080 x 1080 px</strong> (cuadrado) o <strong>1080 x 1350 px</strong> (portrait) para Marketplace</li>
+    <li>Fondo: Negro puro <strong>#000000</strong> o degradado oscuro <strong>#020010 → #000820</strong></li>
+    <li>Tipografía principal: <strong>Orbitron</strong> (disponible en Canva) para títulos</li>
+    <li>Tipografía secundaria: <strong>Exo 2</strong> o <strong>Rajdhani</strong> para texto descriptivo</li>
+    <li>Paleta: Cyan <strong>#00F5FF</strong> / Dorado <strong>#FFAA00</strong> / Magenta <strong>#FF00AA</strong> / Verde <strong>#00FF66</strong></li>
+    <li>Agregar efecto <strong>glow/brillo</strong> en los íconos usando sombra exterior del mismo color</li>
+    <li>Incluir siempre: Bandera 🇬🇹, ID del servicio (#WEB-001), y precio en Quetzales</li>
+  </ul>
+</div>
+
+<p class="note">DESARROLLADOR WEB · GUATEMALA · 2025 · SERVICIOS DIGITALES</p>
+
+</body>
+</html>
