@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOVIMIX® – Nutrición Mineral para Ganado</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── BRAND PALETTE (extracted from images) ── */
+  :root {
+    --teal-dark:  #1d4a4a;   /* dark background of infographic */
+    --teal-mid:   #2e6f6f;   /* mid teal */
+    --teal-light: #3d8b8b;
+    --gold:       #c9963a;   /* gold band at bottom of infographic */
+    --gold-light: #e5b96a;
+    --blue-brand: #1a3a6b;   /* BOVIMIX® logo dark blue */
+    --blue-mid:   #1e4d94;
+    --white:      #ffffff;
+    --off-white:  #f4f8f4;
+    --dark-text:  #162020;
+    --gray:       #eef2f0;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Open Sans', sans-serif; background:var(--white); color:var(--dark-text); overflow-x:hidden; }
+
+  h1,h2,h3,h4 { font-family:'Montserrat', sans-serif; }
+
+  /* ══ NAV ══ */
+  .nav {
+    background: var(--blue-brand);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 22px;
+    position:sticky; top:0; z-index:100;
+    box-shadow:0 2px 12px rgba(0,0,0,.35);
+  }
+  .brand { font-family:'Montserrat',sans-serif; font-weight:900; font-size:1.4rem; color:var(--white); letter-spacing:2px; }
+  .brand sup { font-size:.6rem; vertical-align:super; }
+  .brand-sub { font-size:.55rem; font-weight:600; letter-spacing:3px; color:var(--gold-light); display:block; margin-top:-4px; }
+
+  /* ── RECOMMENDATIONS BUTTON in NAV ── */
+  .btn-rec {
+    background: var(--gold);
+    color: var(--white);
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:.78rem;
+    padding:9px 16px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    display:flex; align-items:center; gap:6px;
+    letter-spacing:.5px;
+    transition:background .2s, transform .2s;
+    box-shadow:0 3px 10px rgba(201,150,58,.4);
+  }
+  .btn-rec:hover { background:var(--gold-light); transform:scale(1.04); }
+  .btn-rec .icon-rec { font-size:1rem; }
+
+  /* ══ HERO ══ */
+  .hero {
+    background: linear-gradient(150deg, var(--teal-dark) 0%, var(--teal-mid) 55%, #2a5f3f 100%);
+    padding:50px 24px 56px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute; top:-80px; right:-80px;
+    width:280px; height:280px;
+    background:radial-gradient(circle, rgba(201,150,58,.25), transparent 70%);
+    border-radius:50%;
+  }
+  .hero::after {
+    content:'';
+    position:absolute; bottom:0; left:0; right:0;
+    height:5px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  }
+
+  .hero-eyebrow {
+    display:inline-block;
+    background:rgba(201,150,58,.2);
+    border:1px solid var(--gold);
+    color:var(--gold-light);
+    font-family:'Montserrat',sans-serif;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    padding:5px 16px;
+    border-radius:30px;
+    margin-bottom:18px;
+  }
+  .hero h1 {
+    font-size:2.4rem;
+    font-weight:900;
+    color:var(--white);
+    line-height:1.1;
+    margin-bottom:12px;
+    text-shadow:0 2px 8px rgba(0,0,0,.3);
+  }
+  .hero h1 .accent { color:var(--gold-light); display:block; }
+  .hero-sub {
+    font-size:1rem;
+    font-weight:600;
+    color:rgba(255,255,255,.85);
+    max-width:340px;
+    margin:0 auto 28px;
+    line-height:1.6;
+  }
+
+  .bag-wrap {
+    position:relative; display:inline-block;
+    margin-bottom:28px;
+    animation:float 3.2s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .bag-wrap img { width:210px; filter:drop-shadow(0 16px 32px rgba(0,0,0,.35)); border-radius:10px; }
+
+  .badge-free {
+    position:absolute; top:-10px; right:-10px;
+    background:var(--gold);
+    color:var(--white);
+    font-family:'Montserrat',sans-serif;
+    font-weight:900;
+    font-size:.75rem;
+    width:62px; height:62px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; line-height:1.2;
+    box-shadow:0 4px 14px rgba(201,150,58,.55);
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+
+  /* WA BUTTON */
+  .btn-wa {
+    background:#25d366;
+    color:var(--white);
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:1.05rem;
+    padding:15px 30px;
+    border-radius:50px;
+    border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:10px;
+    text-decoration:none;
+    box-shadow:0 6px 22px rgba(37,211,102,.45);
+    transition:transform .2s,box-shadow .2s;
+    margin-bottom:10px;
+  }
+  .btn-wa:hover { transform:scale(1.04); box-shadow:0 10px 28px rgba(37,211,102,.55); }
+  .btn-wa svg { width:24px; height:24px; flex-shrink:0; }
+
+  .hero-note { font-size:.8rem; color:rgba(255,255,255,.65); font-weight:600; }
+
+  /* ══ BENEFITS ══ */
+  .benefits { background:var(--off-white); padding:48px 20px 40px; text-align:center; }
+  .section-title { font-size:1.8rem; font-weight:900; color:var(--teal-dark); margin-bottom:6px; }
+  .section-title .accent { color:var(--gold); }
+  .section-sub { font-size:.92rem; color:#556; font-weight:600; margin-bottom:28px; }
+
+  .cards { display:grid; grid-template-columns:1fr 1fr; gap:13px; max-width:480px; margin:0 auto; }
+  .card {
+    background:var(--white);
+    border-radius:16px;
+    padding:20px 14px;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+    border-top:3px solid var(--gold);
+    transition:transform .2s;
+  }
+  .card:hover { transform:translateY(-4px); }
+  .card .icon { font-size:2.2rem; }
+  .card h3 { font-size:.95rem; font-weight:800; color:var(--teal-dark); line-height:1.2; }
+  .card p { font-size:.8rem; color:#555; font-weight:600; line-height:1.4; }
+
+  /* ══ HOW ══ */
+  .how { background: var(--blue-brand); padding:48px 24px; text-align:center; color:var(--white); }
+  .how .section-title { color:var(--white); }
+  .how .section-title .accent { color:var(--gold-light); }
+  .how .section-sub { color:rgba(255,255,255,.75); }
+  .steps { display:flex; flex-direction:column; gap:14px; max-width:420px; margin:0 auto; }
+  .step {
+    background:rgba(255,255,255,.1);
+    border-left:4px solid var(--gold);
+    border-radius:12px;
+    padding:16px 18px;
+    display:flex; align-items:center; gap:14px; text-align:left;
+  }
+  .step-num {
+    background:var(--gold); color:var(--white);
+    font-family:'Montserrat',sans-serif; font-weight:900; font-size:1.3rem;
+    width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .step-text h4 { font-size:1rem; font-weight:800; margin-bottom:2px; }
+  .step-text p { font-size:.82rem; opacity:.8; font-weight:600; }
+
+  /* ══ PRICING ══ */
+  .pricing { background:var(--gray); padding:48px 20px; text-align:center; }
+  .price-cards { display:flex; flex-direction:column; gap:11px; max-width:440px; margin:0 auto 26px; }
+  .price-card {
+    background:var(--white);
+    border-radius:14px; padding:15px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+    box-shadow:0 2px 10px rgba(0,0,0,.07);
+    border-left:5px solid var(--teal-mid);
+    transition:transform .2s;
+    position:relative;
+  }
+  .price-card:hover { transform:scale(1.02); }
+  .price-card.best { border-left-color:var(--gold); background:#fffaf2; }
+  .best-label {
+    position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+    background:var(--gold); color:var(--white);
+    font-family:'Montserrat',sans-serif; font-weight:800;
+    font-size:.68rem; padding:3px 14px; border-radius:20px; white-space:nowrap;
+    letter-spacing:.5px;
+  }
+  .pc-range { font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.05rem; color:var(--teal-dark); }
+  .pc-qty { font-size:.78rem; color:#777; font-weight:600; }
+  .pc-price { font-family:'Montserrat',sans-serif; font-weight:900; font-size:1.5rem; color:var(--teal-dark); line-height:1; }
+  .pc-ship { font-size:.73rem; font-weight:700; color:var(--blue-mid); margin-top:2px; }
+  .pc-ship.flete { color:#999; }
+
+  /* ══ TRUST ══ */
+  .trust { background:var(--teal-dark); padding:36px 20px; text-align:center; }
+  .trust .section-title { color:var(--white); }
+  .trust .section-title .accent { color:var(--gold-light); }
+  .trust-row { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:20px; }
+  .trust-item { display:flex; flex-direction:column; align-items:center; gap:6px; min-width:80px; }
+  .trust-icon { font-size:2rem; }
+  .trust-label { font-size:.78rem; font-weight:700; color:rgba(255,255,255,.85); line-height:1.3; }
+
+  /* ══ TESTIMONIALS ══ */
+  .testimonials { background:var(--off-white); padding:48px 20px; text-align:center; }
+  .testi-cards { display:flex; flex-direction:column; gap:13px; max-width:440px; margin:0 auto; }
+  .testi {
+    background:var(--white); border-radius:16px; padding:18px 20px; text-align:left;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+    border-bottom:3px solid var(--gold);
+  }
+  .testi-stars { color:var(--gold); font-size:1rem; margin-bottom:6px; }
+  .testi-text { font-size:.88rem; font-weight:600; color:#333; line-height:1.55; margin-bottom:10px; font-style:italic; }
+  .testi-name { font-size:.8rem; font-weight:800; color:var(--teal-dark); }
+
+  /* ══ FINAL CTA ══ */
+  .final-cta {
+    background: linear-gradient(150deg, var(--teal-dark) 0%, var(--blue-brand) 100%);
+    padding:52px 24px; text-align:center; color:var(--white);
+    position:relative; overflow:hidden;
+  }
+  .final-cta::before {
+    content:'';
+    position:absolute; bottom:0; left:0; right:0;
+    height:4px;
+    background:linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  }
+  .final-cta h2 { font-size:1.9rem; font-weight:900; margin-bottom:8px; line-height:1.2; }
+  .final-cta p { font-size:.95rem; font-weight:600; opacity:.85; margin-bottom:28px; }
+  .cta-big {
+    background:#25d366; color:var(--white);
+    font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.2rem;
+    padding:17px 34px; border-radius:50px; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:12px;
+    text-decoration:none;
+    box-shadow:0 8px 24px rgba(0,0,0,.25);
+    transition:transform .2s;
+  }
+  .cta-big:hover { transform:scale(1.05); }
+  .cta-big svg { width:28px; height:28px; }
+  .footer-note { margin-top:16px; font-size:.78rem; opacity:.6; font-weight:600; }
+
+  /* ══ FOOTER ══ */
+  footer { background:#0f2020; color:rgba(255,255,255,.5); text-align:center; padding:16px; font-size:.75rem; font-weight:600; }
+  footer strong { color:var(--gold-light); }
+
+  /* ══ FLOATING WA ══ */
+  .cta-fixed {
+    position:fixed; bottom:22px; right:20px; z-index:200;
+    background:#25d366; color:var(--white);
+    font-family:'Montserrat',sans-serif; font-weight:800; font-size:.95rem;
+    padding:13px 20px; border-radius:50px;
+    display:flex; align-items:center; gap:8px;
+    text-decoration:none;
+    box-shadow:0 6px 20px rgba(37,211,102,.5);
+    animation:bounce 2.2s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+  .cta-fixed svg { width:22px; height:22px; }
+
+  /* ══ MODAL ══ */
+  .modal-overlay {
+    display:none;
+    position:fixed; inset:0; z-index:500;
+    background:rgba(10,25,25,.75);
+    backdrop-filter:blur(4px);
+    align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.open { display:flex; }
+
+  .modal {
+    background:var(--white);
+    border-radius:20px;
+    max-width:420px; width:100%;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+    animation:slideUp .3s ease;
+    position:relative;
+  }
+  @keyframes slideUp { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+  .modal-header {
+    background: linear-gradient(135deg, var(--teal-dark), var(--blue-brand));
+    padding:16px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:3px solid var(--gold);
+  }
+  .modal-title {
+    font-family:'Montserrat',sans-serif;
+    font-weight:900; font-size:1.1rem;
+    color:var(--white); letter-spacing:.5px;
+  }
+  .modal-title span { color:var(--gold-light); }
+
+  .modal-close {
+    background:rgba(255,255,255,.15);
+    border:none; color:var(--white);
+    width:32px; height:32px; border-radius:50%;
+    font-size:1.1rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .2s;
+    flex-shrink:0;
+  }
+  .modal-close:hover { background:rgba(255,255,255,.3); }
+
+  .modal-body { padding:0; }
+  .modal-body img {
+    width:100%; display:block;
+  }
+
+  .modal-footer {
+    padding:14px 20px;
+    background:var(--gold);
+    text-align:center;
+  }
+  .modal-footer p {
+    color:var(--white); font-weight:700; font-size:.82rem; line-height:1.5;
+  }
+
+  .modal-wa {
+    margin-top:12px;
+    display:inline-flex; align-items:center; gap:8px;
+    background:#25d366; color:var(--white);
+    font-family:'Montserrat',sans-serif; font-weight:800; font-size:.9rem;
+    padding:11px 22px; border-radius:40px; text-decoration:none;
+    box-shadow:0 4px 14px rgba(37,211,102,.4);
+    transition:transform .2s;
+  }
+  .modal-wa:hover { transform:scale(1.04); }
+  .modal-wa svg { width:20px; height:20px; }
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div>
+    <div class="brand">BOVIMIX<sup>®</sup></div>
+    <div class="brand-sub">NUTRICIÓN MINERAL PARA GANADO</div>
+  </div>
+  <button class="btn-rec" onclick="document.getElementById('modal').classList.add('open')">
+    <span class="icon-rec">📋</span> Recomendaciones
+  </button>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-eyebrow">🐄 SDG Nutrition · Guatemala</div>
+  <h1>Tu ganado más<span class="accent">fuerte y sano</span></h1>
+  <p class="hero-sub">Minerales de alta calidad que tu ganado necesita para crecer bien, producir más leche y mantenerse saludable.</p>
+
+  <div class="bag-wrap">
+    <img src="SDG_Bovimix__02.png" alt="Saco Bovimix">
+    <div class="badge-free">¡ENVÍO GRATIS!</div>
+  </div>
+
+  <br>
+  <a class="btn-wa" href="https://wa.me/50239747110?text=Hola%2C%20quiero%20pedir%20sacos%20de%20BOVIMIX%20%F0%9F%90%84" target="_blank">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    ¡Pedir por WhatsApp!
+  </a>
+  <p class="hero-note">⚡ Respuesta en minutos · Sin complicaciones</p>
+</section>
+
+<!-- ══ BENEFITS ══ -->
+<section class="benefits">
+  <h2 class="section-title">¿Por qué <span class="accent">BOVIMIX®</span>?</h2>
+  <p class="section-sub">Simple: porque tu ganado lo merece 💪</p>
+  <div class="cards">
+    <div class="card"><div class="icon">🥛</div><h3>Más leche</h3><p>Vacas bien nutridas producen más y mejor</p></div>
+    <div class="card"><div class="icon">💪</div><h3>Más fuerte</h3><p>Huesos y músculos bien desarrollados</p></div>
+    <div class="card"><div class="icon">🐄</div><h3>Más sano</h3><p>Menos enfermedades y visitas al veterinario</p></div>
+    <div class="card"><div class="icon">🌱</div><h3>Crece mejor</h3><p>Terneros que se desarrollan rápido y bien</p></div>
+    <div class="card"><div class="icon">🏆</div><h3>Probado</h3><p>Miles de ganaderos ya lo usan con éxito</p></div>
+    <div class="card"><div class="icon">🚀</div><h3>Fácil de usar</h3><p>Solo mezcla con el alimento y listo</p></div>
+  </div>
+</section>
+
+<!-- ══ HOW ══ -->
+<section class="how">
+  <h2 class="section-title">¿Cómo <span class="accent">pedirlo</span>?</h2>
+  <p class="section-sub">¡Tan fácil que hasta un niño puede hacerlo! 😄</p>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Dale click al botón verde 💚</h4><p>El de WhatsApp que ves en la página</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Dinos cuántos sacos quieres 🛍️</h4><p>Te damos el mejor precio según tu cantidad</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Coordinamos la entrega 🚛</h4><p>Te llevamos los sacos hasta tu puerta</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-text"><h4>¡Tu ganado feliz! 🐄🎉</h4><p>Resultados visibles desde el primer mes</p></div></div>
+  </div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section class="pricing">
+  <h2 class="section-title">💰 Precios <span class="accent">Especiales</span></h2>
+  <p class="section-sub">Más sacos = más ahorro. ¡Así de sencillo!</p>
+  <div class="price-cards">
+
+    <div class="price-card">
+      <div><div class="pc-range">1 – 4 sacos</div><div class="pc-qty">Pedido pequeño</div></div>
+      <div style="text-align:right"><div class="pc-price">Q399.00</div><div class="pc-ship">🚚 Envío GRATIS</div></div>
+    </div>
+
+    <div class="price-card">
+      <div><div class="pc-range">5 – 14 sacos</div><div class="pc-qty">Pedido mediano</div></div>
+      <div style="text-align:right"><div class="pc-price">Q375.00</div><div class="pc-ship">🚚 Envío GRATIS</div></div>
+    </div>
+
+    <div class="price-card">
+      <div><div class="pc-range">15 – 24 sacos</div><div class="pc-qty">Pedido grande</div></div>
+      <div style="text-align:right"><div class="pc-price">Q360.00</div><div class="pc-ship">🚚 Envío GRATIS</div></div>
+    </div>
+
+    <div class="price-card best">
+      <div class="best-label">⭐ MÁS POPULAR</div>
+      <div><div class="pc-range">25 – 49 sacos</div><div class="pc-qty">Para ganaderos serios</div></div>
+      <div style="text-align:right"><div class="pc-price">Q330.00</div><div class="pc-ship flete">🚛 + Flete</div></div>
+    </div>
+
+    <div class="price-card" style="border-left-color:var(--blue-mid);background:#f0f4ff;">
+      <div><div class="pc-range">50+ sacos</div><div class="pc-qty">¡Mejor precio!</div></div>
+      <div style="text-align:right"><div class="pc-price" style="color:var(--blue-brand)">Q310.00</div><div class="pc-ship flete">🚛 + Flete</div></div>
+    </div>
+
+  </div>
+  <a class="btn-wa" style="max-width:340px;margin:0 auto;justify-content:center;"
+     href="https://wa.me/50239747110?text=Hola%2C%20quiero%20cotizar%20BOVIMIX%20%F0%9F%90%84" target="_blank">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Quiero mi precio ahora
+  </a>
+</section>
+
+<!-- ══ TRUST ══ -->
+<section class="trust">
+  <h2 class="section-title">Nos <span class="accent">respalda</span> la confianza</h2>
+  <div class="trust-row">
+    <div class="trust-item"><div class="trust-icon">✅</div><div class="trust-label">Producto registrado</div></div>
+    <div class="trust-item"><div class="trust-icon">🚚</div><div class="trust-label">Entrega rápida</div></div>
+    <div class="trust-item"><div class="trust-icon">💬</div><div class="trust-label">Atención personal</div></div>
+    <div class="trust-item"><div class="trust-icon">🐄</div><div class="trust-label">Miles de vacas felices</div></div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="testimonials">
+  <h2 class="section-title">Lo que dicen <span class="accent">nuestros clientes</span></h2>
+  <p class="section-sub">Ganaderos reales, resultados reales 🙌</p>
+  <div class="testi-cards">
+    <div class="testi">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Desde que uso BOVIMIX mis vacas producen más leche y están más activas. Lo recomiendo a todos mis vecinos."</p>
+      <div class="testi-name">— Don Carlos M., ganadero de Jalapa</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Pedí 20 sacos y me llegaron rápido con envío gratis. El precio es muy bueno y el producto de verdad funciona."</p>
+      <div class="testi-name">— Familia Pérez, finca en Jutiapa</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Mis terneros crecen más rápido y ya casi no me enferman. Vale cada quetzal invertido."</p>
+      <div class="testi-name">— Doña María R., Chiquimula</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══ -->
+<section class="final-cta">
+  <h2>¿Listo para tener<br>el mejor ganado? 🐄</h2>
+  <p>Escríbenos ahora y te atendemos al instante</p>
+  <a class="cta-big" href="https://wa.me/50239747110?text=Hola%2C%20quiero%20pedir%20BOVIMIX%20%F0%9F%90%84" target="_blank">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    ¡Escribir por WhatsApp!
+  </a>
+  <p class="footer-note">📞 +502 3974 7110 · SDG Nutrition</p>
+</section>
+
+<footer>
+  © 2025 <strong>BOVIMIX® – SDG Nutrition</strong> · Todos los derechos reservados
+</footer>
+
+<!-- ══ FLOATING WA ══ -->
+<a class="cta-fixed" href="https://wa.me/50239747110?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20BOVIMIX%20%F0%9F%90%84" target="_blank">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  WhatsApp
+</a>
+
+<!-- ══ MODAL RECOMENDACIONES ══ -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this) this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📋 Dosis <span>Recomendada</span></div>
+      <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <img src="IMG_8266.jpeg" alt="Dosis Diaria Recomendada BOVIMIX">
+    </div>
+    <div class="modal-footer">
+      <p>Usar diariamente · Agregar sobre el concentrado o mezcla diaria</p>
+      <a class="modal-wa" href="https://wa.me/50239747110?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20la%20dosis%20de%20BOVIMIX%20%F0%9F%90%84" target="_blank">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        ¿Tengo dudas? Preguntar
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
